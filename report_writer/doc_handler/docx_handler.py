@@ -40,17 +40,23 @@ class SInlineImage:
 
 
 class DocxHandler:
-    def __init__(self, templates_folder):
+    def __init__(self, templates_folder, custom_filters=[], custom_functions=[]):
         self.templates_folder = Path(templates_folder)
         self.TEMPFOLDER =  Path(tempfile.gettempdir(), "edoc")
         if not self.TEMPFOLDER.exists():
             self.TEMPFOLDER.mkdir()
+        self.custom_filters = custom_filters
+        self.custom_functions = custom_functions
 
     def make_jinja_env(self, tpl):
         jinja_env = jinja2.Environment()
         for filter_ in filters:
             jinja_env.filters[filter_.__name__] = filter_
         for function_ in global_functions:
+            jinja_env.globals[function_.__name__] = function_
+        for filter_ in self.custom_filters:
+            jinja_env.filters[filter_.__name__] = filter_
+        for function_ in self.custom_functions:
             jinja_env.globals[function_.__name__] = function_
         jinja_env.globals['subdoc'] = SubdocFunction(
             tpl, self.templates_folder)

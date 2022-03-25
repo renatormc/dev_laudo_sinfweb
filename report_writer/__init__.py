@@ -2,6 +2,7 @@ from .doc_handler import DocxHandler
 # from app.report_writer.doc_handler import OdtHandler
 from pathlib import Path
 from importlib.machinery import SourceFileLoader
+import models
 
 class Renderer:
     def __init__(self, model, models_folder):
@@ -30,6 +31,10 @@ class Renderer:
 
     def render(self, type_, context, name_prefix="", only_laudo=False):
         self.pre(context)
-        self.engine = DocxHandler(self.model_folder / "templates") # if type_ == "docx" else OdtHandler(self.model_folder)
+        Filters = getattr(models, self.model).filters.Filters
+        custom_filters = [getattr(Filters, func) for func in dir(Filters) if callable(getattr(Filters, func)) and not func.startswith("__")]
+        Functions = getattr(models, self.model).functions.Functions
+        custom_functions = [getattr(Functions, func) for func in dir(Functions) if callable(getattr(Functions, func)) and not func.startswith("__")]
+        self.engine = DocxHandler(self.model_folder / "templates", custom_filters=custom_filters, custom_functions=custom_functions) # if type_ == "docx" else OdtHandler(self.model_folder)
         return self.engine.render(context, name_prefix=name_prefix, only_laudo=only_laudo)
        

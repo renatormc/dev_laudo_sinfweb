@@ -52,3 +52,65 @@ s-py render.py laudo_exemplo
 ```
 
 Será gerado o arquivo compilado.docx
+
+
+# Filtros
+
+## not_null
+
+Caso a variável seja nula preenche com uma string vazia
+
+## xxx
+
+Caso a variável for nula preenche com "xxx". Útil para deixar certos campos para preencher posteriormente no editor de textos.
+
+## data_completa
+
+Converte um objeto do tipo datetime para a data em extenso.  
+ex: 12/12/2020 será convertido para "12 dias do mês de dezembro do ano de 2020"
+
+## data_mes_extenso
+
+Converte um objeto do tipo datetime para a data em extenso.
+ex: 12/12/2020 será convertido para "12 de dezembro de 2020"
+
+## numero_extenso_masc
+
+Converte um número para sua grafia em extenso no masculino.
+ex: 22 será convertido para "vinte e dois"
+
+## numero_extenso_masc
+
+Converte um número para sua grafia em extenso no feminino.
+ex: 22 será convertido para "vinte e duas"
+
+## data_mes_extenso
+
+Converte um objeto do tipo datetime para a data simples.
+ex: 12/12/2020 será convertido para "12/12/2020"
+
+# Funções
+## image(path, width)
+
+Insere uma image contida no endereço "path" na largura de "width" em milímetros.
+
+## subdoc(template, context)
+
+Renderiza o template especificado na variável "template" utilizando o contexto passado na variável "context" e insere na posição específicada.
+
+## len(value)
+
+Retorna o tamanho de uma lista.
+
+## to_table(value, per_row)
+
+Converte um array para uma matrix com um número de per_row colunas.
+
+## not_null_or(value, default)
+
+Caso value for nulo retorna o valor default, caso não seja nulo retorna o próprio valor.
+
+## join_path(*args)
+
+Concatena caminhos de arquivos ou diretórios
+

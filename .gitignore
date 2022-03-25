@@ -1,0 +1,5 @@
+compilado.docx
+/__pycache__
+models
+.venv
+test.py

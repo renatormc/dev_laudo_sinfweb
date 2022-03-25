@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 docxtpl = "*"
 inquirer = "*"
+jinxed = "*"
 
 [dev-packages]
 

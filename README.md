@@ -23,6 +23,8 @@ Este projeto tem o propósito de facilitar a criação de novos templates e test
 1- Ter instalado o python na versão 3.9  
 2- Ter instalado virtualenv  
 
+obs: Caso possuia sinftools instalado não é necessário instalar outra versão no Python
+
 ## Configuração
 
 1- Clone o repositório com o comando  
@@ -34,12 +36,19 @@ git clone https://github.com/renatormc/dev_laudo_sinfweb.git
 python -m venv .venv
 ```
 
+obs: Caso tenha sinftools instalado esta etapa não é necessária
+
 3- Copie a pasta "models_example" e a renomeie para "models"  
 4- Edite o template models/laudo_examplo/Main.docx   
 5- Crie um contexto para testes editando o arquivo models/laudo_exemplo/test_data.py  
 6- Realize uma renderização para testar utilizando o comando   
 ```
 python render.py laudo_exemplo
+```
+
+Caso tenha sinftools instalado poderá utilizar o comando:  
+```
+s-py render.py laudo_exemplo
 ```
 
 Será gerado o arquivo compilado.docx

@@ -2,4 +2,5 @@ compilado.docx
 /__pycache__
 models
 .venv
+.vscode
 test.py

@@ -7,8 +7,12 @@ name = "pypi"
 docxtpl = "*"
 inquirer = "*"
 jinxed = "*"
+pyqt5 = "*"
+install = "*"
+
 
 [dev-packages]
+pyqt5-stubs = "*"
 
 [requires]
 python_version = "3.9"

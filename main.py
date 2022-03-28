@@ -2,14 +2,12 @@ import argparse
 import shutil
 import config
 
-
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(dest="command", required=True, help='Command to be used')
 parser.add_argument("-m", "--model", default="choose", help="Model")
 
 p_render = subparsers.add_parser("render")
 p_start = subparsers.add_parser("start")
-
 
 args = parser.parse_args()
 

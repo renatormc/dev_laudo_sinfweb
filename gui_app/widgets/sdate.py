@@ -1,28 +1,30 @@
-from typing import Any
+from typing import Any, Optional
 
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 from custom_types import FormError
 
 from gui_app.widgets.sbase import SBase
+from datetime import datetime
 
 
-class SText(SBase):
+class SDate(SBase):
 
     def __init__(self, name: str, required=False, label="", placeholder=""):
         self.required = required
         self.placeholder = placeholder
         self._name = name
         self.label = label or self.name
-        super(SText, self).__init__()
-        self.led: QLineEdit = None
+        super(SDate, self).__init__()
+        self.led: Optional[QLineEdit] = None
+
 
     @property
     def name(self)->str:
         return self._name
 
     def get_context(self) -> Any:
-        return self.led.displayText()
+        return datetime.strptime(self.led.displayText(), "%d/%m/%Y")
 
     def get_widget(self) -> QWidget:
         w = QWidget()
@@ -35,7 +37,10 @@ class SText(SBase):
         return w
 
     def validate(self) -> list[FormError]:
-        if self.required and self.led.displayText().strip() == "":
-            return [{'field': self.name, 'message': 'O valor não pode ser vazio'}]
+        try:
+            datetime.strptime(self.led.displayText(), "%d/%m/%Y")
+        except:
+            return [{'field': self.name,'message':'Data inválida'}]
         return []
+
 

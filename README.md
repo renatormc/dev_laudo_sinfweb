@@ -31,27 +31,8 @@ obs: Caso possuia sinftools instalado não é necessário instalar outra versão
 ```
 git clone https://github.com/renatormc/dev_laudo_sinfweb.git
 ```
-2- Prepare seu ambiente com os comandos 
-```
-python -m venv .venv
-python main.py start
-```
 
-obs: Caso tenha sinftools instalado esta etapa não é necessária
-
-2- Edite o template models/laudo_examplo/Main.docx   
-4- Crie um contexto para testes editando o arquivo models/laudo_exemplo/test_data.py  
-5- Realize uma renderização para testar utilizando o comando   
-```
-python main.py render
-```
-
-Caso tenha sinftools instalado poderá utilizar o comando:  
-```
-s-py main.py render
-```
-
-Será gerado o arquivo compilado.docx
+2- Copie a pasta "models_example" e a renomeia para "models"
 
 
 # Filtros

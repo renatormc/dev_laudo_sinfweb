@@ -3,6 +3,7 @@ import inquirer
 import config
 
 
+
 def get_test_context(model):
     mod = getattr(models, model)
     return mod.test_data.context

@@ -24,7 +24,6 @@ class SubdocFunction:
         subtpl.render(context)
         sd = self.tpl.new_subdoc()
         sd.subdocx = subtpl.docx
-        print(f"SUBDOC {path}")
         return sd
 
 

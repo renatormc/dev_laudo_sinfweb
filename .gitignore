@@ -4,3 +4,4 @@ models
 .venv
 .vscode
 test.py
+.idea

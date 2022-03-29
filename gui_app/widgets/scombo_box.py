@@ -1,24 +1,32 @@
-from typing import Any
+from typing import Any, Optional
 
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox
 from custom_types import FormError
 
-from gui_app.widgets.sbase import SBase
 
-
-class SComboBox(SBase):
+class SComboBox:
 
     def __init__(self, name: str, label="", choices=[]):
         self._name = name
         self.choices = choices
-        self.label = label or self.name
+        self._label = label or self.name
         super(SComboBox, self).__init__()
-        self.combo: QComboBox = None
+        self._combo: Optional[QComboBox] = None
 
     @property
-    def name(self)->str:
+    def combo(self) -> QComboBox:
+        if self._combo is None:
+            raise Exception("Get Widget must be executed once before")
+        return self._combo
+
+    @property
+    def name(self) -> str:
         return self._name
+
+    @property
+    def label(self) -> str:
+        return self._label
 
     def get_context(self) -> Any:
         return self.combo.currentText()
@@ -28,11 +36,10 @@ class SComboBox(SBase):
         l = QVBoxLayout()
         w.setLayout(l)
         l.addWidget(QLabel(self.label))
-        self.combo = QComboBox()
+        self._combo = QComboBox()
         self.combo.addItems(self.choices)
         l.addWidget(self.combo)
         return w
 
-    def validate(self) -> list[FormError]:
-        return []
-
+    def validate(self):
+        pass

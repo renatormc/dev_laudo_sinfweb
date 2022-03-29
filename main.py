@@ -31,10 +31,10 @@ else:
     elif args.command == "gui":
         from PyQt5.QtWidgets import QApplication
         
-        from gui_app.main_window import MainWindow
+        from gui_app.main_window  import MainWindow
        
         app = QApplication(sys.argv)
-        app.setStyle("fusion")
+        # app.setStyle("fusion")
         w = MainWindow()
         w.show()
         sys.exit(app.exec_())

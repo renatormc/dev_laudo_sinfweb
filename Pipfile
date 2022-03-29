@@ -9,10 +9,11 @@ inquirer = "*"
 jinxed = "*"
 pyqt5 = "*"
 install = "*"
-
+mypy = "*"
 
 [dev-packages]
 pyqt5-stubs = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.9"

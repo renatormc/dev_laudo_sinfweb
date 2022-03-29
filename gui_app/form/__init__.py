@@ -1,13 +1,17 @@
 from typing import TypedDict
 from custom_types import FormError
-from gui_app.widgets.sbase import SBase
+from gui_app.widgets.swidget import SWidget
 from .form_ui import Ui_Form
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
 
 
 class Form(QWidget):
-    def __init__(self, widgets: list[list[SBase]]):
+    def __init__(self, widgets: list[list[SWidget]]):
         self.widgets = widgets
+        self.widgets_map: dict[str, SWidget] = {}
+        for row in self.widgets:
+            for item in row:
+                self.widgets_map[item.name] = item
         super(self.__class__, self).__init__()
         self.ui = Ui_Form()
         self.ui.setupUi(self)
@@ -35,9 +39,12 @@ class Form(QWidget):
                 context[item.name] = item.get_context()
         return context
 
-    def validate(self) -> list[FormError]:
-        errors:list[FormError] = []
+    def validate(self) -> FormError:
+        errors: FormError = {}
         for row in self.widgets:
             for item in row:
-                errors += item.validate()
+                try:
+                    item.validate()
+                except Exception as e:
+                    errors[item.name] = str(e)
         return errors

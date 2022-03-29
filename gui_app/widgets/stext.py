@@ -1,24 +1,35 @@
-from typing import Any
+from optparse import Option
+from typing import Any, Optional
+from xml.dom import ValidationErr
 
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 from custom_types import FormError
 
-from gui_app.widgets.sbase import SBase
 
+class SText:
 
-class SText(SBase):
-
-    def __init__(self, name: str, required=False, label="", placeholder=""):
+    def __init__(self, name: str, required=False, label="", placeholder="") -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
-        self.label = label or self.name
+        self._label = label or self.name
         super(SText, self).__init__()
-        self.led: QLineEdit = None
+        self.led: Optional[QLineEdit] = None
+        self.lbl_error: Optional[QLabel] = None
 
     @property
-    def name(self)->str:
+    def led(self) -> QLineEdit:
+        if not self._led:
+            raise Exception("Get Widget must be executed once before")
+        return self._led
+
+    @property
+    def label(self) -> str:
+        return self._label
+
+    @property
+    def name(self) -> str:
         return self._name
 
     def get_context(self) -> Any:
@@ -29,13 +40,12 @@ class SText(SBase):
         l = QVBoxLayout()
         w.setLayout(l)
         l.addWidget(QLabel(self.label))
-        self.led = QLineEdit()
-        self.led.setPlaceholderText(self.placeholder)
-        l.addWidget(self.led)
+        self._led = QLineEdit()
+        self._led.setPlaceholderText(self.placeholder)
+        l.addWidget(self._led)
         return w
 
-    def validate(self) -> list[FormError]:
+    def validate(self):
         if self.required and self.led.displayText().strip() == "":
-            return [{'field': self.name, 'message': 'O valor não pode ser vazio'}]
-        return []
-
+            raise ValidationErr('O valor não pode ser vazio')
+        

@@ -1,8 +1,5 @@
 from typing import Any, Protocol
-from abc import ABC, abstractmethod, abstractproperty
 from PyQt5.QtWidgets import QWidget
-
-from custom_types import FormError
 
 
 class SWidget(Protocol):
@@ -19,10 +16,20 @@ class SWidget(Protocol):
     def show_error(self, message: str) -> None:
         ...
 
+    def serialize(self) -> Any:
+        ...
+
+    def load(self, value: Any) -> None:
+        ...
+
     @property
     def name(self) -> str:
         ...
 
     @property
     def label(self) -> str:
+        ...
+
+    @property
+    def stretch(self) -> int:
         ...

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui_app/main_window/main_window.ui'
+# Form implementation generated from reading ui file 'gui_app\main_window\main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -30,13 +30,21 @@ class Ui_MainWindow(object):
         self.btn_render.setMinimumSize(QtCore.QSize(120, 40))
         self.btn_render.setObjectName("btn_render")
         self.horizontalLayout.addWidget(self.btn_render)
+        self.btn_save = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_save.setMinimumSize(QtCore.QSize(120, 40))
+        self.btn_save.setObjectName("btn_save")
+        self.horizontalLayout.addWidget(self.btn_save)
+        self.btn_load = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_load.setMinimumSize(QtCore.QSize(120, 40))
+        self.btn_load.setObjectName("btn_load")
+        self.horizontalLayout.addWidget(self.btn_load)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem1)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.verticalLayout_2.setStretch(0, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1119, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1119, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -50,3 +58,5 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.btn_render.setText(_translate("MainWindow", "Gerar docx"))
+        self.btn_save.setText(_translate("MainWindow", "Salvar"))
+        self.btn_load.setText(_translate("MainWindow", "Carregar"))

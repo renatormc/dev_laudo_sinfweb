@@ -4,6 +4,8 @@ import config
 import sys
 from PyQt5.QtWidgets import QApplication
 
+from helpers import render_doc
+
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(dest="command", required=True, help='Command to be used')
 parser.add_argument("-m", "--model", default="choose", help="Model")
@@ -23,10 +25,8 @@ else:
         args.model = choose_model()
         config.model = args.model
     if args.command == "render":
-        r = Renderer(config.model, config.app_dir / "models")
         context = get_test_context(config.model)
-        path = r.render("", context, only_laudo=True)
-        shutil.move(path, config.app_dir / "compilado.docx")
+        render_doc(config.model, context)
         print("Renderizado arquivo compilado.docx")
     elif args.command == "gui":
         from PyQt5.QtWidgets import QApplication

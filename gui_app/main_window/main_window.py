@@ -1,3 +1,4 @@
+from helpers import render_doc
 from gui_app.helpers import get_icon
 from gui_app.main_window.main_window_ui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow
@@ -43,6 +44,7 @@ class MainWindow(QMainWindow):
             return
         context = self.form.get_context()
         print(context)
+        render_doc(config.model, context)
 
     def save(self):
         self.form.save()

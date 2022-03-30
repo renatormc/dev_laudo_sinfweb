@@ -1,9 +1,9 @@
 from pathlib import Path
 from typing import Optional
-from helpers import render_doc, get_models_list
+from helpers import open_doc, render_doc, get_models_list
 from gui_app.helpers import get_icon
 from gui_app.main_window.main_window_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtCore import QSize
 from gui_app.form import Form
 import config
@@ -71,7 +71,12 @@ class MainWindow(QMainWindow):
             return
         print(context)
         try:
-            render_doc(self.form.model, context)
+            file_= QFileDialog.getSaveFileName(self, "Escolha o arquivo",  ".", "DOCX (*.docx)")[0]
+            if file_:
+                render_doc(self.form.model, context, file_)
+                reply = QMessageBox.question(self, "Arquivo compilado", "Arquivo compilado. Deseja abri-lo no seu editor de textos padrão?", QMessageBox.Yes, QMessageBox.No)
+                if reply == QMessageBox.Yes:
+                    open_doc(file_)
         except Exception as e:
             QMessageBox.warning(self, "Erro", str(e))
 

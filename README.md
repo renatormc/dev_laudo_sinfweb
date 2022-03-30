@@ -1,41 +1,83 @@
-# dev_laudo_sinfweb
-
-## Objetivo
-
-Desenvolver templates (docx) de laudos para poderem ser utilizados no sistema Sinfweb
-
-## Como funciona
-
-O Sinfweb possui a capacidade de gerar laudos a partir do preenchimento de um formulário de dados de acordo com o modelo de laudo. Para isto é possível 
-criar vários modelos diferentes de laudos. A geração do laudo funciona da seguinte forma:   
-1- O usuário preenche um formulário html no sistema Sinfweb.   
-2- Os dados preenchidos neste formulários irão formar um contexto (conjunto de dados) que irão ser repassados a um renderizador.   
-3- O renderizador irá receber os dados provenientes do formulário e irá gerar um arquivo docx a partir de um template criado também no formato docx.
+# Fastdoc
 
 
-### Processo de criação de novos modelos
+# Instalação
 
-Para se criar novos modelos de laudos é preciso criar um novo formulário html e um novo template docx. No template docx existem instruções na linguagem jinja2 a qual será utilizada para descrever a lógica que irá determinar como o texto do laudo será gerado. Para criar um novo template deve se utilizar um editor de textos comum como Microsoft Word, Only Office, LibreOffice, etc.    
-Este projeto tem o propósito de facilitar a criação de novos templates e testá-los antes da integração com o Sinfweb.
+O projeto é de código aberto e fica hospedado no Github. Para efetuar a instalação é preciso antes ter na máquina os seguintes pré-requisitos:
 
-## Requisitos
+- Python 3.9
+- Virtualenv
 
-1- Ter instalado o python na versão 3.9  
-2- Ter instalado virtualenv  
-
-obs: Caso possuia sinftools instalado não é necessário instalar outra versão no Python
-
-## Configuração
-
-1- Clone o repositório com o comando  
+## Clone o projeto
 ```
-git clone https://github.com/renatormc/dev_laudo_sinfweb.git
+git clone https://github.com/renatormc/fastdoc.git
 ```
 
-2- Copie a pasta "models_example" e a renomeia para "models"
+## Crie o virtualenv
+
+```
+virtualenv .venv
+```
+
+## Ative o virtualenv
+
+*Para linux:*
+```
+source .venv/bin/activate
+```
+*Para Windows:*
+```
+.venv\Scripts\activate
+```
+
+## instale as dependências
+```bash
+pip install -r requirements.txt
+```
+
+## Copie a pasta models
+
+Copie a pasta "models_example" e a renomeie para "models"
 
 
-# Filtros
+# Processo de criação de modelos
+Para criação de seus próprios modelos siga os passos a seguir.
+
+## Copie a pasta models/example
+Copie a pasta example e a renomeie de acordo com sua preferência, por exemplo "my_model". 
+## Adicione o novo model
+Vá até o arquivo models/__init__.py e adicione a seguinte linha:
+```python
+from . import my_model
+```
+Substituia "my_model" pelo nome do model criado por você.
+
+## Edite o template docx
+
+Abra o arquivo models/my_model/templates/Main.docx e faça as edições. Nessa etapa é utilizado a biblioteca docxtpl. Para maiores detalhes visite a [documentação](https://docxtpl.readthedocs.io/en/latest/) da lib. A linguagem utilizada dentro do template docx é [Jinja2](https://devhints.io/jinja).
+
+## Crie o formulário de entrada
+Para criação do formulário edite o arquivo **models/my_model/form/__init__.py** utilizando os widgets disponíveis.
+
+# Executar o programa
+Para executar o programa utilize o seguinte comando:
+```
+python main.py gui
+```
+
+# Widgets disponíveis
+
+| Widget | Definição |
+|--------|-----------|
+| SText  |    Aceita texto simples e retorna um objeto do tipo str       |
+|  SCheckBox      | Caixa de marcação de verdadeiro ou falso. Retorna um objeto do tipo bool           |
+|   SSpinBox  | Aceita números inteiros e retorna um objeto do tipo int.           |
+|SComboBox|Caixa de seleção de lista fechada. Retorna um objeto do tipo str.|
+|SDate|Recebe um string que representa uma data no formato dd/mm/YYYY. Retorna um objeto do tipo datetime|
+|SFolderPics|Recebe o endereço de uma pasta e retorna a lista de imagens encontradas dentro dela com a possiblidade de utilizar subpastas .|
+|SObjectsByPics|Destinado ao uso com pasta de fotos de objetos de perícia nomeados seguindo o padrão casepics. Retorna a lista de objetos da perícia pela análise do nome das fotos.|
+
+# Filtros disponíveis
 
 ## not_null
 
@@ -65,10 +107,6 @@ ex: 22 será convertido para "vinte e dois"
 Converte um número para sua grafia em extenso no feminino.
 ex: 22 será convertido para "vinte e duas"
 
-## data_mes_extenso
-
-Converte um objeto do tipo datetime para a data simples.
-ex: 12/12/2020 será convertido para "12/12/2020"
 
 # Funções
 ## image(path, width)

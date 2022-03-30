@@ -53,19 +53,7 @@ class Form(QWidget):
                 item.show_error(message)
         return context, errors
 
-    # def validate(self) -> FormError:
-    #     errors: FormError = {}
-    #     for row in self.widgets:
-    #         for item in row:
-    #             message = ""
-    #             try:
-    #                 item.validate()
-    #             except Exception as e:
-    #                 message = str(e)
-    #                 errors[item.name] = message
-    #             item.show_error(message)
-    #     return errors
-
+   
     def save(self, file_: Optional[str] = None):
         data = {}
         for row in self.widgets:
@@ -87,7 +75,7 @@ class Form(QWidget):
                 for key, w in self.widgets_map.items():
                     try:
                         w.load(data[key])
-                    except KeyError:
+                    except Exception:
                         pass
 
     def clear_content(self):

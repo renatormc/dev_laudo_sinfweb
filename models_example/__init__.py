@@ -1,2 +1,2 @@
-from . import laudo_exemplo
-from . import laudo_exemplo2
+from . import example
+from . import sinf_generico

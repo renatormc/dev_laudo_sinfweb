@@ -1,3 +1,7 @@
+import subprocess
+import os
+from pathlib import Path
+from typing import Union
 import models
 import inquirer
 import config
@@ -26,7 +30,12 @@ def choose_model():
     return answers['model']
 
 
-def render_doc(model: str, context):
+def render_doc(model: str, context, file_: Union[Path, str, None] = None):
+    path = Path(file_) if file_ is not None else config.app_dir / "compilado.docx"
     r = Renderer(model, config.app_dir / "models")
-    path = r.render("", context, only_laudo=True)
-    shutil.move(path, config.app_dir / "compilado.docx")
+    p = r.render("", context, only_laudo=True)
+    shutil.move(p, path)
+
+def open_doc(file_: Union[str, Path]) -> None:
+    if os.name == "nt":
+        subprocess.Popen(['start', str(file_)], shell=True)

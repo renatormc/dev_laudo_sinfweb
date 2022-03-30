@@ -40,7 +40,7 @@ pip install -r requirements.txt
 Copie a pasta "models_example" e a renomeie para "models"
 
 
-# Processo de criação de modelos
+# Processo de criação e deleção de modelos
 Para criação de seus próprios modelos digite o seguinte comando:
 ```
 python main.py new-model
@@ -51,6 +51,7 @@ Para deletar um model existente utilize o comando
 python main.py delete-model
 ```
 
+*Não delete ou crie modelos deletando ou copiando manualamente as pastas. Sempre utilze os comandos acima.*
 ## Edite o template docx
 
 Abra o arquivo models/my_model/templates/Main.docx e faça as edições. Nessa etapa é utilizado a biblioteca docxtpl. Para maiores detalhes visite a [documentação](https://docxtpl.readthedocs.io/en/latest/) da lib. A linguagem utilizada dentro do template docx é [Jinja2](https://devhints.io/jinja).

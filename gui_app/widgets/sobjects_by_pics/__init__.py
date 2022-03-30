@@ -1,10 +1,11 @@
 from pathlib import Path
 from typing import Any, Optional
+from gui_app.helpers import apply_converter
 from gui_app.widgets.validation_error import ValidationError
 
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QToolButton, QFileDialog
-from custom_types import ValidatorType
+from custom_types import ConverterType, ValidatorType
 from gui_app.widgets.label_error import LabelError
 from gui_app.widgets.sobjects_by_pics.name_analyzer import get_objects_from_pics
 
@@ -12,13 +13,15 @@ from gui_app.widgets.sobjects_by_pics.name_analyzer import get_objects_from_pics
 class SObjetctsByPics:
 
     def __init__(
-            self, name: str, required=False, label="", placeholder="", validators: list[ValidatorType] = [], stretch=0) -> None:
+            self, name: str, required=False, label="", placeholder="",
+             validators: list[ValidatorType] = [], stretch=0,converter: Optional[ConverterType] = None) -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
         self.validators = validators
         self._label = label or self.name
         self._stretch = stretch
+        self.converter = converter
         super(SObjetctsByPics, self).__init__()
         self._led: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
@@ -55,8 +58,18 @@ class SObjetctsByPics:
         return self._name
 
     def get_context(self) -> Any:
-        path = Path(self.led.displayText())
-        return get_objects_from_pics(path)
+        text = self.led.displayText().strip()
+        path = Path(text)
+        if self.required and text == "":
+            raise ValidationError('O valor não pode ser vazio')
+        if not path.exists() or not path.is_dir():
+            raise ValidationError('Pasta não existente')
+        objs = get_objects_from_pics(path)
+        if self.converter is not None:
+            objs = apply_converter(objs, self.converter)
+        for v in self.validators:
+            v(objs)
+        return objs
 
     def get_widget(self) -> QWidget:
         w = QWidget()
@@ -77,22 +90,13 @@ class SObjetctsByPics:
         l.addWidget(self._lbl_error)
         return w
 
-    def validate(self):
-        text = self.led.displayText().strip()
-        if self.required and text == "":
-            raise ValidationError('O valor não pode ser vazio')
-        path = Path(text)
-        if not path.exists() or not path.is_dir():
-            raise ValidationError('Pasta não existente')
-        objs = get_objects_from_pics(path)
-        for v in self.validators:
-            v(path)
 
     def show_error(self, message: str) -> None:
         self.lbl_error.setText(message)
 
     def choose_folder(self):
-        dir_ = QFileDialog.getExistingDirectory(None, "Escolha um diretório", ".")
+        dir_ = QFileDialog.getExistingDirectory(
+            None, "Escolha um diretório", ".")
         if dir_:
             self.led.setText(str(Path(dir_)))
 
@@ -102,5 +106,5 @@ class SObjetctsByPics:
     def load(self, value: Any) -> None:
         self.led.setText(value)
 
-    def clear_content(self)-> None:
+    def clear_content(self) -> None:
         pass

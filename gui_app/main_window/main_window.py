@@ -3,7 +3,7 @@ from typing import Optional
 from helpers import render_doc, get_models_list
 from gui_app.helpers import get_icon
 from gui_app.main_window.main_window_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5.QtCore import QSize
 from gui_app.form import Form
 import config
@@ -63,12 +63,17 @@ class MainWindow(QMainWindow):
         
 
     def render(self):
-        errors = self.form.validate()
+        file_ = config.local_folder / f"{self.form.model}.json"
+        self.form.save(file_)
+        context, errors = self.form.get_context()
         if errors:
+            QMessageBox.warning(self, "Erro de formulário", "Há erros em seu formulário. Corrija-os antes de prosseguir.")
             return
-        context = self.form.get_context()
         print(context)
-        render_doc(config.model, context)
+        try:
+            render_doc(self.form.model, context)
+        except Exception as e:
+            QMessageBox.warning(self, "Erro", str(e))
 
     def save(self):
         self.form.save()

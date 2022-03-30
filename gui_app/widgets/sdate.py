@@ -1,17 +1,20 @@
 from typing import Any, Optional
+from gui_app.helpers import apply_converter
 from gui_app.widgets.validation_error import ValidationError
 
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 
 from datetime import datetime
-from custom_types import ValidatorType
+from custom_types import ConverterType, ValidatorType
 from gui_app.widgets.label_error import LabelError
 
 
 class SDate:
 
-    def __init__(self, name: str, required=False, label="", placeholder="", validators: list[ValidatorType] = [], stretch=0, default="") -> None:
+    def __init__(self, name: str, required=False, label="",
+                 placeholder="", validators: list[ValidatorType] = [], stretch=0,
+                 default="", converter: Optional[ConverterType] = None) -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
@@ -19,6 +22,7 @@ class SDate:
         self.validators = validators
         self._stretch = stretch
         self.default = default
+        self.converter = converter
         super(SDate, self).__init__()
         self._led: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
@@ -48,7 +52,15 @@ class SDate:
         return self._label
 
     def get_context(self) -> Any:
-        return datetime.strptime(self.led.displayText(), "%d/%m/%Y")
+        try:
+            value = datetime.strptime(self.led.displayText(), "%d/%m/%Y")
+        except:
+            raise ValidationError('Data inválida')
+        if self.converter is not None:
+            value = apply_converter(value, self.converter)
+        for v in self.validators:
+            v(value)
+        return value
 
     def get_widget(self) -> QWidget:
         w = QWidget()
@@ -63,15 +75,6 @@ class SDate:
         l.addWidget(self._lbl_error)
         return w
 
-    def validate(self):
-        try:
-            value = datetime.strptime(self.led.displayText(), "%d/%m/%Y")
-        except:
-            raise ValidationError('Data inválida')
-        for v in self.validators:
-            v(value)
-
-
     def show_error(self, message: str) -> None:
         self.lbl_error.setText(message)
 
@@ -81,5 +84,5 @@ class SDate:
     def load(self, value: Any) -> None:
         self.led.setText(value)
 
-    def clear_content(self)-> None:
+    def clear_content(self) -> None:
         self.led.setText(self.default)

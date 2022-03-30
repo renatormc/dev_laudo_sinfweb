@@ -1,10 +1,11 @@
 from pathlib import Path
 from typing import Any, Optional
+from gui_app.helpers import apply_converter
 from gui_app.widgets.validation_error import ValidationError
 
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QToolButton, QFileDialog
-from custom_types import ValidatorType
+from custom_types import ConverterType, ValidatorType
 from gui_app.widgets.label_error import LabelError
 
 
@@ -12,7 +13,7 @@ class SFolderPics:
 
     def __init__(
             self, name: str, required=False, label="", placeholder="", validators: list[ValidatorType] = [],
-            subfolders=False, extensions=[".jpg", ".png"], stretch=0, default="") -> None:
+            subfolders=False, extensions=[".jpg", ".png"], stretch=0, default="", converter: Optional[ConverterType] = None) -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
@@ -22,6 +23,7 @@ class SFolderPics:
         self.extensions = extensions
         self._stretch = stretch
         self.default = default
+        self.converter = converter
         super(SFolderPics, self).__init__()
         self._led: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
@@ -58,7 +60,12 @@ class SFolderPics:
         return self._name
 
     def get_context(self) -> Any:
-        path = Path(self.led.displayText())
+        text = self.led.displayText().strip()
+        path = Path(text)
+        if self.required and text == "":
+            raise ValidationError('O valor não pode ser vazio')
+        if not path.exists():
+            raise ValidationError('Pasta não existente')
         if self.subfolders:
             pics = []
             for sub in path.iterdir():
@@ -67,9 +74,15 @@ class SFolderPics:
                         "folder": sub.name,
                         "pics": [str(entry.absolute()) for entry in sub.iterdir() if entry.is_file() and entry.suffix.lower() in self.extensions]
                     }) 
-            return pics
+            data: Any = pics
         else:
-            return [str(entry.absolute()) for entry in path.iterdir() if entry.is_file() and entry.suffix.lower() in self.extensions]
+            data = [str(entry.absolute()) for entry in path.iterdir() if entry.is_file() and entry.suffix.lower() in self.extensions]
+        if self.converter is not None:
+            data = apply_converter(data, self.converter)
+        for v in self.validators:
+            v(data)
+        return data
+
 
     def get_widget(self) -> QWidget:
         w = QWidget()
@@ -91,15 +104,6 @@ class SFolderPics:
         l.addWidget(self._lbl_error)
         return w
 
-    def validate(self):
-        text = self.led.displayText().strip()
-        if self.required and text == "":
-            raise ValidationError('O valor não pode ser vazio')
-        path = Path(text)
-        if not path.exists():
-            raise ValidationError('Pasta não existente')
-        for v in self.validators:
-            v(path)
 
     def show_error(self, message: str) -> None:
         self.lbl_error.setText(message)

@@ -10,9 +10,6 @@ class SWidget(Protocol):
     def get_widget(self) -> QWidget:
         ...
 
-    def validate(self) -> None:
-        ...
-
     def show_error(self, message: str) -> None:
         ...
 

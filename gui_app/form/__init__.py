@@ -1,6 +1,7 @@
-from typing import Optional, TypedDict
+from typing import Optional, Tuple
 from custom_types import FormError
 from gui_app.widgets.swidget import SWidget
+from gui_app.widgets.validation_error import ValidationError
 from .form_ui import Ui_Form
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QFileDialog
 import json
@@ -38,25 +39,32 @@ class Form(QWidget):
     def connections(self):
         pass
 
-    def get_context(self):
+    def get_context(self) -> Tuple[dict, FormError]:
         context = {}
-        for row in self.widgets:
-            for item in row:
-                context[item.name] = item.get_context()
-        return context
-
-    def validate(self) -> FormError:
         errors: FormError = {}
         for row in self.widgets:
             for item in row:
                 message = ""
                 try:
-                    item.validate()
-                except Exception as e:
+                    context[item.name] = item.get_context()
+                except ValidationError as e:
                     message = str(e)
                     errors[item.name] = message
                 item.show_error(message)
-        return errors
+        return context, errors
+
+    # def validate(self) -> FormError:
+    #     errors: FormError = {}
+    #     for row in self.widgets:
+    #         for item in row:
+    #             message = ""
+    #             try:
+    #                 item.validate()
+    #             except Exception as e:
+    #                 message = str(e)
+    #                 errors[item.name] = message
+    #             item.show_error(message)
+    #     return errors
 
     def save(self, file_: Optional[str] = None):
         data = {}

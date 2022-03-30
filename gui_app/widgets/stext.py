@@ -23,7 +23,7 @@ class SText:
         self.default = default
         self.converter = converter
         super(SText, self).__init__()
-        self._led: Optional[QLineEdit] = None
+        self._w: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
 
     @property
@@ -31,10 +31,10 @@ class SText:
         return self._stretch
 
     @property
-    def led(self) -> QLineEdit:
-        if not self._led:
+    def w(self) -> QLineEdit:
+        if not self._w:
             raise Exception("get_widget must be executed once before")
-        return self._led
+        return self._w
 
     @property
     def lbl_error(self) -> LabelError:
@@ -51,7 +51,7 @@ class SText:
         return self._name
 
     def get_context(self) -> Any:
-        data = self.led.displayText().strip()
+        data = self.w.displayText().strip()
         if self.required and data == "":
             raise ValidationError('O valor não pode ser vazio')
         if self.converter is not None:
@@ -66,9 +66,9 @@ class SText:
         l.setSpacing(0)
         w.setLayout(l)
         l.addWidget(QLabel(self.label))
-        self._led = QLineEdit()
-        self._led.setPlaceholderText(self.placeholder)
-        l.addWidget(self._led)
+        self._w = QLineEdit()
+        self._w.setPlaceholderText(self.placeholder)
+        l.addWidget(self._w)
         self._lbl_error = LabelError()
         l.addWidget(self._lbl_error)
         return w
@@ -77,10 +77,10 @@ class SText:
         self.lbl_error.setText(message)
 
     def serialize(self) -> Any:
-        return self.led.displayText()
+        return self.w.displayText()
 
     def load(self, value: Any) -> None:
-        self.led.setText(value)
+        self.w.setText(value)
 
     def clear_content(self) -> None:
-        self.led.setText(self.default)
+        self.w.setText(self.default)

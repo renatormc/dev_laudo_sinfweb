@@ -35,7 +35,9 @@ def render_doc(model: str, context, file_: Union[Path, str, None] = None):
     r = Renderer(model, config.app_dir / "models")
     p = r.render("", context, only_laudo=True)
     shutil.move(p, path)
+    
 
 def open_doc(file_: Union[str, Path]) -> None:
     if os.name == "nt":
         subprocess.Popen(['start', str(file_)], shell=True)
+  

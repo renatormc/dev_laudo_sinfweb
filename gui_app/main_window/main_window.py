@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Optional
 from helpers import open_doc, render_doc, get_models_list
@@ -74,9 +75,12 @@ class MainWindow(QMainWindow):
             file_= QFileDialog.getSaveFileName(self, "Escolha o arquivo",  ".", "DOCX (*.docx)")[0]
             if file_:
                 render_doc(self.form.model, context, file_)
-                reply = QMessageBox.question(self, "Arquivo compilado", "Arquivo compilado. Deseja abri-lo no seu editor de textos padrão?", QMessageBox.Yes, QMessageBox.No)
-                if reply == QMessageBox.Yes:
-                    open_doc(file_)
+                if os.name == "nt":
+                    reply = QMessageBox.question(self, "Arquivo compilado", "Arquivo compilado. Deseja abri-lo no seu editor de textos padrão?", QMessageBox.Yes, QMessageBox.No)
+                    if reply == QMessageBox.Yes:
+                        open_doc(file_)
+                else:
+                    QMessageBox.about(self, "Arquivo compilado", f"Arquivo compilado \"{file_}\"")
         except Exception as e:
             QMessageBox.warning(self, "Erro", str(e))
 

@@ -8,11 +8,12 @@ from gui_app.widgets.label_error import LabelError
 
 class SComboBox:
 
-    def __init__(self, name: str, label="", choices=[], stretch=0):
+    def __init__(self, name: str, label="", choices=[], stretch=0, default=""):
         self._name = name
         self.choices = choices
         self._label = label or self.name
         self._stretch = stretch
+        self.default = default
         super(SComboBox, self).__init__()
         self._combo: Optional[QComboBox] = None
         self._lbl_error: Optional[LabelError] = None
@@ -67,3 +68,7 @@ class SComboBox:
 
     def load(self, value: Any) -> None:
         self.combo.setCurrentText(value)
+
+    def clear_content(self)-> None:
+        if self.default != "":
+            self.combo.setCurrentText(self.default)

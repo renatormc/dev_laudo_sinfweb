@@ -101,3 +101,6 @@ class SObjetctsByPics:
 
     def load(self, value: Any) -> None:
         self.led.setText(value)
+
+    def clear_content(self)-> None:
+        pass

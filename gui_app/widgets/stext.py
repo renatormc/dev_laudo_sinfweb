@@ -10,13 +10,14 @@ from gui_app.widgets.label_error import LabelError
 class SText:
 
     def __init__(
-            self, name: str, required=False, label="", placeholder="", validators: list[ValidatorType] = [], stretch=0) -> None:
+            self, name: str, required=False, label="", placeholder="", validators: list[ValidatorType] = [], stretch=0, default="") -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
         self.validators = validators
         self._label = label or self.name
         self._stretch = stretch
+        self.default = default
         super(SText, self).__init__()
         self._led: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
@@ -51,6 +52,7 @@ class SText:
     def get_widget(self) -> QWidget:
         w = QWidget()
         l = QVBoxLayout()
+        l.setSpacing(0)
         w.setLayout(l)
         l.addWidget(QLabel(self.label))
         self._led = QLineEdit()
@@ -75,3 +77,6 @@ class SText:
 
     def load(self, value: Any) -> None:
         self.led.setText(value)
+
+    def clear_content(self)-> None:
+        self.led.setText(self.default)

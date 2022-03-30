@@ -11,13 +11,14 @@ from gui_app.widgets.label_error import LabelError
 
 class SDate:
 
-    def __init__(self, name: str, required=False, label="", placeholder="", validators: list[ValidatorType] = [], stretch=0) -> None:
+    def __init__(self, name: str, required=False, label="", placeholder="", validators: list[ValidatorType] = [], stretch=0, default="") -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
         self._label = label or self.name
         self.validators = validators
         self._stretch = stretch
+        self.default = default
         super(SDate, self).__init__()
         self._led: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
@@ -52,6 +53,7 @@ class SDate:
     def get_widget(self) -> QWidget:
         w = QWidget()
         l = QVBoxLayout()
+        l.setSpacing(0)
         w.setLayout(l)
         l.addWidget(QLabel(self.label))
         self._led = QLineEdit()
@@ -78,3 +80,6 @@ class SDate:
 
     def load(self, value: Any) -> None:
         self.led.setText(value)
+
+    def clear_content(self)-> None:
+        self.led.setText(self.default)

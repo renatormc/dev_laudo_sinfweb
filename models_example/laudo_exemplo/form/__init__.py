@@ -15,5 +15,89 @@ widgets: list[list[SWidget]] = [
     [
        wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
        wt.SObjetctsByPics("objects", label="Objetos", required=True)
-    ]
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
+    [
+       wt.SFolderPics("fotos", label="Fotos", required=True, subfolders=True),
+       wt.SObjetctsByPics("objects", label="Objetos", required=True)
+    ],
 ]

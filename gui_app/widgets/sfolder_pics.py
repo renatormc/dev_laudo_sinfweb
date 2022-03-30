@@ -12,7 +12,7 @@ class SFolderPics:
 
     def __init__(
             self, name: str, required=False, label="", placeholder="", validators: list[ValidatorType] = [],
-            subfolders=False, extensions=[".jpg", ".png"], stretch=0) -> None:
+            subfolders=False, extensions=[".jpg", ".png"], stretch=0, default="") -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
@@ -21,6 +21,7 @@ class SFolderPics:
         self.subfolders = subfolders
         self.extensions = extensions
         self._stretch = stretch
+        self.default = default
         super(SFolderPics, self).__init__()
         self._led: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
@@ -75,6 +76,7 @@ class SFolderPics:
         l = QVBoxLayout()
         w.setLayout(l)
         l.addWidget(QLabel(self.label))
+        l.setSpacing(0)
         h_layout = QHBoxLayout()
         self._led = QLineEdit()
         self._led.setPlaceholderText(self.placeholder)
@@ -112,3 +114,6 @@ class SFolderPics:
 
     def load(self, value: Any) -> None:
         self.led.setText(value)
+
+    def clear_content(self)-> None:
+        self.led.setText(self.default)

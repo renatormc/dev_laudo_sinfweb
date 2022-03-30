@@ -22,6 +22,9 @@ class SWidget(Protocol):
     def load(self, value: Any) -> None:
         ...
 
+    def clear_content(self) -> None:
+        ...
+
     @property
     def name(self) -> str:
         ...

@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from typing import Optional
-from helpers import open_doc, render_doc, get_models_list
+from helpers import open_doc, render_doc, get_models_list, get_model_meta
 from gui_app.helpers import get_icon
 from gui_app.main_window.main_window_ui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog
@@ -34,7 +34,10 @@ class MainWindow(QMainWindow):
     def populate_models(self):
         self.ui.cbx_model.clear()
         models = get_models_list()
-        self.ui.cbx_model.addItems(models)
+        for m in models:
+            meta = get_model_meta(m)
+            item = QCombo
+            self.ui.cbx_model.addItem(meta['full_name'])
 
     def setup_ui(self):
         self.setWindowIcon(get_icon("icon.png"))

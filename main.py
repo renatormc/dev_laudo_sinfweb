@@ -1,8 +1,11 @@
 import argparse
+from distutils.command.config import config
 import sys
 from PyQt5.QtWidgets import QApplication
-from helpers import choose_model, get_test_context
-from helpers import render_doc
+import helpers as hp
+import stringcase
+import config
+import shutil
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers(dest="command", required=True, help='Command to be used')
@@ -10,16 +13,21 @@ subparsers = parser.add_subparsers(dest="command", required=True, help='Command 
 
 p_render = subparsers.add_parser("render")
 p_render.add_argument("-m", "--model", default="choose", help="Model")
+
 p_GUI = subparsers.add_parser("gui")
+
+p_new_model = subparsers.add_parser("new-model")
+
+p_delete_model = subparsers.add_parser("delete-model")
 
 args = parser.parse_args()
 
     
 if args.command == "render":
     if args.model == "choose":
-        args.model = choose_model()
-    context = get_test_context(args.model)
-    render_doc(args.model, context)
+        args.model = hp.choose_model()
+    context = hp.get_test_context(args.model)
+    hp.render_doc(args.model, context)
     print("Renderizado arquivo compilado.docx")
 elif args.command == "gui":
     from PyQt5.QtWidgets import QApplication
@@ -30,3 +38,21 @@ elif args.command == "gui":
     w = MainWindow()
     w.show()
     sys.exit(app.exec_())
+elif args.command == "new-model":
+    answers = hp.inquire_new_model()
+    full_name = answers['full_name']
+    folder_name = stringcase.snakecase(full_name)
+    folder_from = config.app_dir / "models_example/example"
+    folder_to = config.models_folder / folder_name
+    shutil.copytree(folder_from, folder_to)
+    hp.set_model_meta(folder_name, full_name=full_name)
+    hp.fix_imports()
+elif args.command == "delete-model":
+    model = hp.choose_model()
+    try:
+        path = config.models_folder / model
+        shutil.rmtree(path)
+    except FileNotFoundError:
+        pass
+    hp.fix_imports()
+    

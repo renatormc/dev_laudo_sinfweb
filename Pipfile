@@ -10,6 +10,7 @@ jinxed = "*"
 pyqt5 = "*"
 install = "*"
 mypy = "*"
+stringcase = "*"
 
 [dev-packages]
 pyqt5-stubs = "*"

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c8c55d38d287124c08611f03bd76e43bb579eda83608c92ae4c72487f10bd3d1"
+            "sha256": "7c3d7602f8afbddc56aac7fb048142fb5e9dc74ff169d64dd819e62850ebc23e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,14 +16,6 @@
         ]
     },
     "default": {
-        "ansicon": {
-            "hashes": [
-                "sha256:e4d039def5768a47e4afec8e89e83ec3ae5a26bf00ad851f914d1240b444d2b1",
-                "sha256:f1def52d17f65c2c9682cf8370c03f541f410c1752d6a14029f97318e4b9dfec"
-            ],
-            "markers": "platform_system == 'Windows'",
-            "version": "==1.89.0"
-        },
         "blessed": {
             "hashes": [
                 "sha256:63b8554ae2e0e7f43749b6715c734cc8f3883010a809bf16790102563e6cf25b",
@@ -312,6 +304,13 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
+        },
+        "stringcase": {
+            "hashes": [
+                "sha256:48a06980661908efe8d9d34eab2b6c13aefa2163b3ced26972902e3bdfd87008"
+            ],
+            "index": "pypi",
+            "version": "==1.2.0"
         },
         "tomli": {
             "hashes": [

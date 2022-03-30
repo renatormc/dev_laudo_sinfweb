@@ -41,16 +41,15 @@ Copie a pasta "models_example" e a renomeie para "models"
 
 
 # Processo de criação de modelos
-Para criação de seus próprios modelos siga os passos a seguir.
-
-## Copie a pasta models/example
-Copie a pasta example e a renomeie de acordo com sua preferência, por exemplo "my_model". 
-## Adicione o novo model
-Vá até o arquivo models/__init__.py e adicione a seguinte linha:
-```python
-from . import my_model
+Para criação de seus próprios modelos digite o seguinte comando:
 ```
-Substituia "my_model" pelo nome do model criado por você.
+python main.py new-model
+```
+
+Para deletar um model existente utilize o comando
+```
+python main.py delete-model
+```
 
 ## Edite o template docx
 

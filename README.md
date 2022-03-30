@@ -51,7 +51,7 @@ Para deletar um model existente utilize o comando
 python main.py delete-model
 ```
 
-*Não delete ou crie modelos deletando ou copiando manualamente as pastas. Sempre utilze os comandos acima.*
+*Não delete ou crie modelos deletando ou copiando manualamente as pastas. Sempre utilize os comandos acima.*
 ## Edite o template docx
 
 Abra o arquivo models/my_model/templates/Main.docx e faça as edições. Nessa etapa é utilizado a biblioteca docxtpl. Para maiores detalhes visite a [documentação](https://docxtpl.readthedocs.io/en/latest/) da lib. A linguagem utilizada dentro do template docx é [Jinja2](https://devhints.io/jinja).

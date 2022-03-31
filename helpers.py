@@ -33,10 +33,10 @@ def choose_model():
 
 def render_doc(model: str, context, file_: Union[Path, str, None] = None):
     path = Path(file_) if file_ is not None else config.app_dir / "compilado.docx"
-    r = Renderer(model, config.app_dir / "models")
-    p = r.render("", context, only_laudo=True)
-    shutil.move(p, path)
-
+    md = getattr(models, model)
+    r = Renderer(md)
+    r.render(context, path)
+   
 
 def open_doc(file_: Union[str, Path]) -> None:
     if os.name == "nt":

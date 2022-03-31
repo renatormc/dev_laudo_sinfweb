@@ -11,6 +11,7 @@ pyqt5 = "*"
 install = "*"
 mypy = "*"
 stringcase = "*"
+report-writer = {git = "https://github.com/renatormc/report_writer"}
 
 [dev-packages]
 pyqt5-stubs = "*"

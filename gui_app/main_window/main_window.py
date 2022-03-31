@@ -36,8 +36,7 @@ class MainWindow(QMainWindow):
         models = get_models_list()
         for m in models:
             meta = get_model_meta(m)
-            item = QCombo
-            self.ui.cbx_model.addItem(meta['full_name'])
+            self.ui.cbx_model.addItem(meta['full_name'], m)
 
     def setup_ui(self):
         self.setWindowIcon(get_icon("icon.png"))
@@ -54,7 +53,7 @@ class MainWindow(QMainWindow):
         if self.form is not None:
             file_ = config.local_folder / f"{self.form.model}.json"
             self.form.save(file_)
-        model = self.ui.cbx_model.currentText()
+        model = self.ui.cbx_model.currentData()
         md = getattr(models, model)
         widgets = md.form.widgets
         self.form =  Form(model, widgets)

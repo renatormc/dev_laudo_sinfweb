@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
             self.form.save(file_)
         model = self.ui.cbx_model.currentData()
         md = getattr(models, model)
-        widgets = md.form.widgets
+        widgets = getattr(md, 'form').widgets
         self.form =  Form(model, widgets)
         self.ui.sca_form.setWidget(self.form)
         file_ = config.local_folder / f"{self.form.model}.json"

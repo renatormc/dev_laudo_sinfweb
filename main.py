@@ -1,5 +1,4 @@
 import argparse
-from distutils.command.config import config
 import sys
 from PyQt5.QtWidgets import QApplication
 import helpers as hp

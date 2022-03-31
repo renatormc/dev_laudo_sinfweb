@@ -6,3 +6,4 @@ models
 test.py
 .idea
 .local
+.mypy_cache

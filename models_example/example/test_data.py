@@ -1,3 +1,3 @@
-from converters import str2date
+from report_writer.converters import str2date
 
-context = {}
+context: dict = {}

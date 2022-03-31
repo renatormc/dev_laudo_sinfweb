@@ -7,7 +7,6 @@ import models
 import inquirer
 import config
 from report_writer import Renderer
-import shutil
 
 
 def get_test_context(model):

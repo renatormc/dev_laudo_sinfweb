@@ -6,6 +6,7 @@ import helpers as hp
 import stringcase
 import config
 import shutil
+import models
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-w', '--workdir', default='.', help='Work directory')
@@ -27,7 +28,9 @@ config.workdir = Path(args.workdir)
 if args.command == "render":
     if args.model == "choose":
         args.model = hp.choose_model()
-    context = hp.get_test_context(args.model)
+    md = getattr(models, args.model)
+    context = context = md.test_data.context
+    print(context)
     hp.render_doc(args.model, context)
     print("Renderizado arquivo compilado.docx")
 elif args.command == "gui":

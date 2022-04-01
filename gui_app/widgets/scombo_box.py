@@ -3,7 +3,7 @@ from typing import Any, Optional
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox
 from custom_types import ConverterType, FormError
-from gui_app.helpers import apply_converter
+from gui_app.widgets.helpers import apply_converter
 from gui_app.widgets.label_error import LabelError
 
 

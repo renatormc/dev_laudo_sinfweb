@@ -1,5 +1,5 @@
 from typing import Any, Optional
-from gui_app.helpers import apply_converter
+from gui_app.widgets.helpers import apply_converter
 from gui_app.widgets.validation_error import ValidationError
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSpinBox

@@ -9,7 +9,7 @@ from PyQt5.QtCore import QSize
 from gui_app.form import Form
 import config
 import models
-
+import importlib
 
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
@@ -54,8 +54,10 @@ class MainWindow(QMainWindow):
             file_ = config.local_folder / f"{self.form.model}.json"
             self.form.save(file_)
         model = self.ui.cbx_model.currentData()
-        md = getattr(models, model)
-        widgets = getattr(md, 'form').widgets
+        # md = getattr(models, model)
+        form_module = importlib.import_module(f"models.{model}.form")
+        # widgets = getattr(md, 'form').widgets
+        widgets = form_module.widgets
         self.form =  Form(model, widgets)
         self.ui.sca_form.setWidget(self.form)
         file_ = config.local_folder / f"{self.form.model}.json"

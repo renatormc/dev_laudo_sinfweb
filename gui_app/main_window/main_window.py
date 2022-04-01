@@ -10,6 +10,7 @@ from gui_app.form import Form
 import config
 import importlib
 from report_writer.custom_types import InitialData
+from pprint import pprint
 
 
 class MainWindow(QMainWindow):
@@ -88,6 +89,7 @@ class MainWindow(QMainWindow):
             return
         if self.initial_data:
             context.update(self.initial_data.context)
+        # pprint(context)
         try:
             file_ = QFileDialog.getSaveFileName(
                 self, "Escolha o arquivo",  ".", "DOCX (*.docx)")[0]

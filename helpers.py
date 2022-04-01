@@ -7,6 +7,7 @@ import models
 import inquirer
 import config
 from report_writer import Renderer
+from pprint import pprint
 
 
 def get_test_context(model):
@@ -34,7 +35,8 @@ def render_doc(model: str, context, file_: Union[Path, str, None] = None):
     path = Path(file_) if file_ is not None else config.app_dir / "compilado.docx"
     md = getattr(models, model)
     r = Renderer(md)
-    r.render(context, path)
+    new_context, file_ = r.render(context, path)
+    pprint(new_context)
    
 
 def open_doc(file_: Union[str, Path]) -> None:

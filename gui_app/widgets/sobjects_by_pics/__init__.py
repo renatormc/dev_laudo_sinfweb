@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QToolButt
 from custom_types import ConverterType, ValidatorType
 from gui_app.widgets.label_error import LabelError
 from gui_app.widgets.sobjects_by_pics.name_analyzer import get_objects_from_pics
+from gui_app.widgets.sobjects_by_pics.pics_organizer import PicsOrganizer
 
 
 class SObjetctsByPics:
@@ -26,6 +27,7 @@ class SObjetctsByPics:
         self._led: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
         self._btn_choose: Optional[QToolButton] = None
+        self._btn_open_organizer: Optional[QToolButton] = None
 
     @property
     def stretch(self) -> int:
@@ -48,6 +50,12 @@ class SObjetctsByPics:
         if not self._btn_choose:
             raise Exception("get_widget must be executed once before")
         return self._btn_choose
+
+    @property
+    def btn_open_organizer(self) -> QToolButton:
+        if not self._btn_open_organizer:
+            raise Exception("get_widget must be executed once before")
+        return self._btn_open_organizer
 
     @property
     def label(self) -> str:
@@ -84,6 +92,10 @@ class SObjetctsByPics:
         self._btn_choose.setText("...")
         self._btn_choose.clicked.connect(self.choose_folder)
         h_layout.addWidget(self._btn_choose)
+        self._btn_open_organizer = QToolButton()
+        self._btn_open_organizer.setText("Organizador")
+        self._btn_open_organizer.clicked.connect(self.organize_pics)
+        h_layout.addWidget(self._btn_open_organizer)
         l.addLayout(h_layout)
 
         self._lbl_error = LabelError()
@@ -99,6 +111,12 @@ class SObjetctsByPics:
             None, "Escolha um diretório", ".")
         if dir_:
             self.led.setText(str(Path(dir_)))
+
+    def organize_pics(self):
+        context = self.get_context()
+        # print(context)
+        dialog = PicsOrganizer(context)
+        dialog.exec_()
 
     def serialize(self) -> Any:
         return self.led.displayText()

@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 import sys
 from PyQt5.QtWidgets import QApplication
 import helpers as hp
@@ -7,6 +8,7 @@ import config
 import shutil
 
 parser = argparse.ArgumentParser()
+parser.add_argument('-w', '--workdir', default='.', help='Work directory')
 subparsers = parser.add_subparsers(dest="command", required=True, help='Command to be used')
 
 
@@ -20,7 +22,7 @@ p_new_model = subparsers.add_parser("new-model")
 p_delete_model = subparsers.add_parser("delete-model")
 
 args = parser.parse_args()
-
+config.workdir = Path(args.workdir)
     
 if args.command == "render":
     if args.model == "choose":

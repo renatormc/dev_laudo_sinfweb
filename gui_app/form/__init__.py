@@ -65,18 +65,21 @@ class Form(QWidget):
             with Path(file_).open("w", encoding="utf-8") as f:
                 f.write(json.dumps(data, ensure_ascii=False, indent=4))
 
-    def load(self, file_: Optional[str] = None):
+    def load(self, file_: Optional[str] = None) -> None:
         file_ = file_ or QFileDialog.getOpenFileName(self, "Escolha o arquivo",  ".", "JSON (*.json)")[0]
         if file_:
             path = Path(file_)
             if path.exists():
                 with Path(file_).open("r", encoding="utf-8") as f:
                     data = json.load(f)
-                for key, w in self.widgets_map.items():
-                    try:
-                        w.load(data[key])
-                    except Exception:
-                        pass
+                self.load_data(data)
+
+    def load_data(self, data: dict) -> None:
+        for key, w in self.widgets_map.items():
+            try:
+                w.load(data[key])
+            except Exception:
+                pass
 
     def clear_content(self):
         for row in self.widgets:

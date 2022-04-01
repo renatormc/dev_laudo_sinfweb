@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1119</width>
+    <width>1193</width>
     <height>821</height>
    </rect>
   </property>
@@ -59,7 +59,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1099</width>
+         <width>1173</width>
          <height>676</height>
         </rect>
        </property>
@@ -121,6 +121,19 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_initial_data">
+        <property name="minimumSize">
+         <size>
+          <width>180</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Carregar dados iniciais</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_clear">
         <property name="minimumSize">
          <size>
@@ -155,7 +168,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1119</width>
+     <width>1193</width>
      <height>22</height>
     </rect>
    </property>

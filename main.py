@@ -1,7 +1,3 @@
-import models
-import stringcase
-import fastdoc.helpers as hp
-from PyQt5.QtWidgets import QApplication
 import argparse
 import os
 from pathlib import Path
@@ -37,6 +33,10 @@ if args.command == "start":
     shutil.copytree(config.models_example_folder, config.models_folder)
     sys.exit()
 
+from PyQt5.QtWidgets import QApplication
+import fastdoc.helpers as hp
+import stringcase
+import models
 
 if args.command == "render":
     if args.model == "choose":

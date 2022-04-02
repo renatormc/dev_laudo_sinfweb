@@ -35,10 +35,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Copie a pasta models
+## Prepare a pasta
 
-Copie a pasta "models_example" e a renomeie para "models"
-
+Execute o comando 
+```
+python main.py start
+```
+Será criada a pasta de nome "models". É dentro dela que você deverá criar seus models.
 
 # Processo de criação e deleção de modelos
 Para criar um novo model digite o seguinte comando:

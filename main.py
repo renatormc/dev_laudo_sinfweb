@@ -1,4 +1,9 @@
+import models
+import stringcase
+import fastdoc.helpers as hp
+from PyQt5.QtWidgets import QApplication
 import argparse
+import os
 from pathlib import Path
 import sys
 from fastdoc import config
@@ -8,8 +13,10 @@ import unidecode
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-w', '--workdir', default='.', help='Work directory')
-parser.add_argument('-v', '--verbose', action="store_true", help="Verbose mode")
-subparsers = parser.add_subparsers(dest="command", required=True, help='Command to be used')
+parser.add_argument('-v', '--verbose', action="store_true",
+                    help="Verbose mode")
+subparsers = parser.add_subparsers(
+    dest="command", required=True, help='Command to be used')
 
 p_start = subparsers.add_parser("start")
 
@@ -30,11 +37,7 @@ if args.command == "start":
     shutil.copytree(config.models_example_folder, config.models_folder)
     sys.exit()
 
-from PyQt5.QtWidgets import QApplication
-import fastdoc.helpers as hp
-import stringcase
-import models
-    
+
 if args.command == "render":
     if args.model == "choose":
         args.model = hp.choose_model()
@@ -44,10 +47,11 @@ if args.command == "render":
     print("Renderizado arquivo compilado.docx")
 elif args.command == "gui":
     from PyQt5.QtWidgets import QApplication
-    from fastdoc.gui_app.main_window  import MainWindow
-    
+    from fastdoc.gui_app.main_window import MainWindow
+
     app = QApplication(sys.argv)
-    # app.setStyle("fusion")
+    if os.name == "nt":
+        app.setStyle("fusion")  # type: ignore
     w = MainWindow()
     w.show()
     sys.exit(app.exec_())
@@ -67,4 +71,3 @@ elif args.command == "delete-model":
     except FileNotFoundError:
         pass
     hp.fix_imports()
-    

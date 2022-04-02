@@ -15,7 +15,7 @@ class PicsOrganizer(QDialog):
         self.objects_widgets: list[OrganizerObj] = []
 
     def connections(self):
-        self.ui.btn_reconfig.clicked.connect(self.reconfig)
+        self.ui.btn_reconfigure.clicked.connect(self.reconfig)
 
     def reconfig(self):
         for obj in self.objects_widgets:
@@ -34,6 +34,6 @@ class PicsOrganizer(QDialog):
                 icon = QIcon()
                 icon.addPixmap(QPixmap(pic),QIcon.Normal, QIcon.Off)
                 item.setIcon(icon)
-                self.ui.lsw_others.addItem(item)
+                self.ui.lsw_not_associated.addItem(item)
 
 

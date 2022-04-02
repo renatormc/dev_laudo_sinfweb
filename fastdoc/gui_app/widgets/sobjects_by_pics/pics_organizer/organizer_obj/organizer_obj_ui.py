@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'gui_app/widgets/sobjects_by_pics/pics_organizer/organizer_obj/organizer_obj.ui'
+# Form implementation generated from reading ui file 'fastdoc/gui_app/widgets/sobjects_by_pics/pics_organizer/organizer_obj/organizer_obj.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -31,6 +31,16 @@ class Ui_OrganizerObj(object):
         self.horizontalLayout.setStretch(1, 1)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.lsw_object = QtWidgets.QListWidget(OrganizerObj)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.lsw_object.sizePolicy().hasHeightForWidth())
+        self.lsw_object.setSizePolicy(sizePolicy)
+        self.lsw_object.setMaximumSize(QtCore.QSize(16777215, 150))
+        self.lsw_object.setDragEnabled(True)
+        self.lsw_object.setDragDropOverwriteMode(True)
+        self.lsw_object.setDefaultDropAction(QtCore.Qt.MoveAction)
+        self.lsw_object.setIconSize(QtCore.QSize(150, 150))
         self.lsw_object.setViewMode(QtWidgets.QListView.IconMode)
         self.lsw_object.setObjectName("lsw_object")
         self.verticalLayout.addWidget(self.lsw_object)

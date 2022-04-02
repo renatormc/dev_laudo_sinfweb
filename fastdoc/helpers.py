@@ -67,9 +67,4 @@ def fix_imports():
     path = config.models_folder / "__init__.py"
     path.write_text(text, encoding="utf-8")
 
-# def inquire_new_model():
-#     questions = [
-#         inquirer.Text('full_name', message="Nome")
-#     ]
-#     answers = inquirer.prompt(questions)
-#     return answers
+

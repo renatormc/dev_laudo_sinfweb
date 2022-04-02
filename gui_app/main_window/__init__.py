@@ -1,1 +1,0 @@
-from gui_app.main_window.main_window import MainWindow

@@ -4,10 +4,10 @@ import os
 from pathlib import Path
 from typing import Union
 import models
-import inquirer
 from fastdoc import config
 from report_writer import Renderer
 from pprint import pprint
+from InquirerPy import inquirer
 
 
 def get_test_context(model):
@@ -24,25 +24,27 @@ def get_models_list():
 
 
 def choose_model():
-    questions = [
-        inquirer.List('model', message="Escolha o modelo", choices=get_models_list())
-    ]
-    answers = inquirer.prompt(questions)
-    return answers['model']
+    model = inquirer.select(
+        message="Model:",
+        choices=get_models_list(),
+    ).execute()
+    return model
 
 
 def render_doc(model: str, context, file_: Union[Path, str, None] = None):
-    path = Path(file_) if file_ is not None else config.app_dir / "compilado.docx"
+    path = Path(file_) if file_ is not None else config.app_dir / \
+        "compilado.docx"
     md = getattr(models, model)
     r = Renderer(md)
     new_context, file_ = r.render(context, path)
     if config.verbose:
         pprint(new_context)
-   
+
 
 def open_doc(file_: Union[str, Path]) -> None:
     if os.name == "nt":
         subprocess.Popen(['start', str(file_)], shell=True)
+
 
 def get_model_meta(model: str) -> dict:
     path = config.models_folder / model / "meta.json"
@@ -50,23 +52,24 @@ def get_model_meta(model: str) -> dict:
         data = json.load(f)
     return data
 
+
 def set_model_meta(model: str, full_name) -> None:
     data = {'full_name': full_name}
     path = config.models_folder / model / "meta.json"
     with path.open("w", encoding="utf-8") as f:
         f.write(json.dumps(data, ensure_ascii=False, indent=4))
 
+
 def fix_imports():
     models = get_models_list()
     lines = [f"from . import {m}" for m in models]
     text = "\n".join(lines)
-    path = config.app_dir / "models/__init__.py"
+    path = config.models_folder / "__init__.py"
     path.write_text(text, encoding="utf-8")
-    
-def inquire_new_model():
-    questions = [
-        inquirer.Text('full_name', message="Nome")
-    ]
-    answers = inquirer.prompt(questions)
-    return answers
 
+# def inquire_new_model():
+#     questions = [
+#         inquirer.Text('full_name', message="Nome")
+#     ]
+#     answers = inquirer.prompt(questions)
+#     return answers

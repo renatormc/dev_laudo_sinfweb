@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 docxtpl = "*"
-inquirer = "*"
 jinxed = "*"
 pyqt5 = "*"
 install = "*"
@@ -13,6 +12,8 @@ mypy = "*"
 stringcase = "*"
 report-writer = {git = "https://github.com/renatormc/report_writer"}
 beautifulsoup4 = "*"
+inquirerpy = "*"
+unidecode = "*"
 
 [dev-packages]
 pyqt5-stubs = "*"

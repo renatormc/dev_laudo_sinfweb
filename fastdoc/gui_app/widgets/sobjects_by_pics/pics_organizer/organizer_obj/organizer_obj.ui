@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>533</width>
-    <height>239</height>
+    <width>912</width>
+    <height>201</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,14 +15,14 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="lbl_name">
-     <property name="text">
-      <string>Sem nome</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,1,0">
+     <item>
+      <widget class="QLabel" name="lbl_name">
+       <property name="text">
+        <string>Sem nome</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -32,6 +32,13 @@
      </item>
      <item>
       <widget class="QComboBox" name="cbx_type"/>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_close">
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -49,6 +56,9 @@
        <height>150</height>
       </size>
      </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="dragEnabled">
       <bool>true</bool>
      </property>
@@ -58,9 +68,12 @@
      <property name="defaultDropAction">
       <enum>Qt::MoveAction</enum>
      </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::MultiSelection</enum>
+     </property>
      <property name="iconSize">
       <size>
-       <width>150</width>
+       <width>10000</width>
        <height>150</height>
       </size>
      </property>

@@ -1,6 +1,6 @@
 from typing import Any
-from custom_types import ConverterType
-from gui_app.widgets.validation_error import ValidationError
+from fastdoc.custom_types import ConverterType
+from fastdoc.gui_app.widgets.validation_error import ValidationError
 
 def apply_converter(value, converter: ConverterType) -> Any:
     try:

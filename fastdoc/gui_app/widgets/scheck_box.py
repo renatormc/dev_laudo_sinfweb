@@ -1,9 +1,9 @@
 from typing import Any, Optional
-from gui_app.widgets.helpers import apply_converter
+from fastdoc.gui_app.widgets.helpers import apply_converter
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QCheckBox
-from custom_types import ConverterType
-from gui_app.widgets.label_error import LabelError
+from fastdoc.custom_types import ConverterType
+from fastdoc.gui_app.widgets.label_error import LabelError
 
 
 class SCheckBox:

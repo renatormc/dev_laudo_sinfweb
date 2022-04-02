@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Union
 import models
 import inquirer
-import config
+from fastdoc import config
 from report_writer import Renderer
 from pprint import pprint
 
@@ -36,7 +36,8 @@ def render_doc(model: str, context, file_: Union[Path, str, None] = None):
     md = getattr(models, model)
     r = Renderer(md)
     new_context, file_ = r.render(context, path)
-    pprint(new_context)
+    if config.verbose:
+        pprint(new_context)
    
 
 def open_doc(file_: Union[str, Path]) -> None:

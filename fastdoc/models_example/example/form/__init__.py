@@ -1,5 +1,5 @@
-import gui_app.widgets as wt
-from gui_app.widgets.swidget import SWidget
+import fastdoc.gui_app.widgets as wt
+from fastdoc.gui_app.widgets.swidget import SWidget
 
 
 widgets: list[list[SWidget]] = [

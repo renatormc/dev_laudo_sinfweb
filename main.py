@@ -46,7 +46,7 @@ elif args.command == "gui":
     from fastdoc.gui_app.main_window  import MainWindow
     
     app = QApplication(sys.argv)
-    app.setStyle("fusion")
+    # app.setStyle("fusion")
     w = MainWindow()
     w.show()
     sys.exit(app.exec_())

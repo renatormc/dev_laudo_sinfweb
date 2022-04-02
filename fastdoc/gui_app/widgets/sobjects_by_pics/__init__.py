@@ -1,14 +1,14 @@
 from pathlib import Path
 from typing import Any, Optional
-from gui_app.widgets.helpers import apply_converter
-from gui_app.widgets.validation_error import ValidationError
+from fastdoc.gui_app.widgets.helpers import apply_converter
+from fastdoc.gui_app.widgets.validation_error import ValidationError
 
 from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QToolButton, QFileDialog
-from custom_types import ConverterType, ValidatorType
-from gui_app.widgets.label_error import LabelError
-from gui_app.widgets.sobjects_by_pics.name_analyzer import get_objects_from_pics
-from gui_app.widgets.sobjects_by_pics.pics_organizer import PicsOrganizer
+from fastdoc.custom_types import ConverterType, ValidatorType
+from fastdoc.gui_app.widgets.label_error import LabelError
+from fastdoc.gui_app.widgets.sobjects_by_pics.name_analyzer import get_objects_from_pics
+from fastdoc.gui_app.widgets.sobjects_by_pics.pics_organizer import PicsOrganizer
 
 
 class SObjetctsByPics:

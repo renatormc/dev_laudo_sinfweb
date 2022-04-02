@@ -1,10 +1,10 @@
 from typing import Any, Optional
-from gui_app.widgets.helpers import apply_converter
-from gui_app.widgets.validation_error import ValidationError
+from fastdoc.gui_app.widgets.helpers import apply_converter
+from fastdoc.gui_app.widgets.validation_error import ValidationError
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSpinBox
-from custom_types import ConverterType, ValidatorType
-from gui_app.widgets.label_error import LabelError
+from fastdoc.custom_types import ConverterType, ValidatorType
+from fastdoc.gui_app.widgets.label_error import LabelError
 
 
 class SSpinBox:

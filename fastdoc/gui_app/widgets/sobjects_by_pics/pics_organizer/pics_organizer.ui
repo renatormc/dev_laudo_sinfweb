@@ -64,7 +64,7 @@
       <enum>QAbstractItemView::InternalMove</enum>
      </property>
      <property name="defaultDropAction">
-      <enum>Qt::MoveAction</enum>
+      <enum>Qt::CopyAction</enum>
      </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -76,10 +76,10 @@
       </size>
      </property>
      <property name="movement">
-      <enum>QListView::Free</enum>
+      <enum>QListView::Snap</enum>
      </property>
      <property name="viewMode">
-      <enum>QListView::IconMode</enum>
+      <enum>QListView::ListMode</enum>
      </property>
      <property name="sortingEnabled">
       <bool>true</bool>

@@ -79,7 +79,7 @@
       <enum>QListView::Snap</enum>
      </property>
      <property name="viewMode">
-      <enum>QListView::ListMode</enum>
+      <enum>QListView::IconMode</enum>
      </property>
      <property name="sortingEnabled">
       <bool>true</bool>
@@ -97,7 +97,7 @@
         <x>0</x>
         <y>0</y>
         <width>1199</width>
-        <height>630</height>
+        <height>629</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="horizontalLayout_2">
@@ -135,16 +135,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Alias da perícia</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="led_alias_pericias"/>
      </item>
      <item>
       <widget class="QSpinBox" name="spb_n_add">

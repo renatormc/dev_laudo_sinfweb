@@ -1,49 +1,59 @@
 from copy import copy
+import hashlib
 from pathlib import Path
+
+from fastdoc.gui_app.widgets.sobjects_by_pics.objects_typy import CaseObjectsType
 from .pics_organizer_ui import Ui_PicsOrganizer
-from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QListWidgetItem, QMenu, QAction, QListWidget
+from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidget
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QSize
 from .organizer_obj import OrganizerObj
 
 
 class PicsOrganizer(QDialog):
-    def __init__(self, objects):
+    def __init__(self, objects: CaseObjectsType):
         self.objects = objects
         super(self.__class__, self).__init__()
         self.ui = Ui_PicsOrganizer()
         self.ui.setupUi(self)
-        self.ui.led_alias_pericias.setText(objects['alias'])
         self.connections()
-        self.objects_widgets: dict[int, OrganizerObj] = {}
+        self.objects_widgets: list[OrganizerObj] = []
         self.change_icon_size(self.ui.sld_icon_size.value())
-        self.reload()
+        self.populate()
 
     def connections(self):
         self.ui.btn_add.clicked.connect(self.add_obbjects)
         self.ui.sld_icon_size.valueChanged.connect(self.change_icon_size)
         self.ui.lsw_not_associated.customContextMenuRequested.connect(self.provide_context_menu_default)
-    
 
-    def reload(self):
+    def populate(self):
         self.ui.lsw_not_associated.clear()
-        for obj in self.objects['objects']:
-            for pic in obj['pics']:
-                item = QListWidgetItem()
-                icon = QIcon()
-                icon.addPixmap(QPixmap(pic), QIcon.Normal, QIcon.Off)
-                item.setIcon(icon)
-                path = Path(pic)
-                item.setText(path.name)
-                self.ui.lsw_not_associated.addItem(item)
+        for pic in self.objects.pics_not_classified_iterator():
+            item = QListWidgetItem()
+            icon = QIcon()
+            icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
+            item.setIcon(icon)
+            path = Path(pic)
+            item.setText(path.name)
+            self.ui.lsw_not_associated.addItem(item)
+        for obj in self.objects.objects:
+            objw = self.add_object(obj.name)
+            for pic in obj.pics_iterator():
+                self.add_pic_to_object_widget(objw, pic)
+        
+
+    def add_pic_to_object_widget(self, objw: OrganizerObj,  pic: Path) -> None:
+        item = QListWidgetItem()
+        icon = QIcon()
+        icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
+        item.setIcon(icon)
+        item.setText(pic.name)
 
     def add_object(self) -> OrganizerObj:
-        n = len(self.objects_widgets.keys())
-        index = n + 1
-        obj = OrganizerObj(index)
-        obj.set_object_types(['Celular', 'Computador', 'HDD'])
+        index = len(self.objects_widgets)
+        obj = OrganizerObj(f"Objeto {index + 1}", index)
         self.ui.lay_objects.addWidget(obj)
-        self.objects_widgets[index] = obj
+        self.objects_widgets.append(obj)
         obj.close_clicked.connect(self.remove_object)
         obj.context_menu_requested.connect(self.provide_context_menu)
         obj.set_icon_size(QSize(10000, self.ui.sld_icon_size.value()))
@@ -55,7 +65,7 @@ class PicsOrganizer(QDialog):
 
     def change_icon_size(self, value):
         self.ui.lsw_not_associated.setIconSize(QSize(10000, value))
-        for item in self.objects_widgets.values():
+        for item in self.objects_widgets:
             item.set_icon_size(QSize(10000, value))
 
     def remove_object(self, index: int):
@@ -63,7 +73,10 @@ class PicsOrganizer(QDialog):
         for i in range(objw.count()):
             self.move_item(objw, self.ui.lsw_not_associated, objw.item(i), copy=True)
         self.objects_widgets[index].deleteLater()
-        del self.objects_widgets[index]
+        self.objects_widgets.pop(index)
+        for i in range(index, len(self.objects_widgets)):
+            self.objects_widgets[i].index -= 1
+        
 
     def move_item(self, lsw_from: QListWidget, lsw_to: QListWidget, item: QListWidgetItem, copy=False):
         item_clone = item.clone()
@@ -84,8 +97,8 @@ class PicsOrganizer(QDialog):
             menu.addAction("Remover do objeto")
 
         objects_actions = {}
-        for index in self.objects_widgets.keys():
-            text = f"Adicionar ao objeto {index}"
+        for index, obj in enumerate(self.objects_widgets):
+            text = f"Adicionar ao objeto \"{obj.name}\""
             objects_actions[text] = index
             menu.addAction(text)
 
@@ -108,4 +121,4 @@ class PicsOrganizer(QDialog):
                         self.move_item(lsw, objw, item)
                 except KeyError:
                     pass
-        
+    

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'fastdoc\gui_app\widgets\sobjects_by_pics\pics_organizer\pics_organizer.ui'
+# Form implementation generated from reading ui file 'fastdoc/gui_app/widgets/sobjects_by_pics/pics_organizer/pics_organizer.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -38,7 +38,7 @@ class Ui_PicsOrganizer(object):
         self.lsw_not_associated.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.lsw_not_associated.setDragEnabled(True)
         self.lsw_not_associated.setDragDropMode(QtWidgets.QAbstractItemView.InternalMove)
-        self.lsw_not_associated.setDefaultDropAction(QtCore.Qt.CopyAction)
+        self.lsw_not_associated.setDefaultDropAction(QtCore.Qt.MoveAction)
         self.lsw_not_associated.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.lsw_not_associated.setIconSize(QtCore.QSize(10000, 200))
         self.lsw_not_associated.setMovement(QtWidgets.QListView.Free)
@@ -53,7 +53,7 @@ class Ui_PicsOrganizer(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1199, 585))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1199, 588))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.horizontalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")

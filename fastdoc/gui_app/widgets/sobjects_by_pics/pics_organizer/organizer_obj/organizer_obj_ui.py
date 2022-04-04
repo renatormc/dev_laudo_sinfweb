@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'fastdoc\gui_app\widgets\sobjects_by_pics\pics_organizer\organizer_obj\organizer_obj.ui'
+# Form implementation generated from reading ui file 'fastdoc/gui_app/widgets/sobjects_by_pics/pics_organizer/organizer_obj/organizer_obj.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -39,7 +39,7 @@ class Ui_OrganizerObj(object):
         self.lsw_object.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.lsw_object.setDragEnabled(True)
         self.lsw_object.setDragDropOverwriteMode(True)
-        self.lsw_object.setDefaultDropAction(QtCore.Qt.CopyAction)
+        self.lsw_object.setDefaultDropAction(QtCore.Qt.MoveAction)
         self.lsw_object.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
         self.lsw_object.setIconSize(QtCore.QSize(10000, 150))
         self.lsw_object.setMovement(QtWidgets.QListView.Free)

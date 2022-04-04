@@ -64,7 +64,7 @@
       <enum>QAbstractItemView::InternalMove</enum>
      </property>
      <property name="defaultDropAction">
-      <enum>Qt::CopyAction</enum>
+      <enum>Qt::MoveAction</enum>
      </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -112,7 +112,7 @@
         <x>0</x>
         <y>0</y>
         <width>1199</width>
-        <height>585</height>
+        <height>588</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="horizontalLayout_2">

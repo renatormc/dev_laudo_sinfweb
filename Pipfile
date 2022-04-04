@@ -14,12 +14,12 @@ report-writer = {git = "https://github.com/renatormc/report_writer"}
 beautifulsoup4 = "*"
 inquirerpy = "*"
 unidecode = "*"
-pillow = "*"
+
 
 [dev-packages]
 pyqt5-stubs = "*"
 mypy = "*"
-types-pillow = "*"
+
 
 [requires]
 python_version = "3.9"

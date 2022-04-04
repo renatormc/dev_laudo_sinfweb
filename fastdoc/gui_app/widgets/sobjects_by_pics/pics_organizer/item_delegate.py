@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import  QStyledItemDelegate, QStyleOptionViewItem
+from PyQt5.QtWidgets import  QStyledItemDelegate, QStyleOptionViewItem, QSizeGrip
+from PyQt5.QtCore import QSize
 
 class ItemDelegate(QStyledItemDelegate):
     def paint(self, painter, option, index):

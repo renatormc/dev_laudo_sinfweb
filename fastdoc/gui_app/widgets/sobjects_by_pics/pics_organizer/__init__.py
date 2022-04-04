@@ -33,13 +33,18 @@ class PicsOrganizer(QDialog):
 
     @property
     def pic_size(self) -> QSize:
-        return QSize(10000, self.ui.sld_icon_size.value())
+        value = self.ui.sld_icon_size.value()
+        return QSize(value, value)
+
+    @property
+    def item_size_hint(self) -> QSize:
+        return QSize(self.pic_size.width() + 5, self.pic_size.height() + 20)
 
     def populate(self):
         self.ui.lsw_not_associated.clear()
         for pic in self.objects.pics_not_classified_iterator():
             item = QListWidgetItem()
-            item.setSizeHint(QSize(150, 130))
+            item.setSizeHint(self.item_size_hint)
             item.setTextAlignment(Qt.AlignCenter)
             icon = QIcon()
             icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
@@ -54,7 +59,7 @@ class PicsOrganizer(QDialog):
 
     def add_pic_to_object_widget(self, objw: OrganizerObj,  pic: Path) -> None:
         item = QListWidgetItem()
-        item.setSizeHint(QSize(150, 130))
+        item.setSizeHint(self.item_size_hint)
         item.setTextAlignment(Qt.AlignCenter)
         icon = QIcon()
         icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
@@ -68,7 +73,7 @@ class PicsOrganizer(QDialog):
         self.objects_widgets.append(obj)
         obj.close_clicked.connect(self.remove_object)
         obj.context_menu_requested.connect(self.provide_context_menu)
-        obj.set_icon_size(QSize(10000, self.ui.sld_icon_size.value()))
+        obj.set_icon_size(self.pic_size, self.item_size_hint)
         return obj
 
     def add_obbjects(self):
@@ -77,13 +82,15 @@ class PicsOrganizer(QDialog):
 
     def change_icon_size(self, value):
         self.ui.lsw_not_associated.setIconSize(self.pic_size)
-        # for i in range(self.ui.lsw_not_associated.count()):
-        #     item = self.ui.lsw_not_associated.item(i)
+        for i in range(self.ui.lsw_not_associated.count()):
+            item = self.ui.lsw_not_associated.item(i)
+            item.setSizeHint(self.item_size_hint)
 
         # w = self.ui.lsw_not_associated.itemWidget(item)
         # w.pic_size = self.pic_size
-        for item in self.objects_widgets:
-            item.set_icon_size(self.pic_size)
+        for objw in self.objects_widgets:
+            objw.set_icon_size(self.pic_size, self.item_size_hint)
+            
 
     def remove_object(self, index: int):
         objw = self.objects_widgets[index].ui.lsw_object

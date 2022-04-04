@@ -28,19 +28,17 @@ class OrganizerObj(QWidget):
     @name.setter
     def name(self, value) -> None:
         self.ui.led_name.setText(value)
-        # self._id = hashlib.md5(value).hexdigest()
 
 
     def connections(self):
         self.ui.btn_close.clicked.connect(self.close_button_pressed)
         self.ui.lsw_object.customContextMenuRequested.connect(self.provide_context_menu)
 
-    def set_icon_size(self, size: QSize):
-        # for i in range(self.ui.lsw_object.count()):
-        #     item = self.ui.lsw_object.item(i)
-        #     w = self.ui.lsw_object.itemWidget(item)
-        #     w.test()
+    def set_icon_size(self, size: QSize, item_size_hint: QSize):
         self.ui.lsw_object.setIconSize(size)
+        for i in range(self.ui.lsw_object.count()):
+            item = self.ui.lsw_object.item(i)
+            item.setSizeHint(item_size_hint)
 
 
     def close_button_pressed(self):

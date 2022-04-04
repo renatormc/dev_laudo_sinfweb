@@ -1,6 +1,7 @@
+from pathlib import Path
 from .organizer_obj_ui import Ui_OrganizerObj
 from PyQt5.QtWidgets import QWidget, QListWidget
-from PyQt5.QtCore import pyqtSignal, QSize, QPoint
+from PyQt5.QtCore import pyqtSignal, QSize, QPoint, Qt
 from ..item_delegate import ItemDelegate
 
 class OrganizerObj(QWidget):
@@ -28,6 +29,15 @@ class OrganizerObj(QWidget):
     @name.setter
     def name(self, value) -> None:
         self.ui.led_name.setText(value)
+
+    @property
+    def pics(self)-> list[str]:
+        pics: list[str] = []
+        for i in range(self.ui.lsw_object.count()):
+            item = self.ui.lsw_object.item(i)
+            pic: Path = item.data(Qt.UserRole)
+            pics.append(pic.name)
+        return pics
 
 
     def connections(self):

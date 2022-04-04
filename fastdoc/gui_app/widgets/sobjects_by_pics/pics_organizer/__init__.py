@@ -1,7 +1,7 @@
 from copy import copy
 from pathlib import Path
 
-from fastdoc.gui_app.widgets.sobjects_by_pics.objects_typy import CaseObjectsType
+from fastdoc.gui_app.widgets.sobjects_by_pics.objects_typy import CaseObjectsType, ObjectType
 from .pics_organizer_ui import Ui_PicsOrganizer
 from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidget
 from PyQt5.QtGui import QIcon, QPixmap
@@ -26,6 +26,7 @@ class PicsOrganizer(QDialog):
         self.ui.btn_add.clicked.connect(self.add_obbjects)
         self.ui.sld_icon_size.valueChanged.connect(self.change_icon_size)
         self.ui.lsw_not_associated.customContextMenuRequested.connect(self.provide_context_menu_default)
+        self.ui.btn_finish.clicked.connect(self.finish)
 
     def setup_ui(self):
         self.delegate = ItemDelegate()
@@ -44,6 +45,7 @@ class PicsOrganizer(QDialog):
         self.ui.lsw_not_associated.clear()
         for pic in self.objects.pics_not_classified_iterator():
             item = QListWidgetItem()
+            item.setData(Qt.UserRole, pic)
             item.setSizeHint(self.item_size_hint)
             item.setTextAlignment(Qt.AlignCenter)
             icon = QIcon()
@@ -59,6 +61,7 @@ class PicsOrganizer(QDialog):
 
     def add_pic_to_object_widget(self, objw: OrganizerObj,  pic: Path) -> None:
         item = QListWidgetItem()
+        item.setData(Qt.UserRole, pic)
         item.setSizeHint(self.item_size_hint)
         item.setTextAlignment(Qt.AlignCenter)
         icon = QIcon()
@@ -85,9 +88,6 @@ class PicsOrganizer(QDialog):
         for i in range(self.ui.lsw_not_associated.count()):
             item = self.ui.lsw_not_associated.item(i)
             item.setSizeHint(self.item_size_hint)
-
-        # w = self.ui.lsw_not_associated.itemWidget(item)
-        # w.pic_size = self.pic_size
         for objw in self.objects_widgets:
             objw.set_icon_size(self.pic_size, self.item_size_hint)
             
@@ -144,3 +144,16 @@ class PicsOrganizer(QDialog):
                         self.move_item(lsw, objw, item)
                 except KeyError:
                     pass
+    
+    def finish(self):
+        pics: list[str] = []
+        for i in range(self.ui.lsw_not_associated.count()):
+            item = self.ui.lsw_not_associated.item(i)
+            pic: Path = item.data(Qt.UserRole)
+            pics.append(pic.name)
+        self.objects.pics_not_classified = pics
+        self.objects.objects = []
+        for objw in self.objects_widgets:
+            obj = ObjectType(folder=self.objects.folder, pics= objw.pics,name=objw.name)
+            self.objects.objects.append(obj)
+        self.accept()

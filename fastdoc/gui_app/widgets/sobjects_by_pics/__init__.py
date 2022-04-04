@@ -121,7 +121,8 @@ class SObjetctsByPics:
         dialog = PicsOrganizer(self.current_objects)
         ok = dialog.exec_()
         if ok:
-            pass
+            self.current_objects = dialog.objects
+            
 
     def serialize(self) -> Any:
         return self.led.displayText()

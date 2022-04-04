@@ -1,7 +1,7 @@
 from .organizer_obj_ui import Ui_OrganizerObj
 from PyQt5.QtWidgets import QWidget, QListWidget
 from PyQt5.QtCore import pyqtSignal, QSize, QPoint
-import hashlib
+from ..item_delegate import ItemDelegate
 
 class OrganizerObj(QWidget):
     close_clicked = pyqtSignal(int)
@@ -12,9 +12,14 @@ class OrganizerObj(QWidget):
         super(self.__class__, self).__init__()
         self.ui = Ui_OrganizerObj()
         self.ui.setupUi(self)
+        self.setup_ui()
         self.connections()
         self.name = name
         self.index = index
+
+    def setup_ui(self):
+        self.delegate = ItemDelegate()
+        self.ui.lsw_object.setItemDelegate(self.delegate)
      
     @property
     def name(self) -> str:

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'fastdoc/gui_app/widgets/sobjects_by_pics/pics_organizer/pics_organizer.ui'
+# Form implementation generated from reading ui file 'fastdoc\gui_app\widgets\sobjects_by_pics\pics_organizer\pics_organizer.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -33,15 +33,15 @@ class Ui_PicsOrganizer(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lsw_not_associated.sizePolicy().hasHeightForWidth())
         self.lsw_not_associated.setSizePolicy(sizePolicy)
-        self.lsw_not_associated.setMaximumSize(QtCore.QSize(16777215, 150))
+        self.lsw_not_associated.setMaximumSize(QtCore.QSize(16777215, 200))
         self.lsw_not_associated.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.lsw_not_associated.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.lsw_not_associated.setDragEnabled(True)
         self.lsw_not_associated.setDragDropMode(QtWidgets.QAbstractItemView.InternalMove)
         self.lsw_not_associated.setDefaultDropAction(QtCore.Qt.CopyAction)
         self.lsw_not_associated.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
-        self.lsw_not_associated.setIconSize(QtCore.QSize(10000, 150))
-        self.lsw_not_associated.setMovement(QtWidgets.QListView.Snap)
+        self.lsw_not_associated.setIconSize(QtCore.QSize(10000, 200))
+        self.lsw_not_associated.setMovement(QtWidgets.QListView.Free)
         self.lsw_not_associated.setFlow(QtWidgets.QListView.LeftToRight)
         self.lsw_not_associated.setProperty("isWrapping", True)
         self.lsw_not_associated.setResizeMode(QtWidgets.QListView.Adjust)
@@ -53,7 +53,7 @@ class Ui_PicsOrganizer(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1199, 629))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1199, 585))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.horizontalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")

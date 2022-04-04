@@ -31,6 +31,10 @@ class OrganizerObj(QWidget):
         self.ui.lsw_object.customContextMenuRequested.connect(self.provide_context_menu)
 
     def set_icon_size(self, size: QSize):
+        # for i in range(self.ui.lsw_object.count()):
+        #     item = self.ui.lsw_object.item(i)
+        #     w = self.ui.lsw_object.itemWidget(item)
+        #     w.test()
         self.ui.lsw_object.setIconSize(size)
 
 

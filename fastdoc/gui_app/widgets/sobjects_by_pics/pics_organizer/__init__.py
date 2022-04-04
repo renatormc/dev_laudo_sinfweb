@@ -4,10 +4,27 @@ from pathlib import Path
 
 from fastdoc.gui_app.widgets.sobjects_by_pics.objects_typy import CaseObjectsType
 from .pics_organizer_ui import Ui_PicsOrganizer
-from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidget
+from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidget, QWidget, QPushButton, QHBoxLayout, QLabel
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QSize
 from .organizer_obj import OrganizerObj
+
+class CustomQWidget(QWidget):
+    def __init__(self, parent=None):
+        super(CustomQWidget, self).__init__(parent)
+
+        self.label = QLabel("I am a custom widget")
+
+        button = QPushButton("A useless button")
+
+        layout = QHBoxLayout()
+        layout.addWidget(self.label)
+        layout.addWidget(button)
+
+        self.setLayout(layout)
+
+    def test(self, value):
+        self.label.setText(str(value))
 
 
 class PicsOrganizer(QDialog):
@@ -26,16 +43,29 @@ class PicsOrganizer(QDialog):
         self.ui.sld_icon_size.valueChanged.connect(self.change_icon_size)
         self.ui.lsw_not_associated.customContextMenuRequested.connect(self.provide_context_menu_default)
 
+    def setup_ui(self):
+        pass
+
     def populate(self):
         self.ui.lsw_not_associated.clear()
         for pic in self.objects.pics_not_classified_iterator():
-            item = QListWidgetItem()
-            icon = QIcon()
-            icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
-            item.setIcon(icon)
-            path = Path(pic)
-            item.setText(path.name)
+            # item = QListWidgetItem()
+            # icon = QIcon()
+            # icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
+            # item.setIcon(icon)
+            # path = Path(pic)
+            # item.setText(path.name)
+            # self.ui.lsw_not_associated.addItem(item)
+            item = QListWidgetItem(self.ui.lsw_not_associated)
+            # icon = QIcon()
+            # icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
+            # item.setIcon(icon)
+            # path = Path(pic)
+            # item.setText(path.name)
+            item_widget = CustomQWidget()
+            item.setSizeHint(item_widget.sizeHint())
             self.ui.lsw_not_associated.addItem(item)
+            self.ui.lsw_not_associated.setItemWidget(item, item_widget)
         for obj in self.objects.objects:
             objw = self.add_object(obj.name)
             for pic in obj.pics_iterator():
@@ -64,7 +94,11 @@ class PicsOrganizer(QDialog):
             self.add_object()
 
     def change_icon_size(self, value):
-        self.ui.lsw_not_associated.setIconSize(QSize(10000, value))
+        # self.ui.lsw_not_associated.setIconSize(QSize(10000, value))
+        for i in range(self.ui.lsw_not_associated.count()):
+            item = self.ui.lsw_not_associated.item(i)
+            w = self.ui.lsw_not_associated.itemWidget(item)
+            w.test(value)
         for item in self.objects_widgets:
             item.set_icon_size(QSize(10000, value))
 

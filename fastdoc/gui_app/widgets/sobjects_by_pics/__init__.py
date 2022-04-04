@@ -8,7 +8,6 @@ from PyQt5.QtWidgets import QLineEdit
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QToolButton, QFileDialog
 from fastdoc.custom_types import ConverterType, ValidatorType
 from fastdoc.gui_app.widgets.label_error import LabelError
-# from fastdoc.gui_app.widgets.sobjects_by_pics.name_analyzer import get_objects_from_pics
 from fastdoc.gui_app.widgets.sobjects_by_pics.pics_organizer import PicsOrganizer
 
 

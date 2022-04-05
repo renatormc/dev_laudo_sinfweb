@@ -5,9 +5,11 @@ app_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 models_folder = app_dir.parent / "models"
 models_example_folder = app_dir / "models_example"
 local_folder = app_dir / ".local"
+debug=False
 try:
     local_folder.mkdir()
 except FileExistsError:
     pass
 workdir: Path = Path(".")
 verbose = False
+SECRET_KEY="!@#QWEsddda"

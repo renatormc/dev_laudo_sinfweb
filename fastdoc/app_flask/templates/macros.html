@@ -1,0 +1,10 @@
+{% import 'bootstrap5/form.html' as b5 %}
+
+{% macro render_field(field) %}
+{% set field_type = field.__class__.__name__ -%}
+{% if field_type == 'HiddenField' %}
+<p>Hidden field</p>
+{% else %}
+{{ b5.render_field(field) }}
+{% endif %}
+{% endmacro %}

@@ -11,6 +11,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-w', '--workdir', default='.', help='Work directory')
 parser.add_argument('-v', '--verbose', action="store_true",
                     help="Verbose mode")
+parser.add_argument('--debug', action="store_true",
+                    help="Debug mode")
 subparsers = parser.add_subparsers(
     dest="command", required=True, help='Command to be used')
 
@@ -21,6 +23,8 @@ p_render.add_argument("-m", "--model", default="choose", help="Model")
 
 p_GUI = subparsers.add_parser("gui")
 
+p_web = subparsers.add_parser("web")
+
 p_new_model = subparsers.add_parser("new-model")
 
 p_delete_model = subparsers.add_parser("delete-model")
@@ -28,6 +32,7 @@ p_delete_model = subparsers.add_parser("delete-model")
 args = parser.parse_args()
 config.workdir = Path(args.workdir)
 config.verbose = args.verbose
+config.debug = args.debug
 
 if args.command == "start":
     shutil.copytree(config.models_example_folder, config.models_folder)
@@ -37,6 +42,7 @@ from PyQt5.QtWidgets import QApplication
 import fastdoc.helpers as hp
 import stringcase
 import models
+from fastdoc.app_flask import app as app_flask
 
 if args.command == "render":
     if args.model == "choose":
@@ -71,3 +77,5 @@ elif args.command == "delete-model":
     except FileNotFoundError:
         pass
     hp.fix_imports()
+elif args.command == "web":
+    app_flask.run(host='0.0.0.0', port=5000, debug=config.debug)

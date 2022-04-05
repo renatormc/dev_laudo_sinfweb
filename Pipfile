@@ -14,12 +14,17 @@ report-writer = {git = "https://github.com/renatormc/report_writer"}
 beautifulsoup4 = "*"
 inquirerpy = "*"
 unidecode = "*"
-
+flask = "*"
+flask-wtf = "*"
+humanfriendly = "*"
+bootstrap-flask = "*"
+colorama = "*"
 
 [dev-packages]
 pyqt5-stubs = "*"
 mypy = "*"
-
+types-flask = "*"
+types-humanfriendly = "*"
 
 [requires]
 python_version = "3.9"

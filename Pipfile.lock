@@ -1,7 +1,11 @@
 {
     "_meta": {
         "hash": {
+<<<<<<< HEAD
             "sha256": "238c2db99621a670735b5e9097143f9716f9aaa3e14c95271cd9bbad893e33d2"
+=======
+            "sha256": "d900d13be841cd89c8b938ea46dab2588c421310d6cce4258a39a6e63c0437f7"
+>>>>>>> 9f8863729fe15b5feb67a49a5165ede7b29b812d
         },
         "pipfile-spec": 6,
         "requires": {
@@ -48,6 +52,7 @@
             "markers": "python_version >= '3.7'",
             "version": "==8.1.2"
         },
+<<<<<<< HEAD
         "colorama": {
             "hashes": [
                 "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b",
@@ -56,6 +61,8 @@
             "index": "pypi",
             "version": "==0.4.4"
         },
+=======
+>>>>>>> 9f8863729fe15b5feb67a49a5165ede7b29b812d
         "docxcompose": {
             "hashes": [
                 "sha256:b1a40d4f95751565822350174971012875f82a32b83a9d1be098edd965047029"

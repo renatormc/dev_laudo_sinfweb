@@ -1,6 +1,6 @@
 from typing import Any, Optional
 from fastdoc.gui_app.widgets.helpers import apply_converter
-from fastdoc.gui_app.widgets.validation_error import ValidationError
+from fastdoc.gui_app.widgets.types import ValidationError
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSpinBox
 from fastdoc.custom_types import ConverterType, ValidatorType

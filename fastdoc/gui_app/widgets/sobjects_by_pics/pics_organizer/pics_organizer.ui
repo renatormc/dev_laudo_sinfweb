@@ -112,7 +112,7 @@
         <x>0</x>
         <y>0</y>
         <width>1199</width>
-        <height>588</height>
+        <height>587</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="horizontalLayout_2">
@@ -174,19 +174,6 @@
        </property>
        <property name="text">
         <string>Adicionar</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_analise_by_name">
-       <property name="minimumSize">
-        <size>
-         <width>180</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Analisar por nome</string>
        </property>
       </widget>
      </item>

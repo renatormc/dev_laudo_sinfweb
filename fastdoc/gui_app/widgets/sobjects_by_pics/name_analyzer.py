@@ -1,7 +1,7 @@
 from pathlib import Path
 import re
 from typing import Optional, TypedDict, Union
-from fastdoc.gui_app.widgets.validation_error import ValidationError
+from fastdoc.gui_app.widgets.types import ValidationError
 
 
 class LaudoObject(TypedDict):

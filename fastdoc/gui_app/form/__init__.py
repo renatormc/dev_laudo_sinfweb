@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 from fastdoc.custom_types import FormError
 from fastdoc.gui_app.widgets.swidget import SWidget
-from fastdoc.gui_app.widgets.validation_error import ValidationError
+from fastdoc.gui_app.widgets.types import ValidationError
 from .form_ui import Ui_Form
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSpacerItem, QSizePolicy, QFileDialog
 import json

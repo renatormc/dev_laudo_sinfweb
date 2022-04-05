@@ -1,13 +1,15 @@
-from copy import copy
+# from copy import copy
 from pathlib import Path
 
-from fastdoc.gui_app.widgets.sobjects_by_pics.objects_typy import CaseObjectsType, ObjectType
+from fastdoc.gui_app.widgets.sobjects_by_pics.objects_type import CaseObjectsType, ObjectType
+from fastdoc.gui_app.widgets.types import ObjectPicUserData
 from .pics_organizer_ui import Ui_PicsOrganizer
 from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidget
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QSize, Qt
 from .organizer_obj import OrganizerObj
 from .item_delegate import ItemDelegate
+from .helpers import ajust_size_hint
 
 
 class PicsOrganizer(QDialog):
@@ -32,40 +34,48 @@ class PicsOrganizer(QDialog):
         self.delegate = ItemDelegate()
         self.ui.lsw_not_associated.setItemDelegate(self.delegate)
 
+
     @property
     def pic_size(self) -> QSize:
         value = self.ui.sld_icon_size.value()
-        return QSize(value, value)
+        return QSize(500, value)
 
-    @property
-    def item_size_hint(self) -> QSize:
-        return QSize(self.pic_size.width() + 5, self.pic_size.height() + 20)
+    # @property
+    # def item_size_hint(self) -> QSize:
+    #     return QSize(self.ui.sld_icon_size.value() + 30, self.ui.sld_icon_size.value() + 20)
 
     def populate(self):
         self.ui.lsw_not_associated.clear()
         for pic in self.objects.pics_not_classified_iterator():
+            print(pic)
             item = QListWidgetItem()
-            item.setData(Qt.UserRole, pic)
-            item.setSizeHint(self.item_size_hint)
             item.setTextAlignment(Qt.AlignCenter)
             icon = QIcon()
-            icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
+            pixmap = QPixmap(str(pic))
+            print(f"Original size {pixmap.size()}")
+            user_data = ObjectPicUserData(pic=pic, original_size=pixmap.size())
+            item.setData(Qt.UserRole, user_data)
+            ajust_size_hint(item, self.pic_size)
+            icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
             item.setIcon(icon)
             path = Path(pic)
             item.setText(path.name)
             self.ui.lsw_not_associated.addItem(item)
         for obj in self.objects.objects:
-            objw = self.add_object(obj.name)
+            objw = self.add_object()
+            objw.name = obj.name
             for pic in obj.pics_iterator():
                 self.add_pic_to_object_widget(objw, pic)
 
     def add_pic_to_object_widget(self, objw: OrganizerObj,  pic: Path) -> None:
         item = QListWidgetItem()
-        item.setData(Qt.UserRole, pic)
-        item.setSizeHint(self.item_size_hint)
         item.setTextAlignment(Qt.AlignCenter)
         icon = QIcon()
-        icon.addPixmap(QPixmap(str(pic)), QIcon.Normal, QIcon.Off)
+        pixmap = QPixmap(str(pic))
+        user_data = ObjectPicUserData(pic=pic, original_size=pixmap.size())
+        item.setData(Qt.UserRole, user_data)
+        self.ajust_size_hint(item, self.pic_size)
+        icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
         item.setIcon(icon)
         item.setText(pic.name)
 
@@ -76,7 +86,7 @@ class PicsOrganizer(QDialog):
         self.objects_widgets.append(obj)
         obj.close_clicked.connect(self.remove_object)
         obj.context_menu_requested.connect(self.provide_context_menu)
-        obj.set_icon_size(self.pic_size, self.item_size_hint)
+        obj.set_icon_size(self.pic_size)
         return obj
 
     def add_obbjects(self):
@@ -87,10 +97,9 @@ class PicsOrganizer(QDialog):
         self.ui.lsw_not_associated.setIconSize(self.pic_size)
         for i in range(self.ui.lsw_not_associated.count()):
             item = self.ui.lsw_not_associated.item(i)
-            item.setSizeHint(self.item_size_hint)
+            ajust_size_hint(item, self.pic_size)
         for objw in self.objects_widgets:
-            objw.set_icon_size(self.pic_size, self.item_size_hint)
-            
+            objw.set_icon_size(self.pic_size)
 
     def remove_object(self, index: int):
         objw = self.objects_widgets[index].ui.lsw_object
@@ -144,16 +153,16 @@ class PicsOrganizer(QDialog):
                         self.move_item(lsw, objw, item)
                 except KeyError:
                     pass
-    
+
     def finish(self):
         pics: list[str] = []
         for i in range(self.ui.lsw_not_associated.count()):
             item = self.ui.lsw_not_associated.item(i)
-            pic: Path = item.data(Qt.UserRole)
-            pics.append(pic.name)
+            user_data: ObjectPicUserData =  item.data(Qt.UserRole)
+            pics.append(user_data.pic.name)
         self.objects.pics_not_classified = pics
         self.objects.objects = []
         for objw in self.objects_widgets:
-            obj = ObjectType(folder=self.objects.folder, pics= objw.pics,name=objw.name)
+            obj = ObjectType(folder=self.objects.folder, pics=objw.pics, name=objw.name)
             self.objects.objects.append(obj)
         self.accept()

@@ -1,7 +1,7 @@
 # from copy import copy
 from pathlib import Path
 
-from fastdoc.gui_app.widgets.sobjects_by_pics.objects_type import CaseObjectsType, ObjectType
+from fastdoc.custom_types.objects_type import CaseObjectsType, ObjectType
 from fastdoc.gui_app.widgets.types import ObjectPicUserData
 from .pics_organizer_ui import Ui_PicsOrganizer
 from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidget

@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Optional, Union
 from fastdoc.gui_app.widgets.helpers import apply_converter
-from fastdoc.gui_app.widgets.sobjects_by_pics.objects_type import CaseObjectsType
+from fastdoc.custom_types.objects_type import CaseObjectsType
 from fastdoc.gui_app.widgets.types import ValidationError
 
 from PyQt5.QtWidgets import QLineEdit

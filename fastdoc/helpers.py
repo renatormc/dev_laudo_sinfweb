@@ -3,6 +3,7 @@ import subprocess
 import os
 from pathlib import Path
 from typing import Union
+from fastdoc.custom_types.objects_type import CaseObjectsType
 import models
 from fastdoc import config
 from report_writer import Renderer
@@ -66,5 +67,14 @@ def fix_imports():
     text = "\n".join(lines)
     path = config.models_folder / "__init__.py"
     path.write_text(text, encoding="utf-8")
+
+
+def get_objects_from_folder(folder: Path, image_extensions=['.jpg', '.png']) -> CaseObjectsType:
+    obj = CaseObjectsType(folder=folder)
+    obj.pics_not_classified = []
+    for entry in folder.iterdir():
+        if entry.is_file() and entry.suffix in image_extensions:
+            obj.pics_not_classified.append(entry.name)
+    return obj
 
 

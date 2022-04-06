@@ -10,23 +10,24 @@
     </div>
     <div class="row">
         <div class="col">
-            
-              {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                  {% for category, message in messages %}
-                  
-                  <div class="alert {{ category }} alert-dismissible fade show" role="alert">
-                     {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                  {% endfor %}
-              {% endif %}
-              {% endwith %}    
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+
+            <div class="alert {{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <form method="POST" action="{{ url_for('index') }}?model={{ model }}">
+            <form id="frmDocForm" method="POST" action="{{ url_for('index') }}?model={{ model }}"
+                onsubmit="submitForm(event)">
                 {{ form.hidden_tag() }}
                 {% for row in form.get_layout() %}
                 <div class="row">
@@ -44,17 +45,73 @@
                 </div>
                 <div class="row">
                     <div class="col text-center">
-                      
-                            <button class="btn btn-primary">Gerar docx</button>
-                       
+
+                        <button class="btn btn-primary">Gerar docx</button>
+
                     </div>
                 </div>
             </form>
-            
+
         </div>
     </div>
 
 
 </div>
+
+<script>
+    function serializeSCasePic() {
+        let elements = document.getElementsByClassName("s-case-pics");
+        for (var i = 0; i < elements.length; i++) {
+            console.log(i);
+        }
+    }
+
+    function serializeFields() {
+        serializeSCasePic();
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+        serializeFields();
+    }
+
+    function createSortables(){
+        let elements = document.getElementsByClassName("sortable");
+        for (var i = 0; i < elements.length; i++) {
+            new Sortable(elements[i], {
+                // options here
+            });
+        }
+    }
+
+    createSortables();
+
+
+</script>
+
+<style>
+    .thumb-container {
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 15px;
+        padding: 5px 5px 5px 5px;
+        background-color: rgb(243, 243, 243);
+        ;
+    }
+
+    .thumb-foto {
+        width: 150px;
+
+    }
+
+    .tab-object {
+        background-color: rgb(243, 243, 243);
+    }
+
+    .obj-name {
+        color: rgb(55, 55, 172);
+        font-weight: bold;
+    }
+</style>
 
 {% endblock content %}

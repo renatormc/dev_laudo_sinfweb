@@ -2,8 +2,50 @@
 
 {% macro render_field(field) %}
 {% set field_type = field.__class__.__name__ -%}
-{% if field_type == 'HiddenField' %}
-<p>Hidden field</p>
+{% if field_type == 'SCasePics' %}
+<div class="s-case-pics">
+
+    <input type="text" class="form-control" id="{{ field.name }}" value="">
+    <table class="table table-bordered tab-object">
+        <tr>
+            <td>
+                <h4 class="obj-name">Fotos não classificadas</h4>
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="sortable" colspan="2">
+                {% for pic in field.data.pics_not_classified_iterator() %}
+                <div class="thumb-container">
+                    <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}" alt=""></p>
+                    <p class="text-center">
+                    <div class="checkbox">
+                        <label><input type="checkbox" checked>{{ pic.name }}</label>
+                    </div>
+                    </p>
+
+                </div>
+
+
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered tab-object">
+        <tr>
+            <td>
+                <h4 class="obj-name">Objeto 1</h4>
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="sortable" colspan="2">
+              
+                
+            </td>
+        </tr>
+    </table>
+</div>
 {% else %}
 {{ b5.render_field(field) }}
 {% endif %}

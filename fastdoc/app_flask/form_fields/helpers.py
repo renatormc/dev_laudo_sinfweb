@@ -55,3 +55,15 @@ def parse_filesize(value):
 
 def format_size(value):
     return humanfriendly.format_size(value, binary=True).replace(".", ",")
+
+def add_render_kw(kargs, key, value):
+    try:
+        kargs['render_kw'][key] = value
+    except KeyError:
+        kargs['render_kw'] = {key: value}
+
+def add_validators(kargs, validators: list):
+    try:
+        kargs['validators'] += validators
+    except KeyError:
+        kargs['validators'] = validators

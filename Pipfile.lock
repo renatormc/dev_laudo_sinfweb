@@ -1,11 +1,7 @@
 {
     "_meta": {
         "hash": {
-<<<<<<< HEAD
-            "sha256": "238c2db99621a670735b5e9097143f9716f9aaa3e14c95271cd9bbad893e33d2"
-=======
             "sha256": "d900d13be841cd89c8b938ea46dab2588c421310d6cce4258a39a6e63c0437f7"
->>>>>>> 9f8863729fe15b5feb67a49a5165ede7b29b812d
         },
         "pipfile-spec": 6,
         "requires": {
@@ -20,14 +16,6 @@
         ]
     },
     "default": {
-        "ansicon": {
-            "hashes": [
-                "sha256:e4d039def5768a47e4afec8e89e83ec3ae5a26bf00ad851f914d1240b444d2b1",
-                "sha256:f1def52d17f65c2c9682cf8370c03f541f410c1752d6a14029f97318e4b9dfec"
-            ],
-            "markers": "platform_system == 'Windows'",
-            "version": "==1.89.0"
-        },
         "beautifulsoup4": {
             "hashes": [
                 "sha256:9a315ce70049920ea4572a4055bc4bd700c940521d36fc858205ad4fcde149bf",
@@ -52,17 +40,6 @@
             "markers": "python_version >= '3.7'",
             "version": "==8.1.2"
         },
-<<<<<<< HEAD
-        "colorama": {
-            "hashes": [
-                "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b",
-                "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"
-            ],
-            "index": "pypi",
-            "version": "==0.4.4"
-        },
-=======
->>>>>>> 9f8863729fe15b5feb67a49a5165ede7b29b812d
         "docxcompose": {
             "hashes": [
                 "sha256:b1a40d4f95751565822350174971012875f82a32b83a9d1be098edd965047029"
@@ -361,14 +338,6 @@
             "markers": "python_version >= '3.5'",
             "version": "==12.9.1"
         },
-        "pyreadline3": {
-            "hashes": [
-                "sha256:6f3d1f7b8a31ba32b73917cefc1f28cc660562f39aea8646d30bd6eff21f7bae",
-                "sha256:b0efb6516fd4fb07b45949053826a62fa4cb353db5be2bbb4a7aa1fdd1e345fb"
-            ],
-            "markers": "python_version >= '3.8' and sys_platform == 'win32'",
-            "version": "==3.4.1"
-        },
         "python-docx": {
             "hashes": [
                 "sha256:1105d233a0956dd8dd1e710d20b159e2d72ac3c301041b95f4d4ceb3e0ebebc4"
@@ -392,7 +361,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
             "version": "==1.16.0"
         },
         "soupsieve": {

@@ -18,10 +18,6 @@ flask = "*"
 flask-wtf = "*"
 humanfriendly = "*"
 bootstrap-flask = "*"
-<<<<<<< HEAD
-colorama = "*"
-=======
->>>>>>> 9f8863729fe15b5feb67a49a5165ede7b29b812d
 
 [dev-packages]
 pyqt5-stubs = "*"

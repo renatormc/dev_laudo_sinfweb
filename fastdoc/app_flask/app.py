@@ -18,21 +18,8 @@ def index():
     form = get_web_form(model)
     if form.validate():
         context = form.get_context()
-<<<<<<< HEAD
-        if config.debug:
-            print(context)
-            render_doc(model, context, form.dfile.data)
-            flash(f"Documento renderizado com sucesso em \"{form.dfile.data}\"", "alert-success")
-        else:
-            try:
-                render_doc(model, context, form.dfile.data)
-                flash(f"Documento renderizado com sucesso em \"{form.dfile.data}\"", "alert-success")
-            except Exception as e:
-                flash(str(e), "alert-danger")
-=======
         print(context)
         render_doc(model, context, form.dfile.data)
         flash(f"Documento renderizado com sucesso em \"{form.dfile.data}\"", "alert-success")
->>>>>>> 9f8863729fe15b5feb67a49a5165ede7b29b812d
     model_meta = get_model_meta(model)
     return render_template("doc_form.html", form=form, models=models, model=model, model_meta=model_meta)

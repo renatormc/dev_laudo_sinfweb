@@ -10,7 +10,7 @@ from fastdoc.gui_app.form import Form
 from fastdoc import config
 import importlib
 from report_writer.custom_types import InitialData
-from pprint import pprint
+
 
 
 class MainWindow(QMainWindow):

@@ -24,6 +24,7 @@
             {% endwith %}
         </div>
     </div>
+
     <div class="row">
         <div class="col">
             <form id="frmDocForm" method="POST" action="{{ url_for('index') }}?model={{ model }}"
@@ -54,64 +55,30 @@
 
         </div>
     </div>
-
-
 </div>
 
 <script>
-    function serializeSCasePic() {
-        let elements = document.getElementsByClassName("s-case-pics");
-        for (var i = 0; i < elements.length; i++) {
-            console.log(i);
-        }
-    }
 
-    function serializeFields() {
-        serializeSCasePic();
-    }
+    function configContextMenuCasePics() {
+        const items = [
+            { name: 'Cut', fn: function (target) { console.log('Cut', target); } },
+            { name: 'Copy', fn: function (target) { console.log('Copy', target); } },
+            { name: 'Paste', fn: function (target) { console.log('Paste', target); } },
+            {},
+            { name: 'Select All', fn: function (target) { console.log('Select All', target); } },
+        ];
 
-    function submitForm(event) {
-        event.preventDefault();
-        serializeFields();
-    }
+        let myMenu = new ContextMenu('.thumb-foto', items);
 
-    function createSortables(){
-        let elements = document.getElementsByClassName("sortable");
-        for (var i = 0; i < elements.length; i++) {
-            new Sortable(elements[i], {
-                // options here
-            });
-        }
     }
 
     createSortables();
 
-
+    $(document).ready(function(){
+        configContextMenuCasePics();
+    });
+   
 </script>
 
-<style>
-    .thumb-container {
-        display: inline-block;
-        margin-right: 15px;
-        margin-bottom: 15px;
-        padding: 5px 5px 5px 5px;
-        background-color: rgb(243, 243, 243);
-        ;
-    }
-
-    .thumb-foto {
-        width: 150px;
-
-    }
-
-    .tab-object {
-        background-color: rgb(243, 243, 243);
-    }
-
-    .obj-name {
-        color: rgb(55, 55, 172);
-        font-weight: bold;
-    }
-</style>
 
 {% endblock content %}

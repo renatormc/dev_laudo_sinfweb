@@ -38,24 +38,36 @@
 
             </td>
         </tr>
-        <tr>
+        <tr class="tr-case-pics-pics">
+
             <td class="sortable" colspan="2">
-                {% for pic in field.data.pics_not_classified_iterator() %}
-                <div class="thumb-container">
-                    <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}" alt=""></p>
-                    <p class="text-center">
-                    <div class="checkbox">
-                        <label><input type="checkbox" checked>{{ pic.name }}</label>
+                <div class="div-case-pics-pics" tabindex="0">
+                    {% for pic in field.data.pics_not_classified_iterator() %}
+                    <div class="thumb-container" onclick="togglePicSelection(this, event)">
+                        <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}" alt=""></p>
+                        <p class="text-center">{{ pic.name }}</p>
+
                     </div>
-                    </p>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+
             </td>
         </tr>
     </table>
-    {% for obj in field.data.objects %}
-    {{ case_pics_object(object) }}
-    {% endfor %}
+    <table class="table table-bordered tab-object">
+        <tr>
+            <td>
+                <h4 class="obj-name">Objeto 1</h4>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="sortable" colspan="2">
+
+
+            </td>
+        </tr>
+    </table>
 </div>
 {% else %}
 {{ b5.render_field(field) }}

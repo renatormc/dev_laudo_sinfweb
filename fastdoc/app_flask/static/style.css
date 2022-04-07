@@ -1,0 +1,27 @@
+.thumb-container {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 5px 5px 5px 5px;
+    background-color: rgb(243, 243, 243);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.thumb-foto {
+    height: 150px;
+
+}
+
+.tab-object {
+    background-color: rgb(243, 243, 243);
+}
+
+.obj-name {
+    color: rgb(55, 55, 172);
+    font-weight: bold;
+}
+
+.pic-selected{
+    background-color: rgb(201, 201, 201);
+}

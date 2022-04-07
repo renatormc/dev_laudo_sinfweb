@@ -1,5 +1,30 @@
 {% import 'bootstrap5/form.html' as b5 %}
 
+{% macro case_pics_object(object) %}
+<table class="table table-bordered tab-object">
+    <tr>
+        <td>
+            <h4 class="obj-name">{{ object.name }}</h4>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="sortable" colspan="2">
+            {% for pic in object.pics_iterator() %}
+            <div class="thumb-container">
+                <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}" alt=""></p>
+                <p class="text-center">
+                <div class="checkbox">
+                    <label><input type="checkbox" checked>{{ pic.name }}</label>
+                </div>
+                </p>
+            </div>
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+{% endmacro %}
+
 {% macro render_field(field) %}
 {% set field_type = field.__class__.__name__ -%}
 {% if field_type == 'SCasePics' %}
@@ -10,7 +35,7 @@
         <tr>
             <td>
                 <h4 class="obj-name">Fotos não classificadas</h4>
-                
+
             </td>
         </tr>
         <tr>
@@ -23,28 +48,14 @@
                         <label><input type="checkbox" checked>{{ pic.name }}</label>
                     </div>
                     </p>
-
                 </div>
-
-
                 {% endfor %}
             </td>
         </tr>
     </table>
-    <table class="table table-bordered tab-object">
-        <tr>
-            <td>
-                <h4 class="obj-name">Objeto 1</h4>
-                
-            </td>
-        </tr>
-        <tr>
-            <td class="sortable" colspan="2">
-              
-                
-            </td>
-        </tr>
-    </table>
+    {% for obj in field.data.objects %}
+    {{ case_pics_object(object) }}
+    {% endfor %}
 </div>
 {% else %}
 {{ b5.render_field(field) }}

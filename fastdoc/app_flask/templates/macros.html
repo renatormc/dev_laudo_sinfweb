@@ -5,7 +5,6 @@
     <tr>
         <td>
             <h4 class="obj-name">{{ object.name }}</h4>
-
         </td>
     </tr>
     <tr>
@@ -24,6 +23,7 @@
     </tr>
 </table>
 {% endmacro %}
+
 
 {% macro render_field(field) %}
 {% set field_type = field.__class__.__name__ -%}

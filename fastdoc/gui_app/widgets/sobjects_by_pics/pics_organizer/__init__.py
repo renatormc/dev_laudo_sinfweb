@@ -8,8 +8,8 @@ from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidge
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import QSize, Qt
 from .organizer_obj import OrganizerObj
-from .item_delegate import ItemDelegate
 from .helpers import ajust_size_hint
+from .pics_model import PicsModel
 
 
 class PicsOrganizer(QDialog):
@@ -21,18 +21,26 @@ class PicsOrganizer(QDialog):
         self.setup_ui()
         self.connections()
         self.objects_widgets: list[OrganizerObj] = []
-        self.change_icon_size(self.ui.sld_icon_size.value())
-        self.populate()
+        # self.change_icon_size(self.ui.sld_icon_size.value())
+        # self.populate()
 
     def connections(self):
         self.ui.btn_add.clicked.connect(self.add_obbjects)
-        self.ui.sld_icon_size.valueChanged.connect(self.change_icon_size)
-        self.ui.lsw_not_associated.customContextMenuRequested.connect(self.provide_context_menu_default)
+        # self.ui.sld_icon_size.valueChanged.connect(self.change_icon_size)
+        # self.ui.lsw_not_associated.customContextMenuRequested.connect(self.provide_context_menu_default)
         self.ui.btn_finish.clicked.connect(self.finish)
 
     def setup_ui(self):
-        self.delegate = ItemDelegate()
-        self.ui.lsw_not_associated.setItemDelegate(self.delegate)
+        self.pics_not_associated_model = PicsModel(pics=[
+            Path("/media/renato/evidencias/test/pericia/fotos/AC1.jpg"),
+            Path("/media/renato/evidencias/test/pericia/fotos/AC1_1.jpg"),
+            Path("/media/renato/evidencias/test/pericia/fotos/AC2.jpg"),
+            Path("/media/renato/evidencias/test/pericia/fotos/AC2_1.jpg"),
+            Path("/media/renato/evidencias/test/pericia/fotos/AC2_2.jpg"),
+        ])
+        self.ui.lsv_not_associated.setModel(self.pics_not_associated_model)
+
+        # self.ui.lsw_not_associated.setItemDelegate(self.delegate)
 
 
     @property
@@ -93,22 +101,22 @@ class PicsOrganizer(QDialog):
         for i in range(self.ui.spb_n_add.value()):
             self.add_object()
 
-    def change_icon_size(self, value):
-        self.ui.lsw_not_associated.setIconSize(self.pic_size)
-        for i in range(self.ui.lsw_not_associated.count()):
-            item = self.ui.lsw_not_associated.item(i)
-            ajust_size_hint(item, self.pic_size)
-        for objw in self.objects_widgets:
-            objw.set_icon_size(self.pic_size)
+    # def change_icon_size(self, value):
+    #     self.ui.lsw_not_associated.setIconSize(self.pic_size)
+    #     for i in range(self.ui.lsw_not_associated.count()):
+    #         item = self.ui.lsw_not_associated.item(i)
+    #         ajust_size_hint(item, self.pic_size)
+    #     for objw in self.objects_widgets:
+    #         objw.set_icon_size(self.pic_size)
 
-    def remove_object(self, index: int):
-        objw = self.objects_widgets[index].ui.lsw_object
-        for i in range(objw.count()):
-            self.move_item(objw, self.ui.lsw_not_associated, objw.item(i), copy=True)
-        self.objects_widgets[index].deleteLater()
-        self.objects_widgets.pop(index)
-        for i in range(index, len(self.objects_widgets)):
-            self.objects_widgets[i].index -= 1
+    # def remove_object(self, index: int):
+    #     objw = self.objects_widgets[index].ui.lsw_object
+    #     for i in range(objw.count()):
+    #         self.move_item(objw, self.ui.lsw_not_associated, objw.item(i), copy=True)
+    #     self.objects_widgets[index].deleteLater()
+    #     self.objects_widgets.pop(index)
+    #     for i in range(index, len(self.objects_widgets)):
+    #         self.objects_widgets[i].index -= 1
 
     def move_item(self, lsw_from: QListWidget, lsw_to: QListWidget, item: QListWidgetItem, copy=False):
         item_clone = item.clone()

@@ -38,7 +38,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="lsw_not_associated">
+    <widget class="QListView" name="lsv_not_associated">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -96,9 +96,6 @@
      <property name="wordWrap">
       <bool>true</bool>
      </property>
-     <property name="sortingEnabled">
-      <bool>true</bool>
-     </property>
     </widget>
    </item>
    <item>
@@ -112,7 +109,7 @@
         <x>0</x>
         <y>0</y>
         <width>1199</width>
-        <height>587</height>
+        <height>588</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="horizontalLayout_2">

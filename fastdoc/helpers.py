@@ -74,7 +74,7 @@ def get_objects_from_folder(folder: Path, image_extensions=['.jpg', '.png']) -> 
     obj.pics_not_classified = []
     for entry in folder.iterdir():
         if entry.is_file() and entry.suffix in image_extensions:
-            obj.pics_not_classified.append(entry.name)
+            obj.pics_not_classified.append(str(entry.absolute()))
     return obj
 
 

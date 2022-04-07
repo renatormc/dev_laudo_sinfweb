@@ -4,26 +4,23 @@ from fastdoc import config
 
 
 class ObjectType:
-    def __init__(self, folder: Path, type: str = "", pics: list[str] = [], name: str = "Sem nome") -> None:
-        self.folder: Path = folder
+    def __init__(self,  type: str = "", pics: list[str] = [], name: str = "Sem nome") -> None:
         self.type: str = type
         self.pics: list[str] = pics
         self.name: str = name
 
     def pics_iterator(self):
         for pic in self.pics:
-            yield self.folder / pic
+            yield Path(pic)
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            'folder': self.folder,
             'type': self.type,
             'pics': self.pics,
             'name': self.name
         }
 
     def from_dict(self, data: dict[str, Any]) -> 'ObjectType':
-        self.folder = Path(data['folder'])
         self.type = data['type']
         self.name = data['name']
         self.pics = data['pics']
@@ -43,7 +40,7 @@ class CaseObjectsType:
 
     def pics_not_classified_iterator(self):
         for pic in self.pics_not_classified:
-            yield self.folder / pic
+            yield Path(pic)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -55,7 +52,7 @@ class CaseObjectsType:
 
     def from_dict(self, data: dict[str, Any]) -> 'CaseObjectsType':
         self.folder = Path(data['folder'])
-        self.objects = [ObjectType(self.folder).from_dict(item) for item in data['objects']]
+        self.objects = [ObjectType().from_dict(item) for item in data['objects']]
         self.pics_not_classified = data['pics_not_classified']
         self.alias = data['alias']
         return self

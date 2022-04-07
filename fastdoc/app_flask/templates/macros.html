@@ -1,7 +1,7 @@
 {% import 'bootstrap5/form.html' as b5 %}
 
-{% macro case_pics_object(object) %}
-<table class="table table-bordered tab-object">
+{% macro case_pics_object(object, id) %}
+<table class="table table-bordered tab-object" id="{{ id }}">
     <tr>
         <td>
             <h4 class="obj-name">{{ object.name }}</h4>
@@ -11,7 +11,7 @@
     <tr>
         <td class="sortable" colspan="2">
             {% for pic in object.pics_iterator() %}
-            <div class="thumb-container">
+            <div class="thumb-container" onclick="togglePicSelection(this, event)" pic_path="{{ pic }}">
                 <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}" alt=""></p>
                 <p class="text-center">
                 <div class="checkbox">
@@ -39,35 +39,20 @@
             </td>
         </tr>
         <tr class="tr-case-pics-pics">
-
-            <td class="sortable" colspan="2">
-                <div class="div-case-pics-pics" tabindex="0">
+            <td class="sortable" >
                     {% for pic in field.data.pics_not_classified_iterator() %}
-                    <div class="thumb-container" onclick="togglePicSelection(this, event)">
-                        <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}" alt=""></p>
+                    <div class="thumb-container" onclick="togglePicSelection(this, event)" pic_path="{{ pic }}">
+                        <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}"  alt=""></p>
                         <p class="text-center">{{ pic.name }}</p>
 
                     </div>
                     {% endfor %}
-                </div>
-
             </td>
         </tr>
     </table>
-    <table class="table table-bordered tab-object">
-        <tr>
-            <td>
-                <h4 class="obj-name">Objeto 1</h4>
-
-            </td>
-        </tr>
-        <tr>
-            <td class="sortable" colspan="2">
-
-
-            </td>
-        </tr>
-    </table>
+    {% for obj in field.data.objects %}
+    {{ case_pics_object(obj, random_id()) }}
+    {% endfor %}
 </div>
 {% else %}
 {{ b5.render_field(field) }}

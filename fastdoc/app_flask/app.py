@@ -1,11 +1,13 @@
 from pathlib import Path
 from flask import Flask, render_template, request, flash, abort, send_from_directory
 from flask_bootstrap import Bootstrap5
-from .helpers import get_web_form
+from .helpers import get_web_form, random_id
 from fastdoc import config
 from fastdoc.helpers import get_models_list, get_model_meta, render_doc
+from .ajax_helpers import ajax_helpers
 
 app = Flask(__name__)
+app.register_blueprint(ajax_helpers, url_prefix="/ajax-helpers")
 app.config['SECRET_KEY'] = config.SECRET_KEY
 bootstrap = Bootstrap5(app)
 
@@ -37,3 +39,9 @@ def download_file():
     if not path.exists():
         abort(404)
     return send_from_directory(path.parent, path.name)
+
+@app.context_processor
+def always_in_context():
+    return dict(
+      random_id = random_id
+    )

@@ -61,7 +61,12 @@
 
     function configContextMenuCasePics() {
         const items = [
-            { name: 'Cut', fn: function (target) { console.log('Cut', target); } },
+            {
+                name: 'Adicionar para novo objeto', fn: function (target) {
+                    const table = target.closest("table");
+                    ajaxCreateCasePicTable(table);
+                }
+            },
             { name: 'Copy', fn: function (target) { console.log('Copy', target); } },
             { name: 'Paste', fn: function (target) { console.log('Paste', target); } },
             {},
@@ -72,12 +77,27 @@
 
     }
 
-    createSortables();
+    function ajaxCreateCasePicTable(table){
+        const picsEl = table.getElementsByClassName("pic-selected");
+        console.log(picsEl);
+        const pics = [];
+        for (var i = 0; i < picsEl.length; i++) {
+            pics.push(picsEl[i].getAttribute("pic_path"));
+        }
+        axios.post("{{ url_for('ajax_helpers.case_pics_object') }}", {
+            pics: pics
+        }).then(result => {
+            console.log(result);
+        })
+    }
 
-    $(document).ready(function(){
+    
+
+    $(document).ready(function () {
+        createSortables();
         configContextMenuCasePics();
     });
-   
+
 </script>
 
 

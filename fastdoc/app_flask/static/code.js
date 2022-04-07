@@ -15,6 +15,7 @@ function submitForm(event) {
 }
 
 function createSortables() {
+    
     let elements = document.getElementsByClassName("sortable");
     for (var i = 0; i < elements.length; i++) {
         new Sortable(elements[i], {
@@ -37,6 +38,8 @@ function togglePicSelection(el, event) {
     el.classList.toggle('pic-selected');
 
 }
+
+
 
 // function configContextMenuCasePics(objects) {
 

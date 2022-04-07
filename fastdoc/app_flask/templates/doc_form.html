@@ -64,34 +64,70 @@
             {
                 name: 'Adicionar para novo objeto', fn: function (target) {
                     const table = target.closest("table");
-                    ajaxCreateCasePicTable(table);
+                    bootbox.prompt({
+                        title: "This is a prompt, vertically centered!", 
+                        centerVertical: true,
+                        callback: function(result){ 
+                            if (result != null && result != ""){
+                                console.log(result);
+                                ajaxCreateCasePicTable(table, result);
+                            }
+                            
+                        }
+                    });
+                    
                 }
             },
-            { name: 'Copy', fn: function (target) { console.log('Copy', target); } },
-            { name: 'Paste', fn: function (target) { console.log('Paste', target); } },
-            {},
-            { name: 'Select All', fn: function (target) { console.log('Select All', target); } },
+            //{},
+            {
+                name: 'Remover do objeto', fn: function (target) {
+                    const table = target.closest(".tab-object");
+                    const casePicsEl = table.closest('.s-case-pics');
+                    const sortEl = casePicsEl.getElementsByClassName("td-not-classified-pics")[0];
+                    const pics = table.getElementsByClassName("pic-selected");
+                    for (var i = pics.length - 1; i >= 0; i--) {
+                        sortEl.appendChild(pics[i]);
+                    }
+                }
+            },
         ];
 
         let myMenu = new ContextMenu('.thumb-foto', items);
 
     }
 
-    function ajaxCreateCasePicTable(table){
+    function ajaxCreateCasePicTable(table, name) {
         const picsEl = table.getElementsByClassName("pic-selected");
-        console.log(picsEl);
         const pics = [];
-        for (var i = 0; i < picsEl.length; i++) {
+        for (var i = picsEl.length - 1; i >= 0; i--) {
             pics.push(picsEl[i].getAttribute("pic_path"));
+            picsEl[i].parentNode.removeChild(picsEl[i]);
         }
+
         axios.post("{{ url_for('ajax_helpers.case_pics_object') }}", {
-            pics: pics
+            pics: pics,
+            name: name
         }).then(result => {
-            console.log(result);
+            const divCasePics = table.closest(".s-case-pics");
+            divCasePics.innerHTML += result.data;
+            createSortables();
         })
+
     }
 
-    
+
+
+    function deleteObject(button) {
+        const table = button.closest(".tab-object");
+        const casePicsEl = table.closest('.s-case-pics');
+
+        const sortEl = casePicsEl.getElementsByClassName("td-not-classified-pics")[0];
+        const pics = table.getElementsByClassName("thumb-container");
+        for (var i = pics.length - 1; i >= 0; i--) {
+            sortEl.appendChild(pics[i]);
+        }
+        table.remove();
+    }
 
     $(document).ready(function () {
         createSortables();

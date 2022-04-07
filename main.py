@@ -1,6 +1,5 @@
 import stringcase
 import argparse
-import os
 from pathlib import Path
 import sys
 from fastdoc import config
@@ -23,7 +22,6 @@ p_start = subparsers.add_parser("start")
 p_render = subparsers.add_parser("render")
 p_render.add_argument("-m", "--model", default="choose", help="Model")
 
-p_GUI = subparsers.add_parser("gui")
 
 p_web = subparsers.add_parser("web")
 
@@ -41,7 +39,6 @@ if args.command == "start":
     sys.exit()
 
 import fastdoc.helpers as hp
-from PyQt5.QtWidgets import QApplication
 import models
 from fastdoc.app_flask import app as app_flask
 
@@ -52,16 +49,6 @@ if args.command == "render":
     context = context = md.test_data.context
     hp.render_doc(args.model, context, "compilado.docx")
     print("Renderizado arquivo compilado.docx")
-elif args.command == "gui":
-    from PyQt5.QtWidgets import QApplication
-    from fastdoc.gui_app.main_window import MainWindow
-
-    app = QApplication(sys.argv)
-    if os.name == "nt":
-        app.setStyle("fusion")  # type: ignore
-    w = MainWindow()
-    w.show()
-    sys.exit(app.exec_())
 elif args.command == "new-model":
     full_name = inquirer.text(message="Nome:").execute()
     folder_name = stringcase.snakecase(unidecode.unidecode(full_name))

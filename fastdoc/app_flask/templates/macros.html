@@ -4,7 +4,10 @@
 <table class="table table-bordered tab-object" id="{{ id }}">
     <tr>
         <td>
-            <h4 class="obj-name">{{ object.name }}</h4>
+            <input type="text" class="form-control ipt-name" value="{{ object.name }}">
+        </td>
+        <td class="text-end">
+            <button class="btn btn-danger" onclick="deleteObject(this)"><i class="fa fa-trash"></i></button>
         </td>
     </tr>
     <tr>
@@ -12,11 +15,7 @@
             {% for pic in object.pics_iterator() %}
             <div class="thumb-container" onclick="togglePicSelection(this, event)" pic_path="{{ pic }}">
                 <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}" alt=""></p>
-                <p class="text-center">
-                <div class="checkbox">
-                    <label><input type="checkbox" checked>{{ pic.name }}</label>
-                </div>
-                </p>
+                <p class="text-center">{{ pic.name }}</p>
             </div>
             {% endfor %}
         </td>
@@ -29,7 +28,6 @@
 {% set field_type = field.__class__.__name__ -%}
 {% if field_type == 'SCasePics' %}
 <div class="s-case-pics">
-
     <input type="text" class="form-control" id="{{ field.name }}" value="">
     <table class="table table-bordered tab-object">
         <tr>
@@ -39,7 +37,7 @@
             </td>
         </tr>
         <tr class="tr-case-pics-pics">
-            <td class="sortable" >
+            <td class="sortable td-not-classified-pics" >
                     {% for pic in field.data.pics_not_classified_iterator() %}
                     <div class="thumb-container" onclick="togglePicSelection(this, event)" pic_path="{{ pic }}">
                         <p><img class="thumb-foto" src="{{ url_for('download_file') }}?path={{ pic }}"  alt=""></p>

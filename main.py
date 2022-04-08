@@ -41,6 +41,7 @@ if args.command == "start":
 import fastdoc.helpers as hp
 import models
 from fastdoc.app_flask import app as app_flask
+from fastdoc.app_flask import qt
 
 if args.command == "render":
     if args.model == "choose":

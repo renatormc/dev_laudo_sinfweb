@@ -78,3 +78,12 @@ def get_objects_from_folder(folder: Path, image_extensions=['.jpg', '.png']) -> 
     return obj
 
 
+def read_workdir_data():
+    path = config.workdir / "fastdoc.json"
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data
+    except FileNotFoundError:
+        return {}
+

@@ -339,7 +339,7 @@ develop = false
 type = "git"
 url = "https://github.com/renatormc/report_writer"
 reference = "master"
-resolved_reference = "a5e501b4e2299f790831646f617d47977d0076fc"
+resolved_reference = "9e0d8e103af49882c0e987655acc6bb2d0f17785"
 
 [[package]]
 name = "six"

@@ -39,6 +39,7 @@ class FormBase(FlaskForm):
     def load_initial_data(self) -> None:
         pass
 
+
     def validate(self, extra_validators=None):
         if extra_validators is None:
             extra_validators = {}

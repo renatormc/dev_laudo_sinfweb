@@ -2,6 +2,8 @@ import argparse
 import shutil
 import os
 from pathlib import Path
+import subprocess
+import report_writer
 
 app_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 
@@ -28,12 +30,17 @@ elif args.command == "to-sinftools":
         raise Exception("SINFTOOLS variable not found")
     sinftools_dir = Path(aux)
     path_to = sinftools_dir / "tools/fastdoc"
-    folders = ['models', 'fastdoc', 'main.py']
+    itens = ['models', 'fastdoc', 'main.py']
     try:
         shutil.rmtree(path_to)
     except FileNotFoundError:
         pass
     path_to.mkdir()
-    for folder in folders:
-        shutil.copytree(app_dir / folder, path_to / folder)
-    
+    for item in itens:
+        path = app_dir / item
+        if path.is_dir():
+            shutil.copytree(path, path_to / item)
+        else:
+            shutil.copy(path, path_to / item)
+    path_from = Path(report_writer.__file__).parent
+    shutil.copytree(path_from, path_to / "report_writer")

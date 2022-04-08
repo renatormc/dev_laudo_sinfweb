@@ -1,3 +1,4 @@
+import subprocess
 import stringcase
 import argparse
 from pathlib import Path
@@ -28,6 +29,12 @@ p_web = subparsers.add_parser("web")
 p_new_model = subparsers.add_parser("new-model")
 
 p_delete_model = subparsers.add_parser("delete-model")
+
+p_install = subparsers.add_parser("install")
+
+p_update = subparsers.add_parser("update")
+
+p_publish = subparsers.add_parser("publish")
 
 args = parser.parse_args()
 config.workdir = Path(args.workdir)
@@ -68,3 +75,17 @@ elif args.command == "delete-model":
     hp.fix_imports()
 elif args.command == "web":
     app_flask.run(host='0.0.0.0', port=5000, debug=config.debug)
+elif args.command == "install":
+    path = Path("./fastdoc.bat").absolute()
+    text = f"@echo off\n\"{path}\" %*"
+    dest_file = Path("C:\\Windows\\fastdoc.bat")
+    dest_file.write_text(text)
+elif args.command == "update":
+    rclone_exe = config.main_script_dir / "rclone-v1.58.0-windows-amd64/rclone.exe"
+    subprocess.Popen([str(rclone_exe), 'sync', '-v', config.local_data['shared_folder'], str(config.main_script_dir)])
+elif args.command == "publish":
+    dest = config.local_data['shared_folder']
+    input(f"Copiar para \"{dest}\"? Pressione algo para continuar.")
+    rclone_exe = config.main_script_dir / "dist_start/rclone-v1.58.0-windows-amd64/rclone.exe"
+    subprocess.Popen([str(rclone_exe), 'sync', '-v', str(config.main_script_dir / "dist"), config.local_data['shared_folder']])
+

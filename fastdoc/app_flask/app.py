@@ -46,5 +46,5 @@ def download_file():
 def always_in_context():
     return dict(
         random_id=random_id,
-        debug_mode=debug
+        debug_mode=config.debug
     )

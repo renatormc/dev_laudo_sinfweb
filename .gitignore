@@ -2,8 +2,10 @@ compilado.docx
 /__pycache__
 models
 .venv
+dist
 .vscode
 test.py
 .idea
 .local
 .mypy_cache
+local_data.json

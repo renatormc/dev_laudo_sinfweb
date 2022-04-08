@@ -21,8 +21,6 @@ class SCasePics(Field):
     def process_formdata(self, valuelist):
         
         try:
-            print("DEE")
-            print(valuelist[0])
             data = json.loads(valuelist[0])
             
             obj = CaseObjectsType().from_dict(data)

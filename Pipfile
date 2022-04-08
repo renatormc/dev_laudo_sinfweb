@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Flask = "*"
+PyQt5 = "*"
+docxtpl = "*"
+stringcase = "*"
+beautifulsoup4 = "*"
+inquirerpy = "*"
+Flask-WTF = "*"
+humanfriendly = "*"
+Bootstrap-Flask = "*"
+report-writer = {git = "https://github.com/renatormc/report_writer", branch= "master"}
+Unidecode = "*"
+
+[dev-packages]
+PyQt5-stubs = "*"
+mypy = "*"
+types-Flask = "*"
+types-humanfriendly = "*"
+autopep8 = "*"
+
+[requires]
+python_version = "3.9"

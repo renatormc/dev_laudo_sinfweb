@@ -3,7 +3,6 @@ import shutil
 import os
 from pathlib import Path
 import subprocess
-import report_writer
 
 app_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 
@@ -13,7 +12,7 @@ subparsers = parser.add_subparsers(dest="command", required=True, help='Command 
 p_prepare = subparsers.add_parser("prepare")
 p_prepare.add_argument("direction", choices=("up", "down"), help="Direction up or down")
 
-p_to_sinftools = subparsers.add_parser("to-sinftools")
+p_dist = subparsers.add_parser("dist")
 
 args = parser.parse_args()
 
@@ -24,23 +23,24 @@ if args.command == "prepare":
     elif args.direction == "up":
         shutil.rmtree(app_dir / "models")
         shutil.copytree(app_dir / "fastdoc/models_example", app_dir / "models")
-elif args.command == "to-sinftools":
-    aux = os.getenv("SINFTOOLS")
-    if not aux:
-        raise Exception("SINFTOOLS variable not found")
-    sinftools_dir = Path(aux)
-    path_to = sinftools_dir / "tools/fastdoc"
-    itens = ['models', 'fastdoc', 'main.py']
+elif args.command == "dist":
+    path_to = app_dir / "dist"
+    itens = ['models', 'fastdoc', 'main.py', 'requirements.txt']
     try:
         shutil.rmtree(path_to)
     except FileNotFoundError:
         pass
-    path_to.mkdir()
+    shutil.copytree(app_dir / "dist_start", path_to)
     for item in itens:
         path = app_dir / item
         if path.is_dir():
             shutil.copytree(path, path_to / item)
         else:
             shutil.copy(path, path_to / item)
-    path_from = Path(report_writer.__file__).parent
-    shutil.copytree(path_from, path_to / "report_writer")
+   
+    path_from = "D:\\portable\\python\\Python3.10.0"
+    shutil.copytree(path_from, path_to / "Python")
+
+    python = app_dir / "dist/Python/python.exe"
+    subprocess.run([str(python), '-m', 'pip', 'install', '--upgrade', 'pip'])
+    subprocess.run([str(python), '-m', 'pip', 'install', '-r', str(app_dir / "requirements.txt")])

@@ -1,0 +1,157 @@
+<script>
+
+    function findCasePicsElement(subel) {
+        return subel.closest('.s-case-pics');
+    }
+
+
+
+    function configContextMenuCasePics() {
+        const items = [
+            {
+                name: 'Adicionar para novo objeto', fn: function (target) {
+                    const table = target.closest("table");
+                    const name = genUniqueCasePicsObjectName(table);
+                    ajaxCreateCasePicTable(table, name);
+                }
+            },
+            //{},
+            {
+                name: 'Remover do objeto', fn: function (target) {
+                    const table = target.closest(".tab-object");
+                    const casePicsEl = findCasePicsElement(table);
+                    const sortEl = casePicsEl.getElementsByClassName("td-not-classified-pics")[0];
+                    const pics = table.getElementsByClassName("pic-selected");
+                    for (var i = pics.length - 1; i >= 0; i--) {
+                        sortEl.appendChild(pics[i]);
+                    }
+                }
+            },
+        ];
+
+        let myMenu = new ContextMenu('.thumb-foto', items);
+
+    }
+
+    function ajaxCreateCasePicTable(table, name) {
+        const picsEl = table.getElementsByClassName("pic-selected");
+        const pics = [];
+        for (var i = picsEl.length - 1; i >= 0; i--) {
+            pics.push(picsEl[i].getAttribute("pic_path"));
+            picsEl[i].parentNode.removeChild(picsEl[i]);
+        }
+
+        const divCasePics = table.closest(".s-case-pics");
+        const data = {
+            pics: pics,
+            name: name
+        }
+        appendElementFromBackEnd("{{ url_for('ajax_helpers.case_pics_object') }}", divCasePics, data, function () {
+            createSortables();
+        });
+
+    }
+
+
+    function deleteObject(button) {
+        const table = button.closest(".tab-object");
+        const casePicsEl = table.closest('.s-case-pics');
+
+        const sortEl = casePicsEl.getElementsByClassName("td-not-classified-pics")[0];
+        const pics = table.getElementsByClassName("thumb-container");
+        for (var i = pics.length - 1; i >= 0; i--) {
+            sortEl.appendChild(pics[i]);
+        }
+        table.remove();
+    }
+
+    function togglePicSelection(el, event) {
+        let elements = document.getElementsByClassName("thumb-container");
+
+        if (!event.ctrlKey) {
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i] == el) {
+                    continue;
+                }
+                elements[i].classList.remove('pic-selected')
+            }
+        }
+        el.classList.toggle('pic-selected');
+
+    }
+
+    function serializeSCasePic() {
+        let elements = document.getElementsByClassName("s-case-pics");
+        for (var i = 0; i < elements.length; i++) {
+            console.log(i);
+        }
+    }
+
+
+
+
+    function createSortables() {
+
+        let elements = document.getElementsByClassName("sortable");
+        for (var i = 0; i < elements.length; i++) {
+            new Sortable(elements[i], {
+                group: 'shared'
+            });
+        }
+    }
+
+    function genUniqueCasePicsObjectName(element) {
+        const casePicsEl = findCasePicsElement(element);
+        const inputs = casePicsEl.getElementsByClassName("ipt-name");
+        const existingNames = [];
+        for (let i = inputs.length - 1; i >= 0; i--) {
+            existingNames.push(inputs[i].value);
+        }
+        let i = existingNames.length + 1;
+        let name = "Evidência " + i;
+        while (existingNames.includes(name)) {
+            i++;
+            name = "Evidência " + i;
+        }
+        return name;
+    }
+
+    function getCasePicsObjectsData(element){
+        //td-not-classified-pics
+        const el = element.getElementsByClassName("td-not-classified-pics")[0];
+        
+        const pics = el.getElementsByClassName("thumb-container");
+        const data = {pics_not_classified: [], objects: []};
+        for (var i = 0 ; i < pics.length; i++) {
+            data.pics_not_classified.push(pics[i].getAttribute("pic_path"));
+            
+           
+        }
+        const tabObjects = element.getElementsByClassName("tab-object-individual");
+        for (var j =  0; j < tabObjects.length; j++) {
+            const iptName = tabObjects[j].getElementsByClassName("ipt-name")[0];
+            const obj = {name: iptName.value, pics: []};
+            const pics2 = tabObjects[j].getElementsByClassName("thumb-container");
+            for (var k = 0; k < pics2.length; k++) {
+                obj.pics.push(pics2[k].getAttribute("pic_path"));
+            }
+            data.objects.push(obj);
+        }
+        return data;
+    }
+
+    function serializeCasePicsObjects() {
+        const elements = document.getElementsByClassName("s-case-pics");
+        for (let i =  0; i < elements.length; i++) {
+            const data = getCasePicsObjectsData(elements[i]);
+            const ipt = document.getElementsByClassName("json-value")[0];
+            ipt.value = JSON.stringify(data);
+        }
+    }
+
+    $(document).ready(function () {
+        createSortables();
+        configContextMenuCasePics();
+    });
+
+</script>

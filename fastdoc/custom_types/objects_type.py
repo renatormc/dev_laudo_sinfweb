@@ -21,7 +21,10 @@ class ObjectType:
         }
 
     def from_dict(self, data: dict[str, Any]) -> 'ObjectType':
-        self.type = data['type']
+        try:
+            self.type = data['type']
+        except KeyError:
+            self.type = ""
         self.name = data['name']
         self.pics = data['pics']
         return self
@@ -33,7 +36,7 @@ class CaseObjectsType:
             self, folder: Path = config.workdir, objects: list[ObjectType] = [],
             pics_not_classified: list[str] = [],
             alias: str = "") -> None:
-        self.folder: Path = folder
+        # self.folder: Path = folder
         self.objects: list[ObjectType] = objects
         self.pics_not_classified: list[str] = pics_not_classified
         self.alias: str = alias
@@ -44,16 +47,19 @@ class CaseObjectsType:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            'folder': self.folder,
+            # 'folder': self.folder,
             'objects': [obj.to_dict() for obj in self.objects],
             'pics_not_classified': self.pics_not_classified,
             'alias': self.alias
         }
 
     def from_dict(self, data: dict[str, Any]) -> 'CaseObjectsType':
-        self.folder = Path(data['folder'])
+        # self.folder = Path(data['folder'])
         self.objects = [ObjectType().from_dict(item) for item in data['objects']]
         self.pics_not_classified = data['pics_not_classified']
-        self.alias = data['alias']
+        try:
+            self.alias = data['alias']
+        except KeyError:
+            self.alias = ""
         return self
 

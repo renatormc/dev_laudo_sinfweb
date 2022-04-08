@@ -14,16 +14,20 @@ class SCasePics(Field):
         if self.raw_data:
             return self.raw_data[0]
         elif self.data:
-            return json.dumps(self.data)
+            return self.data
         else:
             return u''
 
     def process_formdata(self, valuelist):
         
         try:
+            print("DEE")
+            print(valuelist[0])
             data = json.loads(valuelist[0])
+            
             obj = CaseObjectsType().from_dict(data)
             self.data = obj
         except Exception as e:
+            print(e)
             self.data = CaseObjectsType()
             raise ValueError(str(e))

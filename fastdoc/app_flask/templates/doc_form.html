@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_hidden_errors %}
 {% from 'macros.html' import render_field %}
+{% block scripts %}
+{% include 'fields/s-case-pics.html' %}
+
+{% endblock scripts %}
 
 {% block content %}
 <div class="container">
@@ -24,11 +29,28 @@
             {% endwith %}
         </div>
     </div>
+    {% if form.errors %}
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {% for key, value in form.errors.items() %}
+                <p>
+                    <strong>{{ key }}</strong>
+                </p>
+                {% for err in value %}
+                <p>{{ err }}</p>
+                {% endfor %}
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
 
+        </div>
+    </div>
+    {% endif %}
     <div class="row">
         <div class="col">
             <form id="frmDocForm" method="POST" action="{{ url_for('index') }}?model={{ model }}"
-                onsubmit="submitForm(event)">
+                onsubmit="submitForm(this, event)">
                 {{ form.hidden_tag() }}
                 {% for row in form.get_layout() %}
                 <div class="row">
@@ -55,84 +77,22 @@
 
         </div>
     </div>
+   
 </div>
+
 
 <script>
 
-    function configContextMenuCasePics() {
-        const items = [
-            {
-                name: 'Adicionar para novo objeto', fn: function (target) {
-                    const table = target.closest("table");
-                    bootbox.prompt({
-                        title: "This is a prompt, vertically centered!", 
-                        centerVertical: true,
-                        callback: function(result){ 
-                            if (result != null && result != ""){
-                                console.log(result);
-                                ajaxCreateCasePicTable(table, result);
-                            }
-                            
-                        }
-                    });
-                    
-                }
-            },
-            //{},
-            {
-                name: 'Remover do objeto', fn: function (target) {
-                    const table = target.closest(".tab-object");
-                    const casePicsEl = table.closest('.s-case-pics');
-                    const sortEl = casePicsEl.getElementsByClassName("td-not-classified-pics")[0];
-                    const pics = table.getElementsByClassName("pic-selected");
-                    for (var i = pics.length - 1; i >= 0; i--) {
-                        sortEl.appendChild(pics[i]);
-                    }
-                }
-            },
-        ];
-
-        let myMenu = new ContextMenu('.thumb-foto', items);
-
-    }
-
-    function ajaxCreateCasePicTable(table, name) {
-        const picsEl = table.getElementsByClassName("pic-selected");
-        const pics = [];
-        for (var i = picsEl.length - 1; i >= 0; i--) {
-            pics.push(picsEl[i].getAttribute("pic_path"));
-            picsEl[i].parentNode.removeChild(picsEl[i]);
-        }
-
-        axios.post("{{ url_for('ajax_helpers.case_pics_object') }}", {
-            pics: pics,
-            name: name
-        }).then(result => {
-            const divCasePics = table.closest(".s-case-pics");
-            divCasePics.innerHTML += result.data;
-            createSortables();
-        })
-
+    function serializeFields() {
+        serializeCasePicsObjects();
     }
 
 
-
-    function deleteObject(button) {
-        const table = button.closest(".tab-object");
-        const casePicsEl = table.closest('.s-case-pics');
-
-        const sortEl = casePicsEl.getElementsByClassName("td-not-classified-pics")[0];
-        const pics = table.getElementsByClassName("thumb-container");
-        for (var i = pics.length - 1; i >= 0; i--) {
-            sortEl.appendChild(pics[i]);
-        }
-        table.remove();
+    function submitForm(frm, event) {
+        event.preventDefault();
+        serializeFields();
+        frm.submit();
     }
-
-    $(document).ready(function () {
-        createSortables();
-        configContextMenuCasePics();
-    });
 
 </script>
 

@@ -1,7 +1,7 @@
 {% import 'bootstrap5/form.html' as b5 %}
 
 {% macro case_pics_object(object, id) %}
-<table class="table table-bordered tab-object" id="{{ id }}">
+<table class="table table-bordered tab-object tab-object-individual" id="{{ id }}">
     <tr>
         <td>
             <input type="text" class="form-control ipt-name" value="{{ object.name }}">
@@ -28,7 +28,7 @@
 {% set field_type = field.__class__.__name__ -%}
 {% if field_type == 'SCasePics' %}
 <div class="s-case-pics">
-    <input type="text" class="form-control" id="{{ field.name }}" value="">
+    <input type="text" class="form-control json-value" name="{{ field.name }}" value="" hidden>
     <table class="table table-bordered tab-object">
         <tr>
             <td>
@@ -49,7 +49,7 @@
         </tr>
     </table>
     {% for obj in field.data.objects %}
-    {{ case_pics_object(obj, random_id()) }}
+    {{ case_pics_object(obj) }}
     {% endfor %}
 </div>
 {% else %}

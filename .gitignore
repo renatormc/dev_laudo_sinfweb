@@ -3,6 +3,7 @@ compilado.docx
 models
 .venv
 dist
+
 .vscode
 test.py
 .idea

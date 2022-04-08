@@ -17,10 +17,10 @@ p_dist = subparsers.add_parser("dist")
 args = parser.parse_args()
 
 if args.command == "prepare":
-    if args.direction == "down":
+    if args.direction == "up":
         shutil.rmtree(app_dir / "fastdoc/models_example")
         shutil.copytree(app_dir / "models", app_dir / "fastdoc/models_example")
-    elif args.direction == "up":
+    elif args.direction == "down":
         shutil.rmtree(app_dir / "models")
         shutil.copytree(app_dir / "fastdoc/models_example", app_dir / "models")
 elif args.command == "dist":

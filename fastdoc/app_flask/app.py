@@ -1,6 +1,8 @@
 from pathlib import Path
 from flask import Flask, render_template, request, flash, abort, send_from_directory
 from flask_bootstrap import Bootstrap5
+
+from fastdoc.custom_types import ModelInfo
 from .helpers import get_web_form, random_id
 from fastdoc import config
 from fastdoc.helpers import get_models_list, get_model_meta, render_doc

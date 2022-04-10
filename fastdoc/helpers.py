@@ -2,7 +2,8 @@ import json
 import subprocess
 import os
 from pathlib import Path
-from typing import  Union
+from typing import  Literal, Union
+from fastdoc.custom_types import ModelInfo
 from fastdoc.custom_types.objects_type import CaseObjectsType
 import models
 from fastdoc import config
@@ -16,12 +17,15 @@ def get_test_context(model):
     return mod.test_data.context
 
 
-def get_models_list():
-    models = []
+def get_models_list(type: Literal['qt', 'web']) -> list[ModelInfo]:
+    mis: list[ModelInfo] = []
     for entry in config.models_folder.iterdir():
         if entry.is_dir() and (entry / "templates").exists():
-            models.append(entry.name)
-    return models
+            mi = ModelInfo(entry.name)
+            mi.load_meta()
+            if (type == "qt" and mi.meta['has_qt_form']) or (type == "web" and mi.meta['has_web_form']):
+                mis.append(mi)
+    return mis
 
 
 def choose_model():

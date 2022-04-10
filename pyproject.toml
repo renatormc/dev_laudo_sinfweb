@@ -21,11 +21,12 @@ Bootstrap-Flask = "^2.0.2"
 Flask-WTF = "^1.0.1"
 PyQtWebEngine = "^5.15.5"
 humanfriendly = "^10.0"
+report-writer = {git = "https://github.com/renatormc/report_writer", branch= "master"}
 
 [tool.poetry.dev-dependencies]
-report_writer = { path = "../report_writer", develop = true }
 pyqt5-stubs = "*"
 mypy = "*"
+types-humanfriendly = "^9.2.6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

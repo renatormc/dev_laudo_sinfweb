@@ -25,6 +25,7 @@ p_render.add_argument("-m", "--model", default="choose", help="Model")
 
 
 p_web = subparsers.add_parser("web")
+p_web.add_argument("--qt", action="store_true", help="Open qt server intead of cli")
 
 p_gui = subparsers.add_parser("gui")
 
@@ -52,6 +53,7 @@ import models
 from fastdoc.app_flask import app as app_flask
 from fastdoc.app_flask import qt
 from fastdoc.app_flask.gui_server import run_server
+from fastdoc.gui_app import run_gui_app
 
 if args.command == "render":
     if args.model == "choose":
@@ -77,9 +79,12 @@ elif args.command == "delete-model":
         pass
     hp.fix_imports()
 elif args.command == "web":
-    app_flask.run(host='0.0.0.0', port=5000, debug=config.debug)
+    if args.qt:
+        run_server()
+    else:
+        app_flask.run(host='0.0.0.0', port=5000, debug=config.debug)
 elif args.command == "gui":
-    run_server()
+    run_gui_app()  
 elif args.command == "install":
     path = Path("./fastdoc.bat").absolute()
     text = f"@echo off\n\"{path}\" %*"

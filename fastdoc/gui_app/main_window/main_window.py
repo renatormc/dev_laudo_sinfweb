@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
 from typing import Optional
-from fastdoc.helpers import open_doc, render_doc, get_models_list, get_model_meta
-from fastdoc.gui_app.helpers import get_icon
+from fastdoc.custom_types import ModelInfo
+from fastdoc.helpers import open_doc, render_doc, get_models_info
 from fastdoc.gui_app.main_window.main_window_ui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtCore import QSize
@@ -10,6 +10,7 @@ from fastdoc.gui_app.form import Form
 from fastdoc import config
 import importlib
 from report_writer.custom_types import InitialData
+from fastdoc.gui_app.helpers import get_icon
 
 
 
@@ -36,10 +37,9 @@ class MainWindow(QMainWindow):
 
     def populate_models(self):
         self.ui.cbx_model.clear()
-        models = get_models_list()
-        for m in models:
-            meta = get_model_meta(m)
-            self.ui.cbx_model.addItem(meta['full_name'], m)
+        models = get_models_info('qt')
+        for mi in models:
+            self.ui.cbx_model.addItem(mi.meta['full_name'], mi)
 
     def setup_ui(self):
         self.setWindowIcon(get_icon("icon.png"))
@@ -56,14 +56,14 @@ class MainWindow(QMainWindow):
 
     def create_form(self):
         if self.form is not None:
-            file_ = config.local_folder / f"{self.form.model}.json"
+            file_ = config.local_folder / f"{self.form.model_info}.json"
             self.form.save(file_)
-        model = self.ui.cbx_model.currentData()
-        form_module = importlib.import_module(f"models.{model}.qt_form")
+        model: ModelInfo = self.ui.cbx_model.currentData()
+        form_module = importlib.import_module(f"models.{model.name}.qt_form")
         widgets = form_module.widgets
         self.form = Form(model, widgets)
         self.ui.sca_form.setWidget(self.form)
-        file_ = config.local_folder / f"{self.form.model}.json"
+        file_ = config.local_folder / f"{self.form.model_info}.json"
         if Path(file_).exists():
             self.form.load(file_)
         else:
@@ -80,7 +80,7 @@ class MainWindow(QMainWindow):
                 self.form.load_data(self.initial_data.form_data)
 
     def render(self):
-        file_ = config.local_folder / f"{self.form.model}.json"
+        file_ = config.local_folder / f"{self.form.model_info.name}.json"
         self.form.save(file_)
         context, errors = self.form.get_context()
         if errors:
@@ -94,7 +94,7 @@ class MainWindow(QMainWindow):
             file_ = QFileDialog.getSaveFileName(
                 self, "Escolha o arquivo",  ".", "DOCX (*.docx)")[0]
             if file_:
-                render_doc(self.form.model, context, file_)
+                render_doc(self.form.model_info.name, context, file_)
                 if os.name == "nt":
                     reply = QMessageBox.question(
                         self, "Arquivo compilado", "Arquivo compilado. Deseja abri-lo no seu editor de textos padrão?", QMessageBox.Yes, QMessageBox.No)

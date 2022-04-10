@@ -17,12 +17,11 @@ def get_test_context(model):
     return mod.test_data.context
 
 
-def get_models_list(type: Literal['qt', 'web']) -> list[ModelInfo]:
+def get_models_info(type: Literal['qt', 'web']) -> list[ModelInfo]:
     mis: list[ModelInfo] = []
     for entry in config.models_folder.iterdir():
         if entry.is_dir() and (entry / "templates").exists():
             mi = ModelInfo(entry.name)
-            mi.load_meta()
             if (type == "qt" and mi.meta['has_qt_form']) or (type == "web" and mi.meta['has_web_form']):
                 mis.append(mi)
     return mis
@@ -31,7 +30,7 @@ def get_models_list(type: Literal['qt', 'web']) -> list[ModelInfo]:
 def choose_model():
     model = inquirer.select(
         message="Model:",
-        choices=get_models_list(),
+        choices=get_models_info(),
     ).execute()
     return model
 
@@ -66,7 +65,7 @@ def set_model_meta(model: str, full_name) -> None:
 
 
 def fix_imports():
-    models = get_models_list()
+    models = get_models_info()
     lines = [f"from . import {m}" for m in models]
     text = "\n".join(lines)
     path = config.models_folder / "__init__.py"

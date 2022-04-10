@@ -21,7 +21,9 @@ class ModelInfo:
             'has_qt_form': False,
             'has_web_form': False
         }
-    def load_meta(self):
+        self._load_meta()
+
+    def _load_meta(self):
         path = config.models_folder / self.name / "meta.json"
         with path.open("r", encoding="utf-8") as f:
             self.meta = json.load(f)

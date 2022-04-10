@@ -1,6 +1,6 @@
 import PyQt5.QtWidgets as qw
 from typing import TYPE_CHECKING
-from fastdoc.helpers import get_models_list, get_model_meta
+from fastdoc.helpers import get_models_info, get_model_meta
 
 if TYPE_CHECKING:
     from .gui_server import GuiServer
@@ -46,12 +46,8 @@ class GuiServerUi:
 
     def create_model_combo(self):
         self.cbx_models = qw.QComboBox()
-        for m in get_models_list():
-            try:
-                full_name = get_model_meta(m)['full_name']
-            except KeyError:
-                full_name = m
-            self.cbx_models.addItem(full_name, m)
+        for mi in get_models_info("web"):
+            self.cbx_models.addItem(mi.meta['full_name'], mi)
         self.lay_main.addWidget(self.cbx_models)
 
     def create_choose_edit(self):

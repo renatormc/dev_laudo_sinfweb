@@ -5,7 +5,7 @@ from flask_bootstrap import Bootstrap5
 from fastdoc.custom_types import ModelInfo
 from .helpers import get_web_form, random_id
 from fastdoc import config
-from fastdoc.helpers import get_models_list, get_model_meta, render_doc
+from fastdoc.helpers import get_models_info, get_model_meta, render_doc
 from .ajax_helpers import ajax_helpers
 
 app = Flask(__name__)
@@ -16,8 +16,9 @@ bootstrap = Bootstrap5(app)
 
 @app.route("/", methods=("GET", "POST"))
 def index():
-    models_list = get_models_list()
-    models = [{'name': m, 'meta': get_model_meta(m)} for m in models_list]
+    models: list[ModelInfo] = get_models_info("web")
+    models_list = [m.name for m in models]
+    # models = [{'name': m, 'meta': get_model_meta(m)} for m in models_list]
     model = request.args.get("model")
     if not model in models_list:
         return render_template("base.html", models=models)

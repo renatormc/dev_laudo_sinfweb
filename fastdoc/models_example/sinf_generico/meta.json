@@ -1,3 +1,5 @@
 {
-    "full_name": "Sinf genérico"
+    "full_name": "Sinf genérico",
+    "has_qt_form": false,
+    "has_web_form": true
 }

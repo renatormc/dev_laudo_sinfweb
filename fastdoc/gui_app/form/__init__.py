@@ -1,5 +1,5 @@
 from typing import Optional, Tuple
-from fastdoc.custom_types import FormError
+from fastdoc.custom_types import FormError, ModelInfo
 from fastdoc.gui_app.widgets.swidget import SWidget
 from fastdoc.gui_app.widgets.types import ValidationError
 from .form_ui import Ui_Form
@@ -9,8 +9,8 @@ from pathlib import Path
 
 
 class Form(QWidget):
-    def __init__(self, model:str, widgets: list[list[SWidget]]):
-        self.model = model
+    def __init__(self, model_info:ModelInfo, widgets: list[list[SWidget]]):
+        self.model_info = model_info
         self.widgets = widgets
         self.widgets_map: dict[str, SWidget] = {}
         for row in self.widgets:

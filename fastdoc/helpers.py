@@ -2,14 +2,14 @@ import json
 import subprocess
 import os
 from pathlib import Path
-from typing import Union
+from typing import  Union
 from fastdoc.custom_types.objects_type import CaseObjectsType
 import models
 from fastdoc import config
 from report_writer import Renderer
 from pprint import pprint
 from InquirerPy import inquirer
-
+import importlib
 
 def get_test_context(model):
     mod = getattr(models, model)
@@ -87,3 +87,18 @@ def read_workdir_data():
     except FileNotFoundError:
         return {}
 
+def write_workdir_data(workdir: Union[Path, str], data: Union[dict, list]) -> None:
+    workdir = Path(workdir)
+    path = workdir / "fastdoc.json"
+    with path.open("w", encoding="utf-8") as f:
+        f.write(json.dumps(data, ensure_ascii=False, indent=4))
+
+
+def init_dir(model, workdir: Union[Path, str]) -> bool:
+    workdir = Path(workdir)
+    try:
+        fmod = importlib.import_module(f"models.{model}.init_dir")
+        fmod.init_dir(workdir)
+        return True
+    except ModuleNotFoundError:
+        return False

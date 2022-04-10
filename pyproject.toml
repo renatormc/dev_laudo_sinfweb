@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "fastdoc"
+version = "0.1.0"
+description = "A fast document writer"
+authors = ["Renato Martins"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+docxtpl = "*"
+jinxed = "*"
+pyqt5 = "*"
+install = "*"
+mypy = "*"
+stringcase = "*"
+beautifulsoup4 = "*"
+inquirerpy = "*"
+unidecode = "*"
+Flask = "^2.1.1"
+Bootstrap-Flask = "^2.0.2"
+Flask-WTF = "^1.0.1"
+PyQtWebEngine = "^5.15.5"
+humanfriendly = "^10.0"
+
+[tool.poetry.dev-dependencies]
+report_writer = { path = "../report_writer", develop = true }
+pyqt5-stubs = "*"
+mypy = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,7 +1,8 @@
 import wtforms as wtf
 from fastdoc.app_flask.form_base import FormBase
-from fastdoc.app_flask.form_fields import SDateField, SStringList
-
+from fastdoc.app_flask.form_fields import SDateField, SStringList, SCasePics
+from fastdoc.helpers import get_objects_from_folder
+from fastdoc import config
 
 class WebForm(FormBase):
 
@@ -24,7 +25,7 @@ class WebForm(FormBase):
                                   'placeholder': 'Data em que a seção recebeu os objetos'})
     lacre_entrada = wtf.StringField("Lacre de entrada")
     lacre_saida = wtf.StringField("Lacre de saída")
-    objects_field = wtf.HiddenField()
+    objects = SCasePics("Objects")
     # tipo_laudo = wtf.HiddenField()
 
     def get_layout(self):
@@ -33,7 +34,10 @@ class WebForm(FormBase):
             [(self.ocorrencia_odin, 0), (self.data_odin, 0),  (self.inicio_exame, 0), (self.data_recebimento, 0)],
             [(self.autoridade, 0), (self.n_quesito, 0)],
             [(self.lacre_entrada, 0), (self.lacre_saida, 0)],
-            [(self.objects_field, 0)],
             [(self.relatores, 0)],
             [(self.revisores, 0)],
+            [(self.objects, 0)],
         ]
+
+    def load_initial_data(self) -> None:
+        self.objects.data = get_objects_from_folder(config.workdir / "fotos")

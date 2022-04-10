@@ -1,4 +1,3 @@
-from distutils.log import debug
 from pathlib import Path
 from flask import Flask, render_template, request, flash, abort, send_from_directory
 from flask_bootstrap import Bootstrap5
@@ -46,5 +45,5 @@ def download_file():
 def always_in_context():
     return dict(
         random_id=random_id,
-        debug_mode=config.debug
+        config = config
     )

@@ -10,3 +10,4 @@ test.py
 .local
 .mypy_cache
 local_data.json
+r-dev-manager.json

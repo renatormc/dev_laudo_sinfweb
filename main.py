@@ -26,6 +26,8 @@ p_render.add_argument("-m", "--model", default="choose", help="Model")
 
 p_web = subparsers.add_parser("web")
 
+p_gui = subparsers.add_parser("gui")
+
 p_new_model = subparsers.add_parser("new-model")
 
 p_delete_model = subparsers.add_parser("delete-model")
@@ -49,6 +51,7 @@ import fastdoc.helpers as hp
 import models
 from fastdoc.app_flask import app as app_flask
 from fastdoc.app_flask import qt
+from fastdoc.app_flask.gui_server import run_server
 
 if args.command == "render":
     if args.model == "choose":
@@ -75,6 +78,8 @@ elif args.command == "delete-model":
     hp.fix_imports()
 elif args.command == "web":
     app_flask.run(host='0.0.0.0', port=5000, debug=config.debug)
+elif args.command == "gui":
+    run_server()
 elif args.command == "install":
     path = Path("./fastdoc.bat").absolute()
     text = f"@echo off\n\"{path}\" %*"

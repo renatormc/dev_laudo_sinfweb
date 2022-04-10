@@ -11,6 +11,7 @@
     <div class="row">
         <div class="col">
             <h2>{{ model_meta.full_name }}</h2>
+            <p>Diretório de trabalho: <em>{{ config.workdir }}</em></p>
         </div>
     </div>
     <div class="row">
@@ -27,23 +28,7 @@
             {% endwith %}
         </div>
     </div>
-    {% if debug_mode and form.errors %}
-    <div class="row">
-        <div class="col">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {% for key, value in form.errors.items() %}
-                <p>
-                    <strong>{{ key }}</strong>
-                </p>
-                {% for err in value %}
-                <p>{{ err }}</p>
-                {% endfor %}
-                {% endfor %}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
-    {% endif %}
+   
     <div class="row">
         <div class="col">
             <form id="frmDocForm" method="POST" action="{{ url_for('index') }}?model={{ model }}"
@@ -74,6 +59,23 @@
 
         </div>
     </div>
+    {% if config.debug_mode and form.errors %}
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {% for key, value in form.errors.items() %}
+                <p>
+                    <strong>{{ key }}</strong>
+                </p>
+                {% for err in value %}
+                <p>{{ err }}</p>
+                {% endfor %}
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
    
 </div>
 

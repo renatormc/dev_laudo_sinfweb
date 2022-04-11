@@ -13,19 +13,18 @@ from report_writer.custom_types import InitialData
 from fastdoc.gui_app.helpers import get_icon
 
 
-
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super(self.__class__, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.set_buttons_enable(False)
         self.setup_ui()
         self.connections()
         self.form: Optional[Form] = None
         self.populate_models()
         self.initial_data: Optional[InitialData] = None
-
-        # self.form = self.create_form()
+        
 
     def connections(self):
         self.ui.btn_render.clicked.connect(self.render)
@@ -54,26 +53,36 @@ class MainWindow(QMainWindow):
         self.ui.btn_initial_data.setIcon(get_icon("initial_data.png"))
         self.ui.btn_initial_data.setIconSize(QSize(32, 32))
 
+    def set_buttons_enable(self, value: bool) -> None:
+        print(f"VALUE: {value}")
+        self.ui.btn_clear.setEnabled(value)
+        self.ui.btn_initial_data.setEnabled(value)
+        self.ui.btn_load.setEnabled(value)
+        self.ui.btn_render.setEnabled(value)
+        self.ui.btn_save.setEnabled(value)
+
     def create_form(self):
         if self.form is not None:
             file_ = config.local_folder / f"{self.form.model_info}.json"
-            self.form.save(file_)
+            self.form.save_to_file(file_)
         model: ModelInfo = self.ui.cbx_model.currentData()
         form_module = importlib.import_module(f"models.{model.name}.qt_form")
         widgets = form_module.widgets
         self.form = Form(model, widgets)
         self.ui.sca_form.setWidget(self.form)
+        self.set_buttons_enable(True)
         file_ = config.local_folder / f"{self.form.model_info}.json"
         if Path(file_).exists():
-            self.form.load(file_)
+            self.form.load_from_file(file_)
         else:
             self.form.clear_content()
+           
 
     def load_initial_data(self) -> None:
         if self.form:
-            model = self.ui.cbx_model.currentData()
+            mi = self.ui.cbx_model.currentData()
             initial_feeder = importlib.import_module(
-                f"models.{model}.initial_feeder")
+                f"models.{mi.name}.initial_feeder")
             self.initial_data = initial_feeder.get_initial_data(
                 config.workdir)
             if self.initial_data is not None:
@@ -81,7 +90,7 @@ class MainWindow(QMainWindow):
 
     def render(self):
         file_ = config.local_folder / f"{self.form.model_info.name}.json"
-        self.form.save(file_)
+        self.form.save_to_file(file_)
         context, errors = self.form.get_context()
         if errors:
             QMessageBox.warning(self, "Erro de formulário",
@@ -107,10 +116,10 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "Erro", str(e))
 
     def save(self):
-        self.form.save()
+        self.form.save_to_file()
 
     def load(self):
-        self.form.load()
+        self.form.load_from_file()
 
     def clear_content(self):
         self.form.clear_content()

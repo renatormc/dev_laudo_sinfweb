@@ -18,9 +18,8 @@ bootstrap = Bootstrap5(app)
 def index():
     models: list[ModelInfo] = get_models_info("web")
     models_list = [m.name for m in models]
-    # models = [{'name': m, 'meta': get_model_meta(m)} for m in models_list]
     model = request.args.get("model")
-    if not model in models_list:
+    if model not in models_list:
         return render_template("base.html", models=models)
     form = get_web_form(model)
     if form.validate_on_submit():
@@ -48,5 +47,5 @@ def download_file():
 def always_in_context():
     return dict(
         random_id=random_id,
-        config = config
+        config=config
     )

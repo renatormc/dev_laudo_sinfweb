@@ -8,7 +8,6 @@ import shutil
 from InquirerPy import inquirer
 import unidecode
 
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-w', '--workdir', default='.', help='Work directory')
 parser.add_argument('-v', '--verbose', action="store_true",
@@ -22,7 +21,6 @@ p_start = subparsers.add_parser("start")
 
 p_render = subparsers.add_parser("render")
 p_render.add_argument("-m", "--model", default="choose", help="Model")
-
 
 p_web = subparsers.add_parser("web")
 p_web.add_argument("--qt", action="store_true", help="Open qt server intead of cli")
@@ -84,7 +82,7 @@ elif args.command == "web":
     else:
         app_flask.run(host='0.0.0.0', port=5000, debug=config.debug)
 elif args.command == "gui":
-    run_gui_app()  
+    run_gui_app()
 elif args.command == "install":
     path = Path("./fastdoc.bat").absolute()
     text = f"@echo off\n\"{path}\" %*"
@@ -97,5 +95,5 @@ elif args.command == "publish":
     dest = config.local_data['shared_folder']
     input(f"Copiar para \"{dest}\"? Pressione algo para continuar.")
     rclone_exe = config.main_script_dir / "dist_start/rclone-v1.58.0-windows-amd64/rclone.exe"
-    subprocess.Popen([str(rclone_exe), 'sync', '-v', str(config.main_script_dir / "dist"), config.local_data['shared_folder']])
-
+    subprocess.Popen(
+        [str(rclone_exe), 'sync', '-v', str(config.main_script_dir / "dist"), config.local_data['shared_folder']])

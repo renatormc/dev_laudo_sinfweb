@@ -8,9 +8,16 @@ widgets: list[list[SWidget]] = [
         wt.SSpinBox("idade", label="Idade", stretch=1, min=1, max=100),
     ],
     [
-        wt.SText("profissao", required=True, label="Profissão",  placeholder="Digite o sua profissão"),
+        wt.SText("profissao", required=True, label="Profissão", placeholder="Digite o sua profissão"),
         wt.SDate("data_nascimento", label="Data de nascimento"),
     ],
-
-
+    [
+        wt.SArray("pessoas", label="Pessoas", widgets=[
+            [
+                wt.SText("nome", required=True, label="Nome", placeholder="Digite o seu nome", stretch=1),
+                wt.SSpinBox("idade", label="Idade", stretch=1, min=1, max=100),
+            ]
+        ])
+    ]
+  
 ]

@@ -1,12 +1,12 @@
 import json
+from typing import Any
 import sqlalchemy as sa
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base, DeclarativeMeta
 
+Base: Any = declarative_base()
 
-Base = declarative_base()
-
-
+ 
 class Token(Base):
     __tablename__ = 'token'
     id = sa.Column(sa.Integer, primary_key=True)

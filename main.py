@@ -69,7 +69,7 @@ elif args.command == "new-model":
     folder_from = config.app_dir / "models_example/example"
     folder_to = config.models_folder / folder_name
     shutil.copytree(folder_from, folder_to)
-    hp.set_model_meta(folder_name, full_name=full_name)
+    hp.update_model_meta(folder_name, {'full_name': full_name})
     hp.fix_imports()
 elif args.command == "delete-model":
     model = hp.choose_model()

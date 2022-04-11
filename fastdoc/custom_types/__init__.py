@@ -1,4 +1,5 @@
 from typing import Any, Callable, Optional, TypedDict
+
 from fastdoc import config
 import json
 
@@ -27,4 +28,9 @@ class ModelInfo:
         path = config.models_folder / self.name / "meta.json"
         with path.open("r", encoding="utf-8") as f:
             self.meta = json.load(f)
+
+    def save_meta(self):
+        path = config.models_folder / self.name / "meta.json"
+        with path.open("w", encoding="utf-8") as f:
+            f.write(json.dumps(self.meta, ensure_ascii=False, indent=4))
     

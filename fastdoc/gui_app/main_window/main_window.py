@@ -56,7 +56,6 @@ class MainWindow(QMainWindow):
         self.ui.btn_initial_data.setIconSize(QSize(32, 32))
 
     def set_buttons_enable(self, value: bool) -> None:
-        print(f"VALUE: {value}")
         self.ui.btn_clear.setEnabled(value)
         self.ui.btn_initial_data.setEnabled(value)
         self.ui.btn_load.setEnabled(value)
@@ -88,7 +87,7 @@ class MainWindow(QMainWindow):
             self.initial_data = initial_feeder.get_initial_data(
                 config.workdir)
             if self.initial_data is not None:
-                self.form.load_data(self.initial_data.form_data)
+                self.form.load(self.initial_data.form_data)
 
     def render(self):
         file_ = config.local_folder / f"{self.form.model_info.name}.json"

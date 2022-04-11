@@ -2,8 +2,8 @@ import json
 import subprocess
 import os
 from pathlib import Path
-from typing import  Literal, Union
-from fastdoc.custom_types import ModelInfo
+from typing import  Literal, Optional, Union
+from fastdoc.custom_types import ModelInfo, ModelMetaType
 from fastdoc.custom_types.objects_type import CaseObjectsType
 import models
 from fastdoc import config
@@ -17,20 +17,21 @@ def get_test_context(model):
     return mod.test_data.context
 
 
-def get_models_info(type: Literal['qt', 'web']) -> list[ModelInfo]:
+def get_models_info(type: Optional[Literal['qt', 'web']] = None) -> list[ModelInfo]:
     mis: list[ModelInfo] = []
     for entry in config.models_folder.iterdir():
         if entry.is_dir() and (entry / "templates").exists():
             mi = ModelInfo(entry.name)
-            if (type == "qt" and mi.meta['has_qt_form']) or (type == "web" and mi.meta['has_web_form']):
+            if type is None or (type == "qt" and mi.meta['has_qt_form']) or (type == "web" and mi.meta['has_web_form']):
                 mis.append(mi)
     return mis
 
 
 def choose_model():
+    choices = [mi.name for mi in get_models_info()]
     model = inquirer.select(
         message="Model:",
-        choices=get_models_info(),
+        choices=choices,
     ).execute()
     return model
 
@@ -57,16 +58,15 @@ def get_model_meta(model: str) -> dict:
     return data
 
 
-def set_model_meta(model: str, full_name) -> None:
-    data = {'full_name': full_name}
-    path = config.models_folder / model / "meta.json"
-    with path.open("w", encoding="utf-8") as f:
-        f.write(json.dumps(data, ensure_ascii=False, indent=4))
-
-
+def update_model_meta(name: str, data: dict) -> None:
+    mi = ModelInfo(name)
+    mi.meta.update(data) #type: ignore
+    mi.save_meta()
+   
 def fix_imports():
-    models = get_models_info()
-    lines = [f"from . import {m}" for m in models]
+    lines = []
+    for mi in get_models_info():
+        lines.append(f"from . import {mi.name}")
     text = "\n".join(lines)
     path = config.models_folder / "__init__.py"
     path.write_text(text, encoding="utf-8")

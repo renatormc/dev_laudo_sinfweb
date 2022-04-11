@@ -10,9 +10,10 @@ from fastdoc.gui_app.helpers import get_icon
 
 class SComposite(QWidget):
     removeRequested = pyqtSignal(int)
+    cloneRequested = pyqtSignal(int)
 
     def __init__(self, widgets: list[list[SWidget]],
-            color: Optional[str] = "white", show_delete_button=False, index: int = 0) -> None:
+            color: Optional[str] = "white", is_array_child=False, index: int = 0) -> None:
         super().__init__()
         self._index = index
         self.color = color
@@ -21,7 +22,7 @@ class SComposite(QWidget):
         for row in self.widgets:
             for item in row:
                 self.widgets_map[item.name] = item
-        self.show_delete_button = show_delete_button
+        self.is_array_child = is_array_child
         self.lbl_index: Optional[QLabel] = None
         self.setup_ui()
 
@@ -37,17 +38,27 @@ class SComposite(QWidget):
 
     def setup_ui(self):
         self.lay_main = QVBoxLayout()
+        self.lay_main.setSpacing(0)
         self.setLayout(self.lay_main)
 
-        if self.show_delete_button:
+        if self.is_array_child:
             lay = QHBoxLayout()
             self.lbl_index = QLabel(str(self.index + 1))
             lay.addWidget(self.lbl_index)
-            lay.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+            # lay.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+            
+            btn = QToolButton()
+            btn.clicked.connect(self.request_clone)
+            btn.setIcon(get_icon("clone.jpeg"))
+            btn.setToolTip("Clonar")
+            lay.addWidget(btn)
+
             btn = QToolButton()
             btn.clicked.connect(self.request_remove)
             btn.setIcon(get_icon("x.png"))
+            btn.setToolTip("Remover")
             lay.addWidget(btn)
+    
             self.lay_main.addLayout(lay)
 
         for row in self.widgets:
@@ -57,11 +68,12 @@ class SComposite(QWidget):
                 w = item.get_widget()
                 h_layout.addWidget(w)
                 h_layout.setStretch(i, item.stretch)
+                h_layout.setContentsMargins(0,0,0,0)
         spacer_item = QSpacerItem(40, 20, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.lay_main.addSpacerItem(spacer_item)
-        self.lay_main.setSpacing(0)
         if self.color:
             self.setStyleSheet(f"background-color: {self.color}")
+        
 
     def get_context(self) -> Tuple[dict, FormError]:
         context = {}
@@ -98,3 +110,6 @@ class SComposite(QWidget):
 
     def request_remove(self):
         self.removeRequested.emit(self.index)
+
+    def request_clone(self):
+        self.cloneRequested.emit(self.index)

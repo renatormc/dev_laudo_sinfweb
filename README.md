@@ -6,33 +6,24 @@
 O projeto é de código aberto e fica hospedado no Github. Para efetuar a instalação é preciso antes ter na máquina os seguintes pré-requisitos:
 
 - Python 3.9
-- Virtualenv
+- [Python Poetry](https://python-poetry.org/docs/)
 
 ## Clone o projeto
 ```
 git clone https://github.com/renatormc/fastdoc.git
 ```
 
-## Crie o virtualenv
+## Instale as dependências
 
 ```
-virtualenv .venv
+poetry install
 ```
 
 ## Ative o virtualenv
 
 *Para linux:*
 ```
-source .venv/bin/activate
-```
-*Para Windows:*
-```
-.venv\Scripts\activate
-```
-
-## instale as dependências
-```bash
-pip install -r requirements.txt
+poetry shell
 ```
 
 ## Prepare a pasta

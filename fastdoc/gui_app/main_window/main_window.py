@@ -11,6 +11,7 @@ from fastdoc import config
 import importlib
 from report_writer.custom_types import InitialData
 from fastdoc.gui_app.helpers import get_icon
+from fastdoc.gui_app.manage_models import ManageModelsDialog
 
 
 class MainWindow(QMainWindow):
@@ -33,6 +34,7 @@ class MainWindow(QMainWindow):
         self.ui.cbx_model.currentTextChanged.connect(self.create_form)
         self.ui.btn_clear.clicked.connect(self.clear_content)
         self.ui.btn_initial_data.clicked.connect(self.load_initial_data)
+        self.ui.act_manage_models.triggered.connect(self.manage_models)
 
     def populate_models(self):
         self.ui.cbx_model.clear()
@@ -123,3 +125,7 @@ class MainWindow(QMainWindow):
 
     def clear_content(self):
         self.form.clear_content()
+
+    def manage_models(self):
+        dialog = ManageModelsDialog()
+        dialog.exec_()

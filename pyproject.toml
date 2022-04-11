@@ -22,11 +22,13 @@ Flask-WTF = "^1.0.1"
 PyQtWebEngine = "^5.15.5"
 humanfriendly = "^10.0"
 report-writer = {git = "https://github.com/renatormc/report_writer", branch= "master"}
+SQLAlchemy = "^1.4.35"
 
 [tool.poetry.dev-dependencies]
 pyqt5-stubs = "*"
 mypy = "*"
 types-humanfriendly = "^9.2.6"
+sqlalchemy-stubs = "^0.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

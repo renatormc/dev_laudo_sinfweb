@@ -11,3 +11,4 @@ test.py
 .mypy_cache
 local_data.json
 r-dev-manager.json
+db.db

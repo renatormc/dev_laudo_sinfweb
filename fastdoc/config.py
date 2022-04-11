@@ -22,3 +22,5 @@ try:
         local_data = json.load(f)
 except FileNotFoundError:
     local_data = {}
+
+DATABASE_URI = f"sqlite:///{main_script_dir / 'db.db'}"

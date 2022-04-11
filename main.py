@@ -52,6 +52,9 @@ from fastdoc.app_flask import app as app_flask
 from fastdoc.app_flask import qt
 from fastdoc.app_flask.gui_server import run_server
 from fastdoc.gui_app import run_gui_app
+from database import db
+
+db.init_db()
 
 if args.command == "render":
     if args.model == "choose":

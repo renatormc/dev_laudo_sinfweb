@@ -172,8 +172,26 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuArquivo">
+    <property name="title">
+     <string>Arquivo</string>
+    </property>
+    <addaction name="act_add_token"/>
+    <addaction name="act_manage_models"/>
+   </widget>
+   <addaction name="menuArquivo"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="act_add_token">
+   <property name="text">
+    <string>Adicionar token</string>
+   </property>
+  </action>
+  <action name="act_manage_models">
+   <property name="text">
+    <string>Gerenciar modelos</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

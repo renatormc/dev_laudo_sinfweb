@@ -2,11 +2,10 @@ from pathlib import Path
 from typing import Optional, Union
 import os
 import zipfile
-
-from setuptools import find_namespace_packages
 from fastdoc import config
 import shutil
 from uuid import uuid4
+
 
 def zip_folder(folder_path, output_path) -> None:
     contents = os.walk(folder_path)
@@ -24,6 +23,7 @@ def zip_folder(folder_path, output_path) -> None:
                 zip_file.write(absolute_path, relative_path)
     finally:
         zip_file.close()
+
 
 def unzip_file(file: Union[Path, str], dest: Optional[Union[Path, str]] = None, subfolder=False) -> Path:
     """Unzip a zip file to a folder. If dest is not especified it will be extracted to a temporary folder"""

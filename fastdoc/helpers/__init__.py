@@ -13,6 +13,7 @@ from InquirerPy import inquirer
 import importlib
 import stringcase
 import unidecode
+import imp
 
 
 def get_test_context(model):
@@ -74,6 +75,7 @@ def fix_imports():
     text = "\n".join(lines)
     path = config.models_folder / "__init__.py"
     path.write_text(text, encoding="utf-8")
+    imp.reload(models)
 
 
 def get_objects_from_folder(folder: Path, image_extensions=['.jpg', '.png']) -> CaseObjectsType:

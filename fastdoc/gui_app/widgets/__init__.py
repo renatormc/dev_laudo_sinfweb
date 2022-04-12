@@ -7,6 +7,7 @@ from .sobjects_by_pics import SObjetctsByPics
 from .scheck_box import SCheckBox
 from .sspin_box import SSpinBox
 from .sarray import SArray
+from .svar_form import SVarForm, SVarFormItem
 
 if TYPE_CHECKING:
     from .swidget import SWidget
@@ -19,5 +20,6 @@ __widgets__: list[Type['SWidget']] = [
     SObjetctsByPics,
     SCheckBox,
     SSpinBox,
-    SArray
+    SArray,
+    SVarForm
 ]

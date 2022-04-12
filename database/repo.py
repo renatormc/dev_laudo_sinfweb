@@ -4,7 +4,9 @@ from database.models import *
 
 
 def save_token(name: str, value: str) -> None:
-    token = Token()
+    token = db.session.query(Token).filter(Token.name == name).first()
+    if not token:
+        token = Token()
     token.name = name
     token.value = value
     db.session.add(token)

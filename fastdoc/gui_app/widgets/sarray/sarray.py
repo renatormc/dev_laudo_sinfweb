@@ -1,6 +1,3 @@
-from distutils import errors
-from fastdoc.custom_types import FormError
-# from fastdoc.gui_app.form import Form
 from typing import Any, Optional
 from fastdoc.gui_app.widgets.scomposite import SComposite
 from fastdoc.gui_app.widgets.swidget import SWidget
@@ -21,7 +18,6 @@ class SArray:
         self.widgets = widgets
         super(SArray, self).__init__()
         self._composites: Optional[list[SComposite]] = None
-        # self._lbl_error: Optional[LabelError] = None
 
     @property
     def stretch(self) -> int:
@@ -32,12 +28,6 @@ class SArray:
         if self._composites is None:
             raise Exception("get_widget must be executed once before")
         return self._composites
-
-    # @property
-    # def lbl_error(self) -> LabelError:
-    #     if not self._lbl_error:
-    #         raise Exception("get_widget must be executed once before")
-    #     return self._lbl_error
 
     @property
     def label(self) -> str:
@@ -74,8 +64,6 @@ class SArray:
         lay_main.addWidget(QLabel(self.label))
 
         lay_horizontal = QHBoxLayout()
-        # lay_horizontal.setContentsMargins(0,0,0,0)
-        # lay_horizontal.setSpacing(0)
 
         self.spb_add = QSpinBox()
         self.spb_add.setMinimumHeight(35)
@@ -118,7 +106,8 @@ class SArray:
         for i in range(qtd):
             index = n + i
             widgets = copy.deepcopy(self.widgets)
-            composite = SComposite(widgets, color=Colors.item_array_widget_background, is_array_child=True, index=index)
+            # composite = SComposite(widgets, color=Colors.item_array_widget_background, is_array_child=True, index=index)
+            composite = SComposite(widgets, is_array_child=True, index=index)
             composite.removeRequested.connect(self.remove_by_index)
             composite.cloneRequested.connect(self.clone_by_index)
             self.lay_composites.addWidget(composite)

@@ -1,5 +1,4 @@
-from optparse import Option
-from typing import Any, Optional, Tuple
+from typing import  Optional, Tuple
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QSizePolicy, QToolButton, QLabel
 from PyQt5.QtCore import pyqtSignal
 from fastdoc.custom_types import FormError

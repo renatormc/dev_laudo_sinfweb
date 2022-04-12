@@ -1,8 +1,7 @@
 import json
 from typing import Any
 import sqlalchemy as sa
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base, DeclarativeMeta
+from sqlalchemy.ext.declarative import declarative_base
 
 Base: Any = declarative_base()
 
@@ -18,7 +17,7 @@ class Token(Base):
 
 
 class JsonValue(Base):
-    __tablename__ = 'key_value'
+    __tablename__ = 'json_value'
     id = sa.Column(sa.Integer, primary_key=True)
     key = sa.Column(sa.String(300))
     data_str = sa.Column(sa.Text)
@@ -35,4 +34,12 @@ class JsonValue(Base):
         self.data_str = json.dumps(value)
 
     
-   
+class ItemList(Base):
+    __tablename__ = 'item_list'
+    id = sa.Column(sa.Integer, primary_key=True)
+    model_name = sa.Column(sa.String(300))
+    list_name = sa.Column(sa.String(300))
+    text = sa.Column(sa.Text)
+
+    def __repr__(self) -> str:
+        return self.list

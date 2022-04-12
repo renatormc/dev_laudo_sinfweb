@@ -9,5 +9,5 @@ def run_gui_app():
     if os.name == "nt":
         app.setStyle("fusion")  # type: ignore
     w = MainWindow()
-    w.show()
+    w.showMaximized()
     sys.exit(app.exec_())

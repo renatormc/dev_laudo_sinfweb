@@ -1,12 +1,11 @@
 import subprocess
-import stringcase
 import argparse
 from pathlib import Path
 import sys
 from fastdoc import config
 import shutil
 from InquirerPy import inquirer
-import unidecode
+from fastdoc.helpers import model_name_to_folder_name
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-w', '--workdir', default='.', help='Work directory')
@@ -65,7 +64,7 @@ if args.command == "render":
     print("Renderizado arquivo compilado.docx")
 elif args.command == "new-model":
     full_name = inquirer.text(message="Nome:").execute()
-    folder_name = stringcase.snakecase(unidecode.unidecode(full_name))
+    folder_name = model_name_to_folder_name(full_name)
     folder_from = config.app_dir / "models_example/example"
     folder_to = config.models_folder / folder_name
     shutil.copytree(folder_from, folder_to)

@@ -1,6 +1,12 @@
+from pathlib import Path
+import shutil
+from fastdoc.custom_types import ModelInfo
 from .manage_models_ui import Ui_ManageModels
-from PyQt5.QtWidgets import QDialog, QFileDialog
+from PyQt5.QtWidgets import QDialog, QFileDialog, QMessageBox, QInputDialog, QLineEdit
 from fastdoc.helpers import get_models_info
+from fastdoc import config
+from fastdoc.helpers.zip import zip_folder, unzip_file
+from fastdoc.helpers import model_name_to_folder_name, find_model_meta_by_folder
 
 
 class ManageModelsDialog(QDialog):
@@ -23,10 +29,28 @@ class ManageModelsDialog(QDialog):
             self.ui.cbx_model.addItem(mi.meta['full_name'], mi)
 
     def import_model(self):
-        file_, _ = QFileDialog.getOpenFileName(self, "Escolha um arquivo", "","All Files (*);;Zip Files (*.zip)")
+        file_, _ = QFileDialog.getOpenFileName(self, "Escolha um arquivo", "","Zip Files (*.zip)")
+        if file_:
+            try:
+                folder = unzip_file(file_)
+                meta = find_model_meta_by_folder(folder)
+                model_name = model_name_to_folder_name(meta['full_name'])
+                folder_to = config.models_folder / model_name
+                if folder.exists():
+                    res = QMessageBox.question(self, "Modelo existente", f"Já existe um modelo de nome \"{folder_to}\". Deseja sobrescrevê-lo?")
+                    print(res)
+            finally:
+                shutil.rmtree(folder)
 
     def export_model(self):
-        pass
+        mi: ModelInfo = self.ui.cbx_model.currentData()
+        file_, _ = QFileDialog.getSaveFileName(self, "Escolha um arquivo", f"{mi.name}.zip","Zip Files (*.zip)")
+        if file_:
+            path_from = config.models_folder / mi.name
+            zip_folder(str(path_from), file_)
+            msg = QMessageBox.about(self, "Sucesso", "Modelo exportado com sucesso!")
+            
+
 
     def remove_model(self):
         pass

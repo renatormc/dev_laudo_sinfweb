@@ -64,12 +64,12 @@ class MainWindow(QMainWindow):
 
     def create_form(self):
         if self.form is not None:
-            file_ = config.local_folder / f"{self.form.model_info}.json"
+            file_ = config.local_folder / f"{self.form.model_info.name}.json"
             self.form.save_to_file(file_)
-        model: ModelInfo = self.ui.cbx_model.currentData()
-        form_module = importlib.import_module(f"models.{model.name}.qt_form")
+        mi: ModelInfo = self.ui.cbx_model.currentData()
+        form_module = importlib.import_module(f"models.{mi.name}.qt_form")
         widgets = form_module.widgets
-        self.form = Form(model, widgets)
+        self.form = Form(mi, widgets)
         self.ui.sca_form.setWidget(self.form)
         self.set_buttons_enable(True)
         file_ = config.local_folder / f"{self.form.model_info}.json"

@@ -21,7 +21,6 @@ poetry install
 
 ## Ative o virtualenv
 
-*Para linux:*
 ```
 poetry shell
 ```
@@ -51,7 +50,7 @@ python main.py delete-model
 Abra o arquivo models/my_model/templates/Main.docx e faça as edições. Nessa etapa é utilizado a biblioteca docxtpl. Para maiores detalhes visite a [documentação](https://docxtpl.readthedocs.io/en/latest/) da lib. A linguagem utilizada dentro do template docx é [Jinja2](https://devhints.io/jinja).
 
 ## Crie o formulário de entrada
-Para criação do formulário edite o arquivo **models/my_model/form/__init__.py** utilizando os widgets disponíveis.
+Para criação do formulário edite o arquivo **models/my_model/qt_form/qt_form.py** utilizando os widgets disponíveis.
 
 # Executar o programa
 Para executar o programa utilize o seguinte comando:

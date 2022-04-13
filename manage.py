@@ -14,6 +14,8 @@ p_prepare.add_argument("direction", choices=("up", "down"), help="Direction up o
 
 p_dist = subparsers.add_parser("dist")
 
+p_copy_libs = subparsers.add_parser("copy-libs")
+
 args = parser.parse_args()
 
 if args.command == "prepare":
@@ -44,3 +46,12 @@ elif args.command == "dist":
     python = app_dir / "dist/Python/python.exe"
     subprocess.run([str(python), '-m', 'pip', 'install', '--upgrade', 'pip'])
     subprocess.run([str(python), '-m', 'pip', 'install', '-r', str(app_dir / "requirements.txt")])
+elif args.command == "copy-libs":
+    aux = os.getenv("PYTHON_LOCAL_LIBS_FOLDER")
+    if not aux:
+        raise Exception("Env variable PYTHON_LOCAL_LIBS_FOLDER not set.")
+    libs_folder = Path(aux)
+    to_folder = Path("./libs/report_writer")
+    print(libs_folder)
+    print("Copying report_writer")
+    subprocess.run(['rclone', 'sync', str(libs_folder / "report_writer"), str(to_folder)])

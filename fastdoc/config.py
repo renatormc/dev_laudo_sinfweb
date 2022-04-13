@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 import json
+import tempfile
 
 app_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 main_script_dir = app_dir.parent
@@ -24,3 +25,7 @@ except FileNotFoundError:
     local_data = {}
 
 DATABASE_URI = f"sqlite:///{main_script_dir / 'db.db'}"
+
+TEMPFOLDER = Path(tempfile.gettempdir(), "fastdoc")
+if not TEMPFOLDER.exists():
+    TEMPFOLDER.mkdir()

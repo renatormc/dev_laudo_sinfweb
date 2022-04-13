@@ -1,5 +1,4 @@
-from optparse import Option
-from typing import Any, Optional, Tuple
+from typing import  Optional, Tuple
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSpacerItem, QSizePolicy, QToolButton, QLabel
 from PyQt5.QtCore import pyqtSignal
 from fastdoc.custom_types import FormError
@@ -13,7 +12,7 @@ class SComposite(QWidget):
     cloneRequested = pyqtSignal(int)
 
     def __init__(self, widgets: list[list[SWidget]],
-            color: Optional[str] = "white", is_array_child=False, index: int = 0) -> None:
+            color: Optional[str] = None, is_array_child=False, index: int = 0) -> None:
         super().__init__()
         self._index = index
         self.color = color
@@ -38,12 +37,16 @@ class SComposite(QWidget):
 
     def setup_ui(self):
         self.lay_main = QVBoxLayout()
+        self.lay_main.setContentsMargins(0,0,0,0)
         self.lay_main.setSpacing(0)
         self.setLayout(self.lay_main)
 
         if self.is_array_child:
             lay = QHBoxLayout()
+            lay.setContentsMargins(0,0,0,0)
+            lay.setSpacing(2)
             self.lbl_index = QLabel(str(self.index + 1))
+            self.lbl_index.setContentsMargins(10,0,0,0)
             lay.addWidget(self.lbl_index)
             # lay.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
             
@@ -68,11 +71,11 @@ class SComposite(QWidget):
                 w = item.get_widget()
                 h_layout.addWidget(w)
                 h_layout.setStretch(i, item.stretch)
-                h_layout.setContentsMargins(0,0,0,0)
+                # h_layout.setContentsMargins(0,0,0,0)
         spacer_item = QSpacerItem(40, 20, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.lay_main.addSpacerItem(spacer_item)
         if self.color:
-            self.setStyleSheet(f"background-color: {self.color}")
+            self.setStyleSheet(f"background-color: {self.color}; border-color: {self.color};")
         
 
     def get_context(self) -> Tuple[dict, FormError]:

@@ -57,8 +57,8 @@ class SArray:
         w.setStyleSheet(f"background-color: {Colors.array_widget_background};")
         w.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         lay_main = QVBoxLayout()
-        lay_main.setContentsMargins(0,0,0,0)
-        lay_main.setSpacing(0)
+        # lay_main.setContentsMargins(0,0,0,0)
+        # lay_main.setSpacing(0)
         w.setLayout(lay_main)
 
         lay_main.addWidget(QLabel(self.label))
@@ -107,7 +107,7 @@ class SArray:
             index = n + i
             widgets = copy.deepcopy(self.widgets)
             # composite = SComposite(widgets, color=Colors.item_array_widget_background, is_array_child=True, index=index)
-            composite = SComposite(widgets, is_array_child=True, index=index)
+            composite = SComposite(widgets, is_array_child=True, index=index, color="white")
             composite.removeRequested.connect(self.remove_by_index)
             composite.cloneRequested.connect(self.clone_by_index)
             self.lay_composites.addWidget(composite)

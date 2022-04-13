@@ -4,14 +4,14 @@ from fastdoc.gui_app.widgets.types import ValidationError
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSizePolicy, QComboBox, QHBoxLayout, QSpacerItem
 from fastdoc.gui_app.colors import Colors
 from .svar_form_item import SVarFormItem
-
+import copy
 
 class SVarForm:
     def __init__(self, name: str, choices: list[SVarFormItem], label="", stretch=0) -> None:
         self._name = name
         self._label = label or self.name
         self._stretch = stretch
-        self.choices = choices
+        self.choices = copy.deepcopy(choices)
         super(SVarForm, self).__init__()
         self._current_item: Optional[SVarFormItem] = None
         self.map_choices: dict[str, SVarFormItem] = {}
@@ -48,33 +48,34 @@ class SVarForm:
 
     def get_widget(self) -> QWidget:
         w = QWidget()
-        w.setStyleSheet(f"background-color: blue;")
         w.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.lay_main = QVBoxLayout()
-        # self.lay_main.setContentsMargins(0, 0, 0, 0)
-        # self.lay_main.setSpacing(0)
         w.setLayout(self.lay_main)
 
-        self.lay_main.addWidget(QLabel(self.label))
+        # self.lay_main.addWidget(QLabel(self.label))
 
         lay_horizontal = QHBoxLayout()
+        lay_horizontal.addWidget(QLabel(self.label))
         self.cbx_choice = QComboBox()
-        self.cbx_choice.currentTextChanged.connect(self.change_form)
+        
         self.cbx_choice.addItems(list(self.map_choices.keys()))
         lay_horizontal.addWidget(self.cbx_choice)
         lay_horizontal.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
         self.lay_main.addLayout(lay_horizontal)
+       
 
         self._current_item = self.choices[0]
         self.lay_main.addWidget( self._current_item.form)
+        self.cbx_choice.currentTextChanged.connect(self.change_form)
         return w
 
     def change_form(self):
         if self._current_item is not None:
-            choice = self.cbx_choice.currentText()
             self.current_item.form.setParent(None)
-            self._current_item = self.map_choices[choice]
-            self.lay_main.addWidget(self.current_item.form)
+        choice = self.cbx_choice.currentText()
+        
+        self._current_item = self.map_choices[choice]
+        self.lay_main.addWidget(self.current_item.form)
             
 
 

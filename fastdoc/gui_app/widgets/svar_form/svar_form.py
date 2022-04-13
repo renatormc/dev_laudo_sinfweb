@@ -11,7 +11,7 @@ class SVarForm:
         self._name = name
         self._label = label or self.name
         self._stretch = stretch
-        self.choices = copy.deepcopy(choices)
+        self.choices = [c.clone() for c in choices]
         super(SVarForm, self).__init__()
         self._current_item: Optional[SVarFormItem] = None
         self.map_choices: dict[str, SVarFormItem] = {}
@@ -65,7 +65,7 @@ class SVarForm:
        
 
         self._current_item = self.choices[0]
-        self.lay_main.addWidget( self._current_item.form)
+        self.lay_main.addWidget(self.current_item.form)
         self.cbx_choice.currentTextChanged.connect(self.change_form)
         return w
 

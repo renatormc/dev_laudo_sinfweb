@@ -1,1 +1,0 @@
-from .qt_form import widgets

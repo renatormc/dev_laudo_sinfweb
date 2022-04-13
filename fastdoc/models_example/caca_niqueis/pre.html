@@ -1,0 +1,70 @@
+<!-- Este arquivo é destinado a renderizações de textos longos complexos. O texto compilado será repassado ao contexto de renderização 
+do arquivo docx na variavel definida no atributo "var". Cada div corresponderá a uma variável. -->
+
+<div var="texto_longo">
+    Este texto aparecerá no contexto do docx na variável "texto_longo"
+</div>
+
+<div var="paragrafo_1">
+    {% if n_objetos > 1 %}Os objetos periciados podem ser descritos como dispositivos computacionais acoplados a
+    monitores e montados em estruturas artesanais que possuem características comuns às máquinas caça-níqueis, como o
+    validador de cédulas e o teclado dedicado a apostas.{% else %}O objeto periciado pode ser descrito como um dispositivo computacional acoplado a monitor e montado em estrutura artesanal que possui características comuns às
+    máquinas caça-níqueis, como o validador de cédulas e o teclado dedicado a apostas.{% endif %}
+</div>
+
+<div var="paragrafo_2">
+	{% if maquinas_molhadas %}
+		{% if n_objetos > 1 %}As máquinas examinadas estavam expostas a intempéries e apresentavam indícios de exposição à chuva. Por motivos de segurança, elas não foram conectadas à energia elétrica durante os exames.{% else %}A máquina examinada estava exposta a intempéries e apresentava indícios de exposição à chuva. Por motivos de segurança, ela não foi conectada à energia elétrica durante os exames.{% endif %}
+	{% else %}
+ 		{% if num_maquinas_funcionaram > 0 %}Durante os exames,
+		{% elif num_maquinas_funcionaram == n_objetos %}
+			{% if num_maquinas_funcionaram == 1 %} a máquina periciada ao ser inicializada executou jogo cujo resultado de ganho ou de perda era aleatório, ou seja, ele não dependia da habilidade do jogador.{% else %} todas as máquinas periciadas ao serem inicializadas executaram jogo cujo resultado de ganho ou de perda era aleatório, ou seja, ele não dependia da habilidade do jogador.{% endif %}
+		{% elif num_maquinas_funcionaram > 1 %} as máquinas identificadas com as etiquetas {{ maquinas_funcionaram|join_enumerate(True) }}, ao serem inicializadas, executaram jogos cujo resultado de ganho ou de perda era aleatório, ou seja, ele não dependia da habilidade do jogador.
+		{% else %} a máquina identificada com a etiqueta {{ maquinas_funcionaram|join_enumerate(True) }}, ao ser inicializada, executou jogo cujo resultado de ganho ou de perda era aleatório, ou seja, ele não dependia da habilidade do jogador.{% endif %}
+		
+		{% if num_maquinas_nao_func > 1 %} As demais máquinas não apresentaram funcionamento adequado quando conectadas à tomada de energia elétrica.
+		{% else %} A outra máquina não apresentou funcionamento adequado quando conectada à tomada de energia elétrica.
+		{% endif %}
+						
+		{% if num_maquinas_funcionaram == 0 %}	
+			{% if n_objetos > 1 %}Nenhuma das máquinas periciadas apresentou funcionamento adequado quando conectadas à tomada de energia elétrica.
+			{% else %}A máquina periciada não apresentou funcionamento adequado quando conectada à tomada de energia elétrica.
+			{% endif %}
+		{% endif %}	
+    {% endif %}
+
+</div>    
+    
+
+
+<div var="paragrafo_3">
+    {% if valor_encontrado == '' %}Não foi encontrado valor monetário
+    {% else %}Foi encontrado um total de {{ valor_encontrado|moeda_extenso }}{% endif %}
+    {% if n_objetos > 1 %}no interior das máquinas periciadas.
+    {% else %}no interior da máquina periciada.{% endif %}
+    {% if valor_encontrado != '' %} Este valor foi entregue à autoridade policial mediante a confecção de um termo de exibição e apreensão.
+    {% endif %}
+</div>
+
+<div var="consideracoes_finais_1">
+    {% if n_objetos > 1 %}Os objetos periciados podem ser caracterizados como máquinas caça-níqueis por possuírem mecanismo validador de
+    dinheiro e teclado dedicado a apostas.{% else %}O objeto periciado pode ser caracterizado como máquina caça-níqueis por possuir mecanismo validador de
+    dinheiro e teclado dedicado a apostas.{% endif %}
+
+</div>
+
+
+<div var="consideracoes_finais_2">
+    {% if num_maquinas_funcionaram > 0 %}
+        {% if num_maquinas_funcionaram == n_objetos %}
+            {% if num_maquinas_funcionaram == 1 %}Além disso, a máquina periciada ao ser inicializada executou jogo cujo resultado de ganho ou de perda era aleatório, ou seja, ele não dependia da habilidade do jogador.
+            {% else %} Além disso, todas as {{ n_objetos }} ({{ n_objetos|numero_extenso_fem }}) máquinas periciadas ao serem inicializadas executaram jogo cujo resultado de ganho ou de perda era aleatório, ou seja, ele não dependia da habilidade do jogador.
+            {% endif %}
+        {% else %}
+            {% if num_maquinas_funcionaram == 1 %}Além disso, 1 (uma) das {{ n_objetos }} ({{ n_objetos|numero_extenso_fem }}) máquinas, ao ser inicializada executou jogo cujo resultado de ganho ou de perda era aleatório, ou seja, não dependia da habilidade do jogador.
+            {% else %}Além disso, {{ num_maquinas_funcionaram }} ({{ num_maquinas_funcionaram|numero_extenso_fem }}) das {{ n_objetos }}({{ n_objetos|numero_extenso_fem }}) máquinas, ao serem inicializadas executaram jogos cujo resultado de ganho ou de perda era aleatório, ou seja, não dependia da habilidade do jogador.
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+</div>

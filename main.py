@@ -6,7 +6,6 @@ from fastdoc import config
 import shutil
 from InquirerPy import inquirer
 
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-w', '--workdir', default='.', help='Work directory')
 parser.add_argument('-v', '--verbose', action="store_true",

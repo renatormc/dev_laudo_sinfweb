@@ -1,5 +1,6 @@
 from pathlib import Path
 from datetime import datetime
+from report_writer.helpers import exif_transpose_folder
 
 def folder_to_matrix(folder):
     rows = []
@@ -27,14 +28,10 @@ def concatenate_peritos(relatores, revisores):
 
 
 def pre(context):
-    # """Função que será executada antes da passagem do contexto para
-    # o template. Aqui é possível modificar o contexto. Converter variáveis,
-    # adicionar novas variáveis, etc."""
-    # pass
-
     context["num_peritos"] = len(context["pericia"]["relatores"]) + len(context["pericia"]["revisores"])
     context["num_maquinas_funcionaram"] = len(context["maquinas_funcionaram"])
     context["fotos"]=folder_to_matrix(context["pasta_fotos"])
     context['peritos'] = concatenate_peritos(context["pericia"]['relatores'], context["pericia"]['revisores'])
     context["data_atual"] = datetime.now()
     context["num_maquinas_nao_func"] = context["n_objetos"] - context["num_maquinas_funcionaram"]
+    exif_transpose_folder(context['pasta_fotos'], recursive=True, verbose=True)

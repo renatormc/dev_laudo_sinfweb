@@ -23,6 +23,7 @@ humanfriendly = "^10.0"
 # report-writer = {git = "https://github.com/renatormc/report_writer", branch= "master"}
 report-writer = {path = "./libs/report_writer", develop = true}
 SQLAlchemy = "^1.4.35"
+Pillow = "^9.1.0"
 
 [tool.poetry.dev-dependencies]
 pyqt5-stubs = "*"

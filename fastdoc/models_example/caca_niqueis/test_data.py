@@ -21,7 +21,5 @@ context: dict = {
     "maquinas_funcionaram": ["1", "2"],
     "valor_encontrado" : 250.00,
 
-    "pasta_fotos": r'D:\test\fotos_caca_niqueis',
-    
-
+    "pasta_fotos": r'/media/renato/evidencias/test/FOTOS',
 }

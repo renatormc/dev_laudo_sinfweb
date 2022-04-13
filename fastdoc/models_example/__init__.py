@@ -1,3 +1,3 @@
-from . import example_svar_form
-from . import exemplo
+from . import exemplo__s_var_form
 from . import sinf_generico
+from . import example

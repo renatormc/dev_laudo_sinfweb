@@ -1,3 +1,4 @@
+from typing import Optional
 from fastdoc.gui_app.widgets.scomposite import SComposite
 from fastdoc.gui_app.widgets.swidget import SWidget
 import copy
@@ -6,10 +7,21 @@ import copy
 class SVarFormItem:
     def __init__(self, choice_value: str, widgets: list[list[SWidget]]) -> None:
         self.choice_value = choice_value
-        self.form = SComposite(widgets=widgets)
-        self.form.setStyleSheet("QWidget{background-color: white; padding-left: 0;}")
+        self.widgets = widgets
+        self._composite: Optional[SComposite] = None
+
+    @property
+    def composite(self) -> SComposite:
+        if self._composite is None:
+            raise Exception("Composite was not initialized")
+        return self._composite
+
+    @composite.setter
+    def composite(self, value: SComposite) -> None:
+        self._composite = value
+        self.composite.setStyleSheet("QWidget{background-color: white; padding-left: 0;}")
 
     def clone(self):
-        widgets = copy.deepcopy(self.form.widgets)
+        widgets = copy.deepcopy(self.widgets)
         return SVarFormItem(self.choice_value, widgets)
         

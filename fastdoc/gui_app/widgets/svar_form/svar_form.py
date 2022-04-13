@@ -1,10 +1,11 @@
 from typing import Any, Optional
+from fastdoc.gui_app.widgets.scomposite import SComposite
 from fastdoc.gui_app.widgets.svar_form.svar_form_item import SVarFormItem
 from fastdoc.gui_app.widgets.types import ValidationError
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QSizePolicy, QComboBox, QHBoxLayout, QSpacerItem
 from fastdoc.gui_app.colors import Colors
 from .svar_form_item import SVarFormItem
-import copy
+
 
 class SVarForm:
     def __init__(self, name: str, choices: list[SVarFormItem], label="", stretch=0) -> None:
@@ -12,11 +13,13 @@ class SVarForm:
         self._label = label or self.name
         self._stretch = stretch
         self.choices = [c.clone() for c in choices]
-        super(SVarForm, self).__init__()
         self._current_item: Optional[SVarFormItem] = None
         self.map_choices: dict[str, SVarFormItem] = {}
         for item in self.choices:
             self.map_choices[item.choice_value] = item
+        super(SVarForm, self).__init__()
+        
+
 
     @property
     def current_item(self) -> SVarFormItem:
@@ -41,7 +44,7 @@ class SVarForm:
             'choice': self.current_item.choice_value,
             'data': None
         }
-        data['data'], error = self.current_item.form.get_context()
+        data['data'], error = self.current_item.composite.get_context()
         if error:
             raise ValidationError("Há erros")
         return data
@@ -63,26 +66,29 @@ class SVarForm:
         lay_horizontal.addSpacerItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
         self.lay_main.addLayout(lay_horizontal)
        
-
+        for item in self.choices:
+            item.composite = SComposite(item.widgets)
+            item.composite.setHidden(True)
+            self.lay_main.addWidget(item.composite)
         self._current_item = self.choices[0]
-        self.lay_main.addWidget(self.current_item.form)
+        self.current_item.composite.setHidden(False)
+
         self.cbx_choice.currentTextChanged.connect(self.change_form)
         return w
 
     def change_form(self):
         if self._current_item is not None:
-            self.current_item.form.setParent(None)
+            self.current_item.composite.setHidden(True)
         choice = self.cbx_choice.currentText()
-        
-        self._current_item = self.map_choices[choice]
-        self.lay_main.addWidget(self.current_item.form)
-            
+        if choice:
+            self._current_item = self.map_choices[choice]
+            self.current_item.composite.setHidden(False)
 
 
     def serialize(self) -> Any:
         return {
             'choice': self.current_item.choice_value,
-            'data': self.current_item.form.serialize()
+            'data': self.current_item.composite.serialize()
         }
         
     def load(self, data: dict) -> None:
@@ -90,7 +96,7 @@ class SVarForm:
 
     def clear_content(self) -> None:
         for item in self.choices:
-            item.form.clear_content()
+            item.composite.clear_content()
 
     def show_error(self, message: str) -> None:
         pass

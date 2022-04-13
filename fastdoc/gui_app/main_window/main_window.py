@@ -14,7 +14,7 @@ from fastdoc.gui_app.helpers import get_icon
 from fastdoc.gui_app.manage_models import ManageModelsDialog
 from fastdoc.gui_app.main_window.dialog_token import DialogToken
 from database import repo
-
+import imp
 
 class MainWindow(QMainWindow):
     def __init__(self) -> None:

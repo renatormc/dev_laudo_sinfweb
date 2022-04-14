@@ -1,7 +1,11 @@
+from pathlib import Path
 from typing import TypedDict
 import requests
 import json
 from fastdoc import config
+import sys
+import subprocess
+import os
 
 
 class ReleaseInfo(TypedDict):
@@ -26,3 +30,9 @@ def has_newer_version():
     info_remote = get_remote_version_info()
     info_local = get_local_version_info()
     return info_remote['version'] != info_local['version']
+
+def update():
+    if os.name == "nt":
+        path = config.main_script_dir.parent / "fastdoc_updater/main.exe"
+        subprocess.Popen(['cmd', '/k', str(path)])
+        sys.exit()

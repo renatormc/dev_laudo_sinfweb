@@ -24,6 +24,7 @@ humanfriendly = "^10.0"
 report-writer = {path = "./libs/report_writer", develop = true}
 SQLAlchemy = "^1.4.35"
 Pillow = "^9.1.0"
+requests = "^2.27.1"
 
 [tool.poetry.dev-dependencies]
 pyqt5-stubs = "*"
@@ -31,6 +32,7 @@ mypy = "*"
 types-humanfriendly = "^9.2.6"
 sqlalchemy-stubs = "^0.4"
 autopep8 = "^1.6.0"
+types-requests = "^2.27.16"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

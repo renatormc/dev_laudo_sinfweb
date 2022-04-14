@@ -1,0 +1,8 @@
+compilado.docx
+/__pycache__
+.venv
+.vscode
+test.py
+.idea
+.pytest_cache
+test.docx

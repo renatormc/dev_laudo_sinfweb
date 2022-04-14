@@ -8,6 +8,8 @@ from .scheck_box import SCheckBox
 from .sspin_box import SSpinBox
 from .sarray import SArray
 from .svar_form import SVarForm, SVarFormItem
+from .sfloat import SFloat
+from .sfile_chooser import SFileChooser
 
 if TYPE_CHECKING:
     from .swidget import SWidget
@@ -21,5 +23,7 @@ __widgets__: list[Type['SWidget']] = [
     SCheckBox,
     SSpinBox,
     SArray,
-    SVarForm
+    SVarForm,
+    SFloat,
+    SFileChooser
 ]

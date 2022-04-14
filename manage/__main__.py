@@ -4,7 +4,8 @@ import os
 from pathlib import Path
 import subprocess
 
-app_dir = Path(os.path.dirname(os.path.realpath(__file__)))
+script_dir = Path(os.path.dirname(os.path.realpath(__file__))).absolute()
+app_dir = script_dir.parent
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-v', '--verbose', action="store_true", help="Verbose mode")
@@ -55,7 +56,7 @@ elif args.command == "copy-libs":
     to_folder = Path("./libs/report_writer")
     print(libs_folder)
     print("Copying report_writer")
-    args_ = ['rclone', '--filter-from', str(app_dir / 'rclone_filter.txt'),
+    args_ = ['rclone', '--filter-from', str(script_dir / 'rclone_filter.txt'),
                    'sync', str(libs_folder / "report_writer"), str(to_folder)]
     if args.verbose:
         args_.append("-v")

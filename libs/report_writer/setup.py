@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='report_writer',
     packages=find_packages(),
-    version='0.1.0',
+    version='0.1.1',
     description='Lib for writing reports using docxtpl',
     author='Renato Martins',
     license='MIT',

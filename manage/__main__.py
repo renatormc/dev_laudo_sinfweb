@@ -7,6 +7,7 @@ import subprocess
 app_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 
 parser = argparse.ArgumentParser()
+parser.add_argument('-v', '--verbose', action="store_true", help="Verbose mode")
 subparsers = parser.add_subparsers(dest="command", required=True, help='Command to be used')
 
 p_prepare = subparsers.add_parser("prepare")
@@ -39,7 +40,7 @@ elif args.command == "dist":
             shutil.copytree(path, path_to / item)
         else:
             shutil.copy(path, path_to / item)
-   
+
     path_from = "D:\\portable\\python\\Python3.10.0"
     shutil.copytree(path_from, path_to / "Python")
 
@@ -54,4 +55,8 @@ elif args.command == "copy-libs":
     to_folder = Path("./libs/report_writer")
     print(libs_folder)
     print("Copying report_writer")
-    subprocess.run(['rclone', 'sync', str(libs_folder / "report_writer"), str(to_folder)])
+    args_ = ['rclone', '--filter-from', str(app_dir / 'rclone_filter.txt'),
+                   'sync', str(libs_folder / "report_writer"), str(to_folder)]
+    if args.verbose:
+        args_.append("-v")
+    subprocess.run(args_)

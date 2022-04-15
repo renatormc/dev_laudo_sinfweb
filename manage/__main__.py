@@ -43,15 +43,16 @@ if args.command == "prepare":
         shutil.copytree(app_dir / "fastdoc/models_example", app_dir / "models")
 elif args.command == "dist":
     path_to = app_dir.parent / "dist"
-    itens = ['models', 'fastdoc', 'main.py', 'requirements.txt']
-    # shutil.copytree(app_dir / "dist_start", path_to)
+    itens = ['models', 'fastdoc', 'main.py']
     for item in itens:
         path = app_dir / item
         copy_item(path, path_to / item)
 
+    requirement_to = path_to / 'requirements.txt'
+    subprocess.run(["poetry", 'export', '-f', 'requirements.txt', '--output', str(requirement_to)], shell=True)
     python = path_to / "programs/Python/python.exe"
     subprocess.run([str(python), '-m', 'pip', 'install', '--upgrade', 'pip'])
-    subprocess.run([str(python), '-m', 'pip', 'install', '-r', str(path_to / "requirements.txt")])
+    subprocess.run([str(python), '-m', 'pip', 'install', '-r',str(requirement_to)])
 elif args.command == "copy-libs":
     aux = os.getenv("PYTHON_LOCAL_LIBS_FOLDER")
     if not aux:

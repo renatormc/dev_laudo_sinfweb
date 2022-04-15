@@ -1,4 +1,4 @@
-from report_writer.converters import str2date
+from rlibs.report_writer.converters import str2date
 
 context: dict = {
   "nome": "Renato Martins Costa",

@@ -20,8 +20,6 @@ Bootstrap-Flask = "^2.0.2"
 Flask-WTF = "^1.0.1"
 PyQtWebEngine = "^5.15.5"
 humanfriendly = "^10.0"
-# report-writer = {git = "https://github.com/renatormc/report_writer", branch= "master"}
-report-writer = {path = "./libs/report_writer", develop = true}
 SQLAlchemy = "^1.4.35"
 Pillow = "^9.1.0"
 requests = "^2.27.1"
@@ -33,6 +31,8 @@ types-humanfriendly = "^9.2.6"
 sqlalchemy-stubs = "^0.4"
 autopep8 = "^1.6.0"
 types-requests = "^2.27.16"
+types-Pillow = "^9.0.11"
+types-beautifulsoup4 = "^4.10.18"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

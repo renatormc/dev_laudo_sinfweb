@@ -4,6 +4,20 @@ import os
 from pathlib import Path
 import subprocess
 
+def copy_item(from_: Path, to: Path):
+    if from_.is_dir():
+        try:
+            shutil.rmtree(to)
+        except FileNotFoundError:
+            pass
+        shutil.copytree(from_, to)
+    else:
+        try:
+           to.unlink()
+        except FileNotFoundError:
+            pass
+        shutil.copy(from_, to)
+
 script_dir = Path(os.path.dirname(os.path.realpath(__file__))).absolute()
 app_dir = script_dir.parent
 
@@ -28,26 +42,16 @@ if args.command == "prepare":
         shutil.rmtree(app_dir / "models")
         shutil.copytree(app_dir / "fastdoc/models_example", app_dir / "models")
 elif args.command == "dist":
-    path_to = app_dir / "dist"
+    path_to = app_dir.parent / "dist"
     itens = ['models', 'fastdoc', 'main.py', 'requirements.txt']
-    try:
-        shutil.rmtree(path_to)
-    except FileNotFoundError:
-        pass
-    shutil.copytree(app_dir / "dist_start", path_to)
+    # shutil.copytree(app_dir / "dist_start", path_to)
     for item in itens:
         path = app_dir / item
-        if path.is_dir():
-            shutil.copytree(path, path_to / item)
-        else:
-            shutil.copy(path, path_to / item)
+        copy_item(path, path_to / item)
 
-    path_from = "D:\\portable\\python\\Python3.10.0"
-    shutil.copytree(path_from, path_to / "Python")
-
-    python = app_dir / "dist/Python/python.exe"
+    python = path_to / "programs/Python/python.exe"
     subprocess.run([str(python), '-m', 'pip', 'install', '--upgrade', 'pip'])
-    subprocess.run([str(python), '-m', 'pip', 'install', '-r', str(app_dir / "requirements.txt")])
+    subprocess.run([str(python), '-m', 'pip', 'install', '-r', str(path_to / "requirements.txt")])
 elif args.command == "copy-libs":
     aux = os.getenv("PYTHON_LOCAL_LIBS_FOLDER")
     if not aux:

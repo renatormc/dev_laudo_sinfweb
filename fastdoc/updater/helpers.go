@@ -139,8 +139,8 @@ func GetReleaseInfo() (*ReleaseInfo, error) {
 }
 
 func SyncDown() {
-	info, err := GetReleaseInfo()
-	if err != nil {
-		panic(err)
-	}
+	// info, err := GetReleaseInfo()
+	// if err != nil {
+	// 	panic(err)
+	// }
 }

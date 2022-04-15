@@ -7,7 +7,7 @@ from fastdoc.custom_types import ModelInfo, ModelMetaType
 from fastdoc.custom_types.objects_type import CaseObjectsType
 import models
 from fastdoc import config
-from report_writer import Renderer
+from rlibs.report_writer import Renderer
 from pprint import pprint
 from InquirerPy import inquirer
 import importlib

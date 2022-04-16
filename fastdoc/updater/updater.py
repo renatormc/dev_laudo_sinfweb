@@ -26,7 +26,7 @@ try:
     path.unlink()
 except FileNotFoundError:
     pass
-shutil.copy(Path("./fastdoc/updater/fastdoc.bat", path))
+shutil.copy(Path("./fastdoc/updater/fastdoc.bat"),  path)
 
 #copy models folder
 models_example = Path("./fastdoc/models_example")

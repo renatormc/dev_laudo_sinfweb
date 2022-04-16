@@ -1,5 +1,4 @@
 from . import config
-from .helpers import copy_item
 import subprocess
 import shutil
 
@@ -13,13 +12,8 @@ def prepare(direction: str):
 
 def dist():
     path_to = config.app_dir.parent / "dist"
-    itens = ['models', 'fastdoc', 'main.py']
-    for item in itens:
-        path = config.app_dir / item
-        copy_item(path, path_to / item)
-
-    requirement_to = path_to / 'requirements.txt'
     subprocess.run(["poetry", 'export', '-f', 'requirements.txt', '--output', 'requirements.txt'], shell=True)
-    python = path_to / "programs/Python/python.exe"
-    subprocess.run([str(python), '-m', 'pip', 'install', '--upgrade', 'pip'])
-    subprocess.run([str(python), '-m', 'pip', 'install', '-r',str(requirement_to)])
+    shutil.copy(config.app_dir / "fastdoc/updater/updater.py", path_to / "programs/updater.py")
+    shutil.copy(config.app_dir / "fastdoc/updater/install.bat", path_to / "install.bat")
+
+

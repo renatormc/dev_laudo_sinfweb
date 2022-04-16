@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -65,6 +67,24 @@ func SliceStrContains(s []string, str string) bool {
 	}
 
 	return false
+}
+
+func CmdExec2(args ...string) {
+	baseCmd := args[0]
+	cmdArgs := args[1:]
+
+	cmd := exec.Command(baseCmd, cmdArgs...)
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		log.Fatal(err)
+	}
+	cmd.Start()
+
+	buf := bufio.NewReader(stdout)
+	for {
+		line, _, _ := buf.ReadLine()
+		fmt.Println(string(line))
+	}
 }
 
 func CmdExec(args ...string) (*bytes.Buffer, error) {

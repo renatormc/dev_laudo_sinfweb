@@ -12,7 +12,7 @@ if gitdir.exists() and gitdir.is_dir():
     os.chdir("fastdoc")
     subprocess.check_output(['git', 'reset', '--hard'])
     subprocess.check_output(['git', 'checkout', 'master'])
-    subprocess.check_output(['git', 'pull','oirigin', 'master'])
+    subprocess.check_output(['git', 'pull','origin', 'master'])
 else:
     subprocess.check_output(['git', 'clone', 'https://github.com/renatormc/fastdoc.git'])
     os.chdir("fastdoc")

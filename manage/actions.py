@@ -19,7 +19,7 @@ def dist():
         copy_item(path, path_to / item)
 
     requirement_to = path_to / 'requirements.txt'
-    subprocess.run(["poetry", 'export', '-f', 'requirements.txt', '--output', str(requirement_to)], shell=True)
+    subprocess.run(["poetry", 'export', '-f', 'requirements.txt', '--output', 'requirements.txt'], shell=True)
     python = path_to / "programs/Python/python.exe"
     subprocess.run([str(python), '-m', 'pip', 'install', '--upgrade', 'pip'])
     subprocess.run([str(python), '-m', 'pip', 'install', '-r',str(requirement_to)])

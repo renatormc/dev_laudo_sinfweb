@@ -9,7 +9,7 @@ from PyQt5.QtCore import QSize
 from fastdoc.gui_app.form import Form
 from fastdoc import config
 import importlib
-from rlibs.report_writer.custom_types import InitialData
+from rlibs.report_writer.types import InitialData
 from fastdoc.gui_app.helpers import get_icon
 from fastdoc.gui_app.manage_models import ManageModelsDialog
 from fastdoc.gui_app.main_window.dialog_token import DialogToken

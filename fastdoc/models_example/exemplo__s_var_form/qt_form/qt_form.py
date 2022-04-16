@@ -4,7 +4,7 @@ from fastdoc.gui_app.widgets.swidget import SWidget
 
 widgets: list[list[SWidget]] = [
     [
-        wt.SVarForm('requisicao', choices=[
+        wt.SVarForm('requisicao', label="Requisição", choices=[
             wt.SVarFormItem(choice_value='judiciario', widgets=[
                 [
                     wt.SText("processo", required=True, label="Processo"),

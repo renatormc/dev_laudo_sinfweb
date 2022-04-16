@@ -1,4 +1,4 @@
-from rlibs.report_writer.converters import str2date
+from rlibs.report_writer.converters import str2date, pics_from_subfolders
 
 context: dict = {
     "tipo_exame": "VISTORIA EM OBJETOS",
@@ -21,5 +21,5 @@ context: dict = {
     "maquinas_funcionaram": ["1", "2"],
     "valor_encontrado" : 250.00,
 
-    "pasta_fotos": r'/media/renato/evidencias/test/FOTOS',
+    "fotos": pics_from_subfolders(r'/media/renato/charlie/tests/pericia/FOTOS'),
 }

@@ -1,6 +1,6 @@
 import argparse
-from . import config
-from . import actions as act
+from manage import config
+from manage import actions as act
 
 
 parser = argparse.ArgumentParser()

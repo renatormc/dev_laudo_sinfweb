@@ -21,7 +21,7 @@ else:
 subprocess.check_output([str(python_exe), "-m", "pip", "install", "--upgrade", "pip"])
 subprocess.check_output([str(python_exe), "-m", "pip", "install", "-r", "requirements.txt"])
 
-path = Path("./fastdoc.bat")
+path = Path("../fastdoc.bat")
 try:
     path.unlink()
 except FileNotFoundError:

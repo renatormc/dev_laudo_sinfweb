@@ -13,7 +13,7 @@ try:
     local_folder.mkdir()
 except FileExistsError:
     pass
-workdir: Path = Path(".")
+workdir: Path = Path(".").absolute()
 verbose = False
 SECRET_KEY="!@#QWEsddda"
 

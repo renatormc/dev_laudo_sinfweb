@@ -7,13 +7,10 @@ import shutil
 from InquirerPy import inquirer
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-w', '--workdir', default='.', help='Work directory')
-parser.add_argument('-v', '--verbose', action="store_true",
-                    help="Verbose mode")
-parser.add_argument('--debug', action="store_true",
-                    help="Debug mode")
-subparsers = parser.add_subparsers(
-    dest="command", required=True, help='Command to be used')
+parser.add_argument('-w', '--workdir', help='Work directory')
+parser.add_argument('-v', '--verbose', action="store_true", help="Verbose mode")
+parser.add_argument('--debug', action="store_true", help="Debug mode")
+subparsers = parser.add_subparsers(dest="command", required=True, help='Command to be used')
 
 p_start = subparsers.add_parser("start")
 
@@ -36,31 +33,31 @@ p_update = subparsers.add_parser("update")
 p_publish = subparsers.add_parser("publish")
 
 args = parser.parse_args()
-config.workdir = Path(args.workdir)
 config.verbose = args.verbose
 config.debug = args.debug
-
-
 
 if args.command == "start":
     shutil.copytree(config.models_example_folder, config.models_folder)
     sys.exit()
 
-
-
 from fastdoc.helpers import fix_imports, model_name_to_folder_name
 fix_imports()
-
 
 import fastdoc.helpers as hp
 import models
 from fastdoc.app_flask import app as app_flask
 from fastdoc.app_flask.gui_server import run_server
 from fastdoc.gui_app import run_gui_app
-from database import db
-
+from database import db, repo
 
 db.init_db()
+if args.workdir:
+    config.workdir = Path(args.workdir).absolute()
+    if not config.workdir.exists():
+        raise Exception(f"The directory \"{config.workdir}\" doesn't exist.")
+    repo.save_last_workdir(config.workdir)
+else:
+    config.workdir = repo.get_last_workdir()
 
 if args.command == "render":
     if args.model == "choose":

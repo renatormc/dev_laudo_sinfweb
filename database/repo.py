@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Optional
 from database import db
 from database.models import *
@@ -56,3 +57,21 @@ def search_list_items(model_name: str, list_name: str, search_term: str, limit: 
         query = query.limit(limit)
     items = query.all()
     return [item.text for item in items] if items else []
+
+
+def get_last_workdir() -> Path:
+    jvalue = db.session.query(JsonValue).filter(
+        JsonValue.key == "last_work_dir").first()
+    if not jvalue:
+        return Path(".").absolute()
+    return Path(jvalue.data).absolute()
+
+
+def save_last_workdir(value: str | Path) -> None:
+    jvalue = db.session.query(JsonValue).filter(JsonValue.key == "last_work_dir").first()
+    if not jvalue:
+        jvalue = JsonValue()
+        jvalue.key = "last_work_dir"
+    jvalue.data = str(value)
+    db.session.add(jvalue)
+    db.session.commit()

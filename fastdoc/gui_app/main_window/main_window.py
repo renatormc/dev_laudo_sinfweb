@@ -4,7 +4,7 @@ from typing import Optional
 from fastdoc.custom_types import ModelInfo
 from fastdoc.helpers import open_doc, render_doc, get_models_info
 from fastdoc.gui_app.main_window.main_window_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QDialog
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtCore import QSize
 from fastdoc.gui_app.form import Form
 from fastdoc import config
@@ -14,7 +14,8 @@ from fastdoc.gui_app.helpers import get_icon
 from fastdoc.gui_app.manage_models import ManageModelsDialog
 from fastdoc.gui_app.main_window.dialog_token import DialogToken
 from database import repo
-import imp
+import traceback
+
 
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
@@ -27,6 +28,7 @@ class MainWindow(QMainWindow):
         self.form: Optional[Form] = None
         self.populate_models()
         self.initial_data: Optional[InitialData] = None
+        self.ui.led_workdir.setText(str(config.workdir))
         
 
     def connections(self):
@@ -38,6 +40,7 @@ class MainWindow(QMainWindow):
         self.ui.btn_initial_data.clicked.connect(self.load_initial_data)
         self.ui.act_manage_models.triggered.connect(self.manage_models)
         self.ui.act_add_token.triggered.connect(self.add_token)
+        self.ui.btn_choose_workdir.clicked.connect(self.choose_workdir)
 
     def populate_models(self):
         self.ui.cbx_model.clear()
@@ -119,7 +122,9 @@ class MainWindow(QMainWindow):
                     QMessageBox.about(self, "Arquivo compilado",
                                       f"Arquivo compilado \"{file_}\"")
         except Exception as e:
+            traceback.print_exc()
             QMessageBox.warning(self, "Erro", str(e))
+            
 
     def save(self):
         self.form.save_to_file()
@@ -141,3 +146,12 @@ class MainWindow(QMainWindow):
         if ok:
             repo.save_token(dialog.name, dialog.token)
             QMessageBox.about(self, "Sucesso", "Token salvo com sucesso!")
+
+    def choose_workdir(self):
+        path = Path(self.ui.led_workdir.displayText())
+        dir_ = QFileDialog.getExistingDirectory(self, "Escolher diretóriod e trabalho", str(path))
+        if dir_:
+            path = Path(dir_)
+            config.workdir = path
+            self.ui.led_workdir.setText(str(path))
+            repo.save_last_workdir(path)

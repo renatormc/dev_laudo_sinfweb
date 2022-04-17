@@ -1,8 +1,6 @@
 from rlibs.report_writer.converters import str2date, pics_from_subfolders
 
-
 def get_context():
-
     return {
         "tipo_exame": "VISTORIA EM OBJETOS",
         "procedimento": "RAI 19509193",
@@ -20,9 +18,9 @@ def get_context():
         "n_quesito": 246276,
         "autoridade": "Jacó Machado das Chagas",
 
-        "maquinas_molhadas": False,
+        "maquinas_molhadas" : False,
         "maquinas_funcionaram": ["1", "2"],
-        "valor_encontrado": 250.00,
+        "valor_encontrado" : 250.00,
 
         "fotos": pics_from_subfolders(r'/media/renato/charlie/tests/pericia/FOTOS'),
     }

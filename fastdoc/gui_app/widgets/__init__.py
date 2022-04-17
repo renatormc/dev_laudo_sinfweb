@@ -10,6 +10,8 @@ from .sarray import SArray
 from .svar_form import SVarForm, SVarFormItem
 from .sfloat import SFloat
 from .sfile_chooser import SFileChooser
+from .sstring_list import SStringList
+from .types import ValidationError
 
 if TYPE_CHECKING:
     from .swidget import SWidget
@@ -25,5 +27,6 @@ __widgets__: list[Type['SWidget']] = [
     SArray,
     SVarForm,
     SFloat,
-    SFileChooser
+    SFileChooser,
+    SStringList
 ]

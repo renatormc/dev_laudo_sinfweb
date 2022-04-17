@@ -1,6 +1,5 @@
 from rlibs.report_writer.converters import str2date
 
-
 def get_context():
     return {
         "nome": "joão Silva Pereira",

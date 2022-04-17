@@ -21,6 +21,7 @@ widgets: list[list[SWidget]] = [
         wt.SText("procedimento", label="Procedimento", placeholder="RAI, Inquérito ou Processo"),
         wt.SText("requisitante", label="Requisitante", placeholder="Nome da delegacia ou judiciário"),
         wt.SText("autoridade", label="Autoridade", placeholder="Nome do delegado ou juiz"),
+        wt.SDate("data_exame", label="Data do exame"),
     ],
     [
         wt.SSpinBox("n_objetos", label="Número de objetos"),

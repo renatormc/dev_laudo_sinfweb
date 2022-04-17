@@ -1,4 +1,4 @@
-from rlibs.report_writer.converters import str2date, pics_from_subfolders
+from rlibs.report_writer.converters import str2date
 
 def get_context():
     return {
@@ -10,9 +10,9 @@ def get_context():
             'sinf': 43,
             'rg': 6281,
             'ano': 2022,
-            'relatores': ["Rodrigo Jorge Neves", "Conan de Almeida Alfonso"],
-            'revisores': []
         },
+        'relatores': ["Rodrigo Jorge Neves", "Conan de Almeida Alfonso"],
+        'revisores': [],
         "n_objetos": 2,
         "ocorrencia_odin": "24211/2021",
         "n_quesito": 246276,
@@ -22,5 +22,5 @@ def get_context():
         "maquinas_funcionaram": ["1", "2"],
         "valor_encontrado" : 250.00,
 
-        "fotos": pics_from_subfolders(r'/media/renato/charlie/tests/pericia/FOTOS'),
+        "pasta_fotos": r'/media/renato/charlie/tests/pericia/FOTOS',
     }

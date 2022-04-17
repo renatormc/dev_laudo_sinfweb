@@ -1,5 +1,6 @@
 # Fastdoc
 
+Fastdoc é um progama cujo objetivo é facilitar a redação de documentos tais como laudos. Ao executar o programa o usuário escolhe o tipo de documento o qual ele quer criar, preenche um formulário e clica no botão "Gerar docx" e o programa gerará automaticamente um documento no formato docx já com os dados preenchidos o qual pode ser utilizado para impressão direta ou modificações posteriores utilizando um editor de textos como Word. 
 
 # Instalação no Windows
 
@@ -34,4 +35,24 @@ fastdoc.bat start
 # Como usar
 
 Para utilização do programa execute o arquivo fastdoc.exe. Crie um atalho para tal executável para sua área de trabalho caso ache necessário.
+
+# Gerenciamento de modelos
+
+Os modelos ficam dentro da pasta "models" na raiz do projeto. Cada subpasta é um modelo diferente.
+
+## Criar novo modelo
+Para se criar um novo modelo é necessário executar o comando a seguir:
+
+```
+fastdoc.bat new-model
+```
+
+## Deletar modelos
+Para se deletar um modelo é precisoi digitar o comando a seguir.
+```
+fastdoc.bat delete-model
+```
+*Não delete ou crie modelos deletando ou copiando manualmente as pastas. Sempre utilize os comandos acima.*
+
+Após criação do novo modelo basicamente o que preciso fazer é editar o arquivo templates/Main.docx dentro da pasta do modelo e criar um formulário no arquivo qt_form/qt_form.py.
 

@@ -56,7 +56,6 @@ import fastdoc.helpers as hp
 import models
 from fastdoc.app_flask import app as app_flask
 from fastdoc.app_flask.gui_server import run_server
-print("ASSSSS")
 from fastdoc.gui_app import run_gui_app
 from database import db
 
@@ -67,7 +66,7 @@ if args.command == "render":
     if args.model == "choose":
         args.model = hp.choose_model()
     md = getattr(models, args.model)
-    context = context = md.get_context()
+    context = context = md.test_data.get_context()
     hp.render_doc(args.model, context, "compilado.docx")
     print("Renderizado arquivo compilado.docx")
 elif args.command == "new-model":

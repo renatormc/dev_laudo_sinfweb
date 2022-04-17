@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import TypedDict
 import requests
 import json

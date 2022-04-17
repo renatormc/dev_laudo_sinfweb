@@ -7,7 +7,7 @@ import shutil
 from uuid import uuid4
 
 
-def zip_folder(folder_path, output_path) -> None:
+def zip_folder(folder_path: str, output_path: str) -> None:
     contents = os.walk(folder_path)
     try:
         zip_file = zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED)

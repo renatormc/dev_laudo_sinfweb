@@ -15,6 +15,7 @@ p_prepare.add_argument("direction", choices=(
 
 p_dist = subparsers.add_parser("dist")
 
+
 args = parser.parse_args()
 config.verbose = args.verbose
 

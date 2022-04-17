@@ -34,7 +34,7 @@ fastdoc.bat start
 
 # Como usar
 
-Para utilização do programa execute o arquivo fastdoc.exe. Crie um atalho para tal executável para sua área de trabalho caso ache necessário.
+Para utilização do programa execute o arquivo fastdoc_gui.exe. Crie um atalho para tal executável para sua área de trabalho caso necessário.
 
 # Gerenciamento de modelos
 
@@ -48,7 +48,7 @@ fastdoc.bat new-model
 ```
 
 ## Deletar modelos
-Para se deletar um modelo é precisoi digitar o comando a seguir.
+Para se deletar um modelo é preciso digitar o comando a seguir.
 ```
 fastdoc.bat delete-model
 ```

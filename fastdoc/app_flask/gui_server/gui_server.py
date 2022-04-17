@@ -1,5 +1,6 @@
 import PyQt5.QtWidgets as qw
 from PyQt5.QtCore import Qt
+
 import sys
 from fastdoc.app_flask.gui_server.gui_server_thread import ServerThread
 from fastdoc.app_flask.helpers import get_available_port
@@ -9,6 +10,7 @@ from .gui_server_ui import GuiServerUi
 from pathlib import Path
 from fastdoc import config
 from fastdoc.helpers import init_dir
+
 
 class GuiServer(qw.QMainWindow):
     def __init__(self, port):
@@ -62,7 +64,6 @@ def provide_GUI_for(application):
     w = GuiServer(port)
     w.show()
     return qtapp.exec_()
-
 
 
 

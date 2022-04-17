@@ -40,31 +40,34 @@ config.workdir = Path(args.workdir)
 config.verbose = args.verbose
 config.debug = args.debug
 
+
+
 if args.command == "start":
     shutil.copytree(config.models_example_folder, config.models_folder)
     sys.exit()
 
+
+
 from fastdoc.helpers import fix_imports, model_name_to_folder_name
 fix_imports()
+
 
 import fastdoc.helpers as hp
 import models
 from fastdoc.app_flask import app as app_flask
-from fastdoc.app_flask import qt
 from fastdoc.app_flask.gui_server import run_server
+print("ASSSSS")
 from fastdoc.gui_app import run_gui_app
 from database import db
 
 
 db.init_db()
 
-
-
 if args.command == "render":
     if args.model == "choose":
         args.model = hp.choose_model()
     md = getattr(models, args.model)
-    context = context = md.test_data.context
+    context = context = md.get_context()
     hp.render_doc(args.model, context, "compilado.docx")
     print("Renderizado arquivo compilado.docx")
 elif args.command == "new-model":

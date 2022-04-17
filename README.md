@@ -36,6 +36,14 @@ fastdoc.bat start
 
 Para utilização do programa execute o arquivo fastdoc_gui.exe. Crie um atalho para tal executável para sua área de trabalho caso necessário.
 
+# Como atualizar
+
+Para atualizar ara o terminal na pasta do projeto e digite o seguinte comando.
+```
+git pull origin master
+py -3.10 -m poetry install
+```
+
 # Gerenciamento de modelos
 
 Os modelos ficam dentro da pasta "models" na raiz do projeto. Cada subpasta é um modelo diferente.

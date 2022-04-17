@@ -6,7 +6,7 @@ authors = ["Renato Martins"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 docxtpl = "*"
 jinxed = "*"
 pyqt5 = "*"

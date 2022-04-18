@@ -4,8 +4,9 @@ from typing import Optional
 from fastdoc.custom_types import ModelInfo
 from fastdoc.helpers import open_doc, render_doc, get_models_info
 from fastdoc.gui_app.main_window.main_window_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QInputDialog
 from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QShowEvent
 from fastdoc.gui_app.form import Form
 from fastdoc import config
 import importlib
@@ -15,6 +16,7 @@ from fastdoc.gui_app.manage_models import ManageModelsDialog
 from fastdoc.gui_app.main_window.dialog_token import DialogToken
 from database import repo
 import traceback
+from fastdoc.helpers.update import has_newer_version
 
 
 class MainWindow(QMainWindow):
@@ -41,6 +43,7 @@ class MainWindow(QMainWindow):
         self.ui.act_manage_models.triggered.connect(self.manage_models)
         self.ui.act_add_token.triggered.connect(self.add_token)
         self.ui.btn_choose_workdir.clicked.connect(self.choose_workdir)
+        self.load
 
     def populate_models(self):
         self.ui.cbx_model.clear()
@@ -155,3 +158,10 @@ class MainWindow(QMainWindow):
             config.workdir = path
             self.ui.led_workdir.setText(str(path))
             repo.save_last_workdir(path)
+
+    def showEvent(self, a0: QShowEvent) -> None:
+        # res, info_remote = has_newer_version()
+        # if res:
+        #     QInputDialog.get
+        return super().showEvent(a0)
+

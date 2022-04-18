@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import TypedDict, Tuple
 import requests
 import json
 from fastdoc import config
@@ -25,10 +25,10 @@ def get_remote_version_info() -> ReleaseInfo:
         return {'repo_url': '', 'version': ''}
     return data
 
-def has_newer_version():
+def has_newer_version() -> Tuple[bool, ReleaseInfo]:
     info_remote = get_remote_version_info()
     info_local = get_local_version_info()
-    return info_remote['version'] != info_local['version']
+    return info_remote['version'] != info_local['version'], info_remote
 
 def update():
     if os.name == "nt":

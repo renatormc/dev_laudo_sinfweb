@@ -31,8 +31,8 @@ widgets: list[list[SWidget]] = [
         wt.SText("autoridade", label="Autoridade"),
     ],
     [
-        wt.SText("relatores", label="Relatores",
-                 placeholder="Entre os relatores separados por vírgula", converter=convert_relatores),
+        wt.SStringList("relatores", label="Relatores",
+                 placeholder="Entre os relatores separados por vírgula"),
         wt.SText("revisor", label="Revisor"),
     ],
     [

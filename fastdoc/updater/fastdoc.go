@@ -13,7 +13,7 @@ func main() {
 		panic(err)
 	}
 	exPath := filepath.Dir(ex)
-	pythonExe := filepath.Join(exPath, ".venv", "Scripts", "pythonw.exe")
+	pythonExe := filepath.Join(exPath, "extras", "Python", "pythonw.exe")
 	script := filepath.Join(exPath, "main.py")
 
 	cmd := exec.Command(pythonExe, script, "gui")

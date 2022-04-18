@@ -78,10 +78,10 @@ class SStringList:
         self.lbl_error.setText(message)
 
     def serialize(self) -> Any:
-        return self.w.displayText()
+        return [item.strip() for item in  self.w.displayText().split(self.separator)]
 
     def load(self, value: Any) -> None:
-        self.w.setText(value)
+        self.w.setText(self.separator.join(value))
 
     def clear_content(self) -> None:
         self.w.setText(self.default)

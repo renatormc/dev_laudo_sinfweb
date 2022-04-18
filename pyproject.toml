@@ -24,6 +24,7 @@ SQLAlchemy = "^1.4.35"
 Pillow = "^9.1.0"
 requests = "^2.27.1"
 "pdfminer.six" = "^20220319"
+PyJWT = "^2.3.0"
 
 [tool.poetry.dev-dependencies]
 pyqt5-stubs = "*"

@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Optional
+from unicodedata import name
 from database import db
 from database.models import *
 
@@ -14,8 +15,11 @@ def save_token(name: str, value: str) -> None:
     db.session.commit()
 
 
-def get_token(name: str) -> Optional[Token]:
-    return db.session.query(Token).filter(Token.name == name).first()
+def get_token(name: str) -> Optional[str]:
+    token = db.session.query(Token).filter(Token.name == name).first()
+    if token:
+        return token.value
+    return None
 
 
 def get_json_value(key):

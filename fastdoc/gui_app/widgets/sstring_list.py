@@ -52,13 +52,14 @@ class SStringList:
         return self._name
 
     def get_context(self) -> Any:
-        data = [item.strip() for item in  self.w.displayText().split(self.separator)]
+        data = [item.strip() for item in  self.w.displayText().split(self.separator) if item.strip() != '']
         if self.required and data == []:
             raise ValidationError('O valor não pode ser vazio')
         if self.converter is not None:
             data =  apply_converter(data, self.converter)
         for v in self.validators:
             v(data)
+        print(data)
         return data
 
     def get_widget(self) -> QWidget:
@@ -78,7 +79,7 @@ class SStringList:
         self.lbl_error.setText(message)
 
     def serialize(self) -> Any:
-        return [item.strip() for item in  self.w.displayText().split(self.separator)]
+        return [item.strip() for item in  self.w.displayText().split(self.separator) if item.strip() != '']
 
     def load(self, value: Any) -> None:
         self.w.setText(self.separator.join(value))

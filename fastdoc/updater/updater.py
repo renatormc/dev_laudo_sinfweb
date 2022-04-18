@@ -6,7 +6,7 @@ import sys
 app_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 gitdir = Path("fastdoc/.git")
 python_exe = Path(sys.executable)
-git_exe =  (app_dir / "../../extras/GitPortable/GitBashPortable.exe").absolute()
+git_exe =  (app_dir / "../../extras/GitPortable/App/Git/bin/git.exe").absolute()
 
 if gitdir.exists() and gitdir.is_dir():
     os.chdir("fastdoc")

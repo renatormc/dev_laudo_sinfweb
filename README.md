@@ -2,7 +2,11 @@
 
 Fastdoc é um progama cujo objetivo é facilitar a redação de documentos tais como laudos. Ao executar o programa o usuário escolhe o tipo de documento o qual ele quer criar, preenche um formulário e clica no botão "Gerar docx" e o programa gerará automaticamente um documento no formato docx já com os dados preenchidos o qual pode ser utilizado para impressão direta ou modificações posteriores utilizando um editor de textos como Word. 
 
-# Instalação no Windows
+# Instalação no Windows binários
+
+Baixe o [pacote](https://www.4shared.com/zip/E9zhHVF_ea/fastdoc.html?) e o descompacte em uma pasta de sua preferência.
+
+# Instalação no Windows modo manual
 
 ## Instalar Python versão 3.10
 

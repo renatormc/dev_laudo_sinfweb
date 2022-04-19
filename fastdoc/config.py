@@ -31,5 +31,4 @@ TEMPFOLDER = Path(tempfile.gettempdir(), "fastdoc")
 if not TEMPFOLDER.exists():
     TEMPFOLDER.mkdir()
 
-print(sys.executable)
-SELF_CONTAINED: bool = "extras\\Python\\python.exe" in sys.executable
+SELF_CONTAINED: bool = "extras\\Python\\python.exe" in sys.executable or "extras\\Python\\pythonw.exe" in sys.executable

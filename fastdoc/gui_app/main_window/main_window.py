@@ -19,6 +19,7 @@ from fastdoc.gui_app.main_window.dialog_token import DialogToken
 from database import repo
 import traceback
 from fastdoc.helpers.update import has_newer_version
+from fastdoc.gui_app.about_dialog import AboutDialog
 
 
 class MainWindow(QMainWindow):
@@ -44,7 +45,7 @@ class MainWindow(QMainWindow):
         self.ui.act_manage_models.triggered.connect(self.manage_models)
         self.ui.act_add_token.triggered.connect(self.add_token)
         self.ui.btn_choose_workdir.clicked.connect(self.choose_workdir)
-        self.load
+        self.ui.act_about.triggered.connect(self.show_about_dialog)
 
     def populate_models(self):
         self.ui.cbx_model.clear()
@@ -174,3 +175,7 @@ class MainWindow(QMainWindow):
                     subprocess.Popen(['cmd', '/k', str(path)])
                     sys.exit()
         return super().showEvent(a0)
+
+    def show_about_dialog(self):
+        dialog = AboutDialog()
+        dialog.exec_()

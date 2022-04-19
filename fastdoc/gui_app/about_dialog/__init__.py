@@ -5,8 +5,8 @@ from fastdoc.helpers.update import get_local_version_info
 from fastdoc.gui_app.helpers import get_icon
 
 class AboutDialog(QDialog):
-    def __init__(self):
-        super(self.__class__, self).__init__()
+    def __init__(self, parent):
+        super(self.__class__, self).__init__(parent)
         self.ui = Ui_AboutDialog()
         self.ui.setupUi(self)
         self.connections()

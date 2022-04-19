@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 import json
 import tempfile
@@ -29,3 +30,5 @@ DATABASE_URI = f"sqlite:///{main_script_dir / 'db.db'}"
 TEMPFOLDER = Path(tempfile.gettempdir(), "fastdoc")
 if not TEMPFOLDER.exists():
     TEMPFOLDER.mkdir()
+
+SELF_CONTAINED: bool = "extras\\Python\\python.exe" in sys.executable

@@ -1,17 +1,19 @@
 import os
+import sys
+import subprocess
 from pathlib import Path
 from typing import Optional
 from fastdoc.custom_types import ModelInfo
 from fastdoc.helpers import open_doc, render_doc, get_models_info
 from fastdoc.gui_app.main_window.main_window_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QShowEvent
 from fastdoc.gui_app.form import Form
 from fastdoc import config
 import importlib
 from rlibs.report_writer.types import InitialData
-from fastdoc.gui_app.helpers import get_icon
+from fastdoc.gui_app.helpers import ask_confirmation, get_icon
 from fastdoc.gui_app.manage_models import ManageModelsDialog
 from fastdoc.gui_app.main_window.dialog_token import DialogToken
 from database import repo
@@ -31,7 +33,6 @@ class MainWindow(QMainWindow):
         self.populate_models()
         self.initial_data: Optional[InitialData] = None
         self.ui.led_workdir.setText(str(config.workdir))
-        
 
     def connections(self):
         self.ui.btn_render.clicked.connect(self.render)
@@ -89,17 +90,19 @@ class MainWindow(QMainWindow):
                 self.form.clear_content()
         else:
             self.set_buttons_enable(False)
-           
 
     def load_initial_data(self) -> None:
         if self.form:
             mi = self.ui.cbx_model.currentData()
             initial_feeder = importlib.import_module(
                 f"models.{mi.name}.initial_feeder")
-            self.initial_data = initial_feeder.get_initial_data(
-                config.workdir)
-            if self.initial_data is not None:
-                self.form.load(self.initial_data.form_data)
+            try:
+                self.initial_data = initial_feeder.get_initial_data(config.workdir)
+                if self.initial_data is not None:
+                    self.form.load(self.initial_data.form_data)
+            except Exception as e:
+                traceback.print_exc()
+                QMessageBox.warning(self, "Erro", str(e))
 
     def render(self):
         file_ = config.local_folder / f"{self.form.model_info.name}.json"
@@ -117,8 +120,9 @@ class MainWindow(QMainWindow):
             if file_:
                 render_doc(self.form.model_info.name, context, file_)
                 if os.name == "nt":
-                    reply = QMessageBox.question(
-                        self, "Arquivo compilado", "Arquivo compilado. Deseja abri-lo no seu editor de textos padrão?", QMessageBox.Yes, QMessageBox.No)
+                    reply = QMessageBox.question(self, "Arquivo compilado",
+                                                 "Arquivo compilado. Deseja abri-lo no seu editor de textos padrão?",
+                                                 QMessageBox.Yes, QMessageBox.No)
                     if reply == QMessageBox.Yes:
                         open_doc(file_)
                 else:
@@ -127,7 +131,6 @@ class MainWindow(QMainWindow):
         except Exception as e:
             traceback.print_exc()
             QMessageBox.warning(self, "Erro", str(e))
-            
 
     def save(self):
         self.form.save_to_file()
@@ -160,8 +163,14 @@ class MainWindow(QMainWindow):
             repo.save_last_workdir(path)
 
     def showEvent(self, a0: QShowEvent) -> None:
-        # res, info_remote = has_newer_version()
-        # if res:
-        #     QInputDialog.get
+        if config.SELF_CONTAINED:
+            res, info_remote = has_newer_version()
+            if not res:
+                res = ask_confirmation(
+                    self, "Nova versão disponível",
+                    f"Seu programa está desatualizado. A versão {info_remote['version']} está disponível. Gostaria de atualizar?")
+                if res:
+                    path = config.main_script_dir / "fastdoc_update.bat"
+                    subprocess.Popen(['cmd', '/k', str(path)])
+                    sys.exit()
         return super().showEvent(a0)
-

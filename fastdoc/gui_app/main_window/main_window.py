@@ -109,6 +109,8 @@ class MainWindow(QMainWindow):
         file_ = config.local_folder / f"{self.form.model_info.name}.json"
         self.form.save_to_file(file_)
         context, errors = self.form.get_context()
+        if config.debug:
+            print(context)
         if errors:
             QMessageBox.warning(self, "Erro de formulário",
                                 "Há erros em seu formulário. Corrija-os antes de prosseguir.")

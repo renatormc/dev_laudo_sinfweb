@@ -129,8 +129,7 @@ class MainWindow(QMainWindow):
                     if reply == QMessageBox.Yes:
                         open_doc(file_)
                 else:
-                    QMessageBox.about(self, "Arquivo compilado",
-                                      f"Arquivo compilado \"{file_}\"")
+                    QMessageBox.about(self, "Arquivo compilado", f"Arquivo compilado \"{file_}\"")
         except Exception as e:
             traceback.print_exc()
             QMessageBox.warning(self, "Erro", str(e))

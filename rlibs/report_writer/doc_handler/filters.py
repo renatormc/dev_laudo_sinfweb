@@ -121,7 +121,10 @@ class Filters:
 
     @staticmethod
     def join_enumerate(values, with_quotes=False):
-        if len(values) == 1:
+        n = len(values)
+        if n == 0:
+            return ""
+        if n == 1:
             return str(values[0])
         if with_quotes:
             values = [f"\"{v}\"" for v in values]

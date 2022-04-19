@@ -12,5 +12,6 @@ subprocess.check_output([str(git_exe), 'checkout', 'master'])
 subprocess.check_output([str(git_exe), 'pull','origin', 'master'])
 
 subprocess.check_output([str(python_exe), "-m", "pip", "install", "-r", "requirements.txt"])
+print("Aplicativo atualizado com sucesso!")
 
 

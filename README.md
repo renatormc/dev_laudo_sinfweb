@@ -2,24 +2,18 @@
 
 Fastdoc é um progama cujo objetivo é facilitar a redação de documentos tais como laudos. Ao executar o programa o usuário escolhe o tipo de documento o qual ele quer criar, preenche um formulário e clica no botão "Gerar docx" e o programa gerará automaticamente um documento no formato docx já com os dados preenchidos o qual pode ser utilizado para impressão direta ou modificações posteriores utilizando um editor de textos como Word. 
 
-# Instalação no Windows binários
+# Instalação no Windows (forma mais fácil)
 
 Baixe o [pacote](https://www.4shared.com/zip/E9zhHVF_ea/fastdoc.html?) e o descompacte em uma pasta de sua preferência.
+Execute o arquivo fastdoc_gui.exe. Crie um atalho para ele na area de trabalho caso necessário.
 
-# Instalação no Windows modo manual
+# Instalação Manual
 
-## Instalar Python versão 3.10
+Requisitos:
 
-Baixe o [instalador](https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe) e efetue a instalação.
-
-## Instalar o git
-
-Efetue a instalação do git em sua máquina. Uma forma de se efetuar tal instalação é utilizando este [link](https://git-scm.com/downloads).
-Outra forma de se instalar o git é utilizando [Chocolatey](https://chocolatey.org/install) com  o commando:
-
-```
-choco install git
-```
+- Ter Python 3.10 instalado
+- Ter git instalado
+- Ter Poetry instalado
 
 ## Clone o projeto
 Abra o terminal em uma pasta na qual você irá salvar o projeto e execute o seguinte comando
@@ -31,21 +25,25 @@ git clone https://github.com/renatormc/fastdoc.git
 Abra o terminal na pasta fastdoc criada e execute os comandos a seguir na sequência
 
 ```
-py -3.10 -m pip install poetry
-py -3.10 -m poetry install
-fastdoc.bat start
+poetry install
+poetry shell
+python main.py start
 ```
 
-# Como usar
 
-Para utilização do programa execute o arquivo fastdoc_gui.exe. Crie um atalho para tal executável para sua área de trabalho caso necessário.
+## Como usar
 
-# Como atualizar
+Para execução rode o programa com o comando abaixo:
+```
+python main.py gui
+```
+
+## Como atualizar
 
 Para atualizar ara o terminal na pasta do projeto e digite o seguinte comando.
 ```
 git pull origin master
-py -3.10 -m poetry install
+poetry install
 ```
 
 # Gerenciamento de modelos

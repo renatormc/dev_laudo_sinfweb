@@ -167,7 +167,7 @@ class MainWindow(QMainWindow):
     def showEvent(self, a0: QShowEvent) -> None:
         if config.SELF_CONTAINED:
             res, info_remote = has_newer_version()
-            if not res:
+            if res:
                 res = ask_confirmation(
                     self, "Nova versão disponível",
                     f"Seu programa está desatualizado. A versão {info_remote['version']} está disponível. Gostaria de atualizar?")

@@ -32,6 +32,8 @@ p_update = subparsers.add_parser("update")
 
 p_publish = subparsers.add_parser("publish")
 
+p_version = subparsers.add_parser("version")
+
 args = parser.parse_args()
 config.verbose = args.verbose
 config.debug = args.debug
@@ -49,6 +51,7 @@ from fastdoc.app_flask import app as app_flask
 from fastdoc.app_flask.gui_server import run_server
 from fastdoc.gui_app import run_gui_app
 from database import db, repo
+from fastdoc.helpers.update import get_local_version_info, get_remote_version_info
 
 db.init_db()
 if args.workdir:
@@ -103,3 +106,7 @@ elif args.command == "publish":
     rclone_exe = config.main_script_dir / "dist_start/rclone-v1.58.0-windows-amd64/rclone.exe"
     subprocess.Popen(
         [str(rclone_exe), 'sync', '-v', str(config.main_script_dir / "dist"), config.local_data['shared_folder']])
+elif args.command == "version":
+    info_remote = get_remote_version_info()
+    info_local = get_local_version_info()
+    print(f"Current version: {info_local['version']}. Available version: {info_remote['version']}")

@@ -18,12 +18,10 @@ nome_meses = [
 ]
 
 
-
 class Filters:
     @staticmethod
     def br(value, loop_):
         return value if loop_.index == 1 else f"<w:br/>{value}"
-
 
     @staticmethod
     def not_null(value):
@@ -45,14 +43,12 @@ class Filters:
         dia_extenso = get_extenso(value.day)
         return f"{dia} ({dia_extenso}) dias do mês de {nome_meses[value.month - 1]} do ano de {value.year} ({get_extenso(value.year)})"
 
-  
     @staticmethod
     def data_mes_extenso(value):
         if not isinstance(value, datetime):
             return ""
-        dia = str(value.day) if value.day > 1 else f"{value.day}°"  
+        dia = str(value.day) if value.day > 1 else f"{value.day}°"
         return f"{dia} de {nome_meses[value.month - 1]} de {value.year}"
-      
 
     @staticmethod
     def hora_minuto(value):
@@ -138,18 +134,17 @@ class Filters:
     def moeda_extenso(value, prefix="R$ "):
         value_str = f"{value:.2f}".replace(".", ",")
         reais = math.floor(value)
-        centavos = int((value%reais + 0.0000000001)*100) if reais > 0 else value*100
+        centavos = int((value % reais + 0.0000000001)*100) if reais > 0 else value*100
         reais_text = get_extenso(reais)
         aux1 = "reais" if reais > 1 else "real"
         aux2 = "centavos" if centavos > 1 else "centavo"
         centavos_text = get_extenso(centavos)
-        
+
         middle_text = f"{reais_text} {aux1}"
         if centavos > 0:
             middle_text += f" e {centavos_text} {aux2}"
         text = f"{prefix}{value_str} ({middle_text})"
         return text
-
 
 
 filters = [getattr(Filters, func) for func in dir(Filters) if callable(

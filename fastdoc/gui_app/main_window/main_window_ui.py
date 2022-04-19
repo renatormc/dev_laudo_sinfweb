@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'fastdoc\gui_app\main_window\main_window.ui'
+# Form implementation generated from reading ui file 'fastdoc/gui_app/main_window/main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -43,7 +43,7 @@ class Ui_MainWindow(object):
         self.sca_form.setWidgetResizable(True)
         self.sca_form.setObjectName("sca_form")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1173, 684))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1173, 676))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.sca_form.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_2.addWidget(self.sca_form)
@@ -76,10 +76,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1193, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1193, 22))
         self.menubar.setObjectName("menubar")
         self.menuArquivo = QtWidgets.QMenu(self.menubar)
         self.menuArquivo.setObjectName("menuArquivo")
+        self.menuSobre = QtWidgets.QMenu(self.menubar)
+        self.menuSobre.setObjectName("menuSobre")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -88,9 +90,13 @@ class Ui_MainWindow(object):
         self.act_add_token.setObjectName("act_add_token")
         self.act_manage_models = QtWidgets.QAction(MainWindow)
         self.act_manage_models.setObjectName("act_manage_models")
+        self.act_about = QtWidgets.QAction(MainWindow)
+        self.act_about.setObjectName("act_about")
         self.menuArquivo.addAction(self.act_add_token)
         self.menuArquivo.addAction(self.act_manage_models)
+        self.menuSobre.addAction(self.act_about)
         self.menubar.addAction(self.menuArquivo.menuAction())
+        self.menubar.addAction(self.menuSobre.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -107,5 +113,7 @@ class Ui_MainWindow(object):
         self.btn_initial_data.setText(_translate("MainWindow", "Carregar dados iniciais"))
         self.btn_clear.setText(_translate("MainWindow", "Limpar"))
         self.menuArquivo.setTitle(_translate("MainWindow", "Arquivo"))
+        self.menuSobre.setTitle(_translate("MainWindow", "Ajuda"))
         self.act_add_token.setText(_translate("MainWindow", "Adicionar token"))
         self.act_manage_models.setText(_translate("MainWindow", "Gerenciar modelos"))
+        self.act_about.setText(_translate("MainWindow", "Sobre"))

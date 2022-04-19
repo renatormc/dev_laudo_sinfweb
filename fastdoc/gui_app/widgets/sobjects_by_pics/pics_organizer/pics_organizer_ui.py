@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'fastdoc\gui_app\widgets\sobjects_by_pics\pics_organizer\pics_organizer.ui'
+# Form implementation generated from reading ui file 'fastdoc/gui_app/widgets/sobjects_by_pics/pics_organizer/pics_organizer.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #

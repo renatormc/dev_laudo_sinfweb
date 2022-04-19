@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'fastdoc\gui_app\main_window\dialog_token\dialog_token.ui'
+# Form implementation generated from reading ui file 'fastdoc/gui_app/main_window/dialog_token/dialog_token.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #

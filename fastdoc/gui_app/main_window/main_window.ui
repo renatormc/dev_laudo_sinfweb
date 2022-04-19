@@ -68,7 +68,7 @@
          <x>0</x>
          <y>0</y>
          <width>1173</width>
-         <height>684</height>
+         <height>676</height>
         </rect>
        </property>
       </widget>
@@ -177,7 +177,7 @@
      <x>0</x>
      <y>0</y>
      <width>1193</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArquivo">
@@ -187,7 +187,14 @@
     <addaction name="act_add_token"/>
     <addaction name="act_manage_models"/>
    </widget>
+   <widget class="QMenu" name="menuSobre">
+    <property name="title">
+     <string>Ajuda</string>
+    </property>
+    <addaction name="act_about"/>
+   </widget>
    <addaction name="menuArquivo"/>
+   <addaction name="menuSobre"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="act_add_token">
@@ -198,6 +205,11 @@
   <action name="act_manage_models">
    <property name="text">
     <string>Gerenciar modelos</string>
+   </property>
+  </action>
+  <action name="act_about">
+   <property name="text">
+    <string>Sobre</string>
    </property>
   </action>
  </widget>

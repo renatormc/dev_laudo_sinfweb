@@ -178,5 +178,5 @@ class MainWindow(QMainWindow):
         return super().showEvent(a0)
 
     def show_about_dialog(self):
-        dialog = AboutDialog()
+        dialog = AboutDialog(self)
         dialog.exec_()

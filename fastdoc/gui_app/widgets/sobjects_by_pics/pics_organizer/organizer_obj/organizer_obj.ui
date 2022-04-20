@@ -62,7 +62,7 @@
       <enum>Qt::MoveAction</enum>
      </property>
      <property name="selectionMode">
-      <enum>QAbstractItemView::MultiSelection</enum>
+      <enum>QAbstractItemView::ExtendedSelection</enum>
      </property>
      <property name="iconSize">
       <size>

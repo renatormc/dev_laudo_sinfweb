@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from typing import Literal, Optional, Union
 from fastdoc.custom_types import ModelInfo, ModelMetaType
-from fastdoc.custom_types.objects_type import CaseObjectsType
+from rlibs.report_writer.types import CaseObjectsType
 import models
 from fastdoc import config
 from rlibs.report_writer import Renderer

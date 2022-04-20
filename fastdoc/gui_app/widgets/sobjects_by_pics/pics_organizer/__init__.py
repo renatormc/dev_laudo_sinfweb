@@ -1,7 +1,7 @@
 # from copy import copy
 from pathlib import Path
 
-from fastdoc.custom_types.objects_type import CaseObjectsType, ObjectType
+from rlibs.report_writer.types import CaseObjectsType, ObjectType
 from fastdoc.gui_app.widgets.types import ObjectPicUserData
 from .pics_organizer_ui import Ui_PicsOrganizer
 from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidget
@@ -47,7 +47,6 @@ class PicsOrganizer(QDialog):
     def populate(self):
         self.ui.lsw_not_associated.clear()
         for pic in self.objects.pics_not_classified_iterator():
-            print(pic)
             item = QListWidgetItem()
             item.setTextAlignment(Qt.AlignCenter)
             icon = QIcon()
@@ -74,10 +73,11 @@ class PicsOrganizer(QDialog):
         pixmap = QPixmap(str(pic))
         user_data = ObjectPicUserData(pic=pic, original_size=pixmap.size())
         item.setData(Qt.UserRole, user_data)
-        self.ajust_size_hint(item, self.pic_size)
+        ajust_size_hint(item, self.pic_size)
         icon.addPixmap(pixmap, QIcon.Normal, QIcon.Off)
         item.setIcon(icon)
         item.setText(pic.name)
+        objw.ui.lsw_object.addItem(item)
 
     def add_object(self) -> OrganizerObj:
         index = len(self.objects_widgets)
@@ -163,6 +163,6 @@ class PicsOrganizer(QDialog):
         self.objects.pics_not_classified = pics
         self.objects.objects = []
         for objw in self.objects_widgets:
-            obj = ObjectType(folder=self.objects.folder, pics=objw.pics, name=objw.name)
+            obj = ObjectType(pics=objw.pics, name=objw.name)
             self.objects.objects.append(obj)
         self.accept()

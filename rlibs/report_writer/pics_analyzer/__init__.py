@@ -1,5 +1,7 @@
+from pathlib import Path
 import re
-from typing import TypedDict, Optional
+from typing import TypedDict, Optional, Union
+from rlibs.report_writer.types import CaseObjectsType, ObjectType
 
 
 class AnalyzedPicInfo(TypedDict):
@@ -25,3 +27,28 @@ class NameAnalyzer:
         }
         if ret['obj_number'] is not None:
             return ret
+
+
+def get_objects_from_pics(folder: Union[Path, str]) -> CaseObjectsType:
+    folder = Path(folder)
+    objects = CaseObjectsType(folder)
+    analyzer = NameAnalyzer()
+    obj_map: dict[str, ObjectType] = {}
+    for entry in folder.iterdir():
+        if entry.name.startswith("_"):
+            continue
+        res = analyzer.analise_name(entry.stem)
+        if not res:
+            continue
+        if objects.alias and res['alias'] != objects.alias:
+            objects = CaseObjectsType(folder)
+            objects.pics_not_classified = [entry.name for entry in folder.iterdir()]
+            return objects
+        objects.alias = res['alias']
+        try:
+            obj_map[res['obj_number']].pics.append(str(entry.absolute()))
+        except KeyError:
+            obj = ObjectType(name=res['obj_number'], pics=[str(entry.absolute())])
+            obj_map[res['obj_number']] = obj
+    objects.objects = [obj for obj in obj_map.values()]
+    return objects

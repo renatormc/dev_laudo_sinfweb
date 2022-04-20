@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Optional, Union
 from fastdoc.gui_app.widgets.helpers import apply_converter
-from fastdoc.custom_types.objects_type import CaseObjectsType
+from rlibs.report_writer.types import CaseObjectsType
 from fastdoc.gui_app.widgets.types import ValidationError
 
 from PyQt5.QtWidgets import QLineEdit
@@ -9,6 +9,8 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QToolButt
 from fastdoc.custom_types import ConverterType, ValidatorType
 from fastdoc.gui_app.widgets.label_error import LabelError
 from fastdoc.gui_app.widgets.sobjects_by_pics.pics_organizer import PicsOrganizer
+from rlibs.report_writer.pics_analyzer import get_objects_from_pics
+from fastdoc import config
 
 
 class SObjetctsByPics:
@@ -30,7 +32,7 @@ class SObjetctsByPics:
         self._lbl_error: Optional[LabelError] = None
         self._btn_choose: Optional[QToolButton] = None
         self._btn_open_organizer: Optional[QToolButton] = None
-        self.current_objects: CaseObjectsType = CaseObjectsType()
+        self.current_objects: CaseObjectsType = CaseObjectsType(config.workdir)
 
     @property
     def stretch(self) -> int:
@@ -150,8 +152,11 @@ class SObjetctsByPics:
     def on_folder_change(self, value):
         path = Path(value)
         if path.exists() and path.is_dir():
-            self.current_objects = CaseObjectsType(pics_not_classified=self.get_pics_from_folder(path))
+            # self.current_objects = CaseObjectsType(pics_not_classified=self.get_pics_from_folder(path))
+            self.current_objects = get_objects_from_pics(path)
             self.btn_open_organizer.setEnabled(True)
         else:
             self.current_objects = CaseObjectsType()
             self.btn_open_organizer.setEnabled(False)
+
+    

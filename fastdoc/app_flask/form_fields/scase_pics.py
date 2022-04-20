@@ -1,7 +1,7 @@
 from wtforms import Field
 from wtforms.widgets import TextInput
 import json
-from fastdoc.custom_types.objects_type import CaseObjectsType
+from rlibs.report_writer.types import CaseObjectsType
 
 
 class SCasePics(Field):

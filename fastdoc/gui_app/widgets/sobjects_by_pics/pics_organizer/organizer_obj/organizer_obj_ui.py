@@ -40,7 +40,7 @@ class Ui_OrganizerObj(object):
         self.lsw_object.setDragEnabled(True)
         self.lsw_object.setDragDropOverwriteMode(True)
         self.lsw_object.setDefaultDropAction(QtCore.Qt.MoveAction)
-        self.lsw_object.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
+        self.lsw_object.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.lsw_object.setIconSize(QtCore.QSize(10000, 150))
         self.lsw_object.setMovement(QtWidgets.QListView.Free)
         self.lsw_object.setFlow(QtWidgets.QListView.LeftToRight)

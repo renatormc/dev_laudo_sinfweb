@@ -1,3 +1,4 @@
 from fastdoc import config
+import os
 
-URL_SINFWEB = "http://localhost:5001" if config.debug else "http://10.129.3.14"
+URL_SINFWEB = os.getenv("URL_SINFWEB") or "http://10.129.3.14"

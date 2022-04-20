@@ -2,6 +2,8 @@ from pathlib import Path
 import re
 from pdfminer.high_level import extract_text
 from fastdoc.data_extractors.odin_parser.data_types import OdinParserData
+import stringcase
+
 
 
 class OdinPdfParser:

@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
-from fastdoc.custom_types.objects_type import ObjectType
+from rlibs.report_writer.types import ObjectType
+
 
 ajax_helpers = Blueprint('ajax_helpers', __name__)
 

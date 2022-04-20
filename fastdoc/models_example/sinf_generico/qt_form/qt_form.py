@@ -40,7 +40,10 @@ widgets: list[list[SWidget]] = [
         wt.SText("lacre_saida", label="Lacre de saída")
     ],
     [
-        wt.SObjetctsByPics("objects", "Pasta com fotos dos objetos")
+        wt.SStringList("pessoas_envolvidas", label="Pessoas envolvidas", placeholder="Pessoas separadas por vírgula")
+    ],
+    [
+        wt.SObjetctsByPics("objects", "Pasta com fotos dos objetos", default_object_type="Celular")
     ]
 
 ]

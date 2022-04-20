@@ -17,16 +17,18 @@ def get_initial_data(workdir: Union[Path, str]) -> Optional[InitialData]:
         data = parser.extract_all()
         p = data.pericia
         d.form_data['pericia'] = f"{p.seq}/{p.rg}/{p.ano}"
-        d.form_data['requisitante'] = data.quesito.unidade_origem
+        d.form_data['requisitante'] = str(data.quesito.unidade_origem).title()
         d.form_data['procedimento'] = f"RAI {data.rai}"
         d.form_data['ocorrencia_odin'] = data.ocorrencia
         d.form_data['data_odin'] = data.data_ocorrencia
         d.form_data['numero_quesito'] = data.quesito.numero
-        d.form_data['autoridade'] = data.autoridade
+        d.form_data['autoridade'] = str(data.autoridade).title()
+        d.form_data['pessoas_envolvidas'] = [p.title() for p  in data.pessoas]
         data_sinfweb = get_pericia_data(p.rg, p.ano)
         d.form_data['relatores'] = data_sinfweb['relatores']
         if data_sinfweb['revisor']:
             d.form_data['revisores'] = [data_sinfweb['revisor']]
         d.form_data['inicio_exame'] = data_sinfweb['data_atribuicao'].split()[0]
+        
 
     return d

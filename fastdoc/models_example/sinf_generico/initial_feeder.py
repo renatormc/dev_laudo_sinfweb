@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Optional, Union
 from rlibs.report_writer.types import InitialData
 from fastdoc.data_extractors.odin_parser import OdinPdfParser
-from fastdoc.data_extractors.sinfweb_bridge import get_pericia_data
+from fastdoc.data_extractors.sinfweb_bridge import SinfwebBrigde
 
 
 def get_initial_data(workdir: Union[Path, str]) -> Optional[InitialData]:
@@ -24,11 +24,11 @@ def get_initial_data(workdir: Union[Path, str]) -> Optional[InitialData]:
         d.form_data['numero_quesito'] = data.quesito.numero
         d.form_data['autoridade'] = str(data.autoridade).title()
         d.form_data['pessoas_envolvidas'] = [p.title() for p  in data.pessoas]
-        data_sinfweb = get_pericia_data(p.rg, p.ano)
-        d.form_data['relatores'] = data_sinfweb['relatores']
-        if data_sinfweb['revisor']:
-            d.form_data['revisores'] = [data_sinfweb['revisor']]
-        d.form_data['inicio_exame'] = data_sinfweb['data_atribuicao'].split()[0]
-        
-
+        b = SinfwebBrigde()
+        b.get_pericia_data(p.rg, p.ano)
+        d.form_data['relatores'] = b.get_item('relatores')
+        d.form_data['revisores'] = b.get_item('revisor')
+        item = b.get_item('data_atribuicao')
+        if item:
+            d.form_data['inicio_exame'] = item.split()[0]
     return d

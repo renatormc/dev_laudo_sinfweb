@@ -1,1 +1,1 @@
-from . sinfweb_bridge import get_pericia_data
+from . sinfweb_bridge import SinfwebBrigde

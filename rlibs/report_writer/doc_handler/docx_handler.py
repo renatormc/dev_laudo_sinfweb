@@ -12,6 +12,8 @@ class SubdocFunction:
         self.templates_folder = templates_folder
 
     def __call__(self, template, context):
+        if not isinstance(context, dict):
+            context = {'data': context}
         path = self.templates_folder / f"{template}.docx"
         if not path.exists():
             print(f"Não foi encontrado o arquivo {path}")

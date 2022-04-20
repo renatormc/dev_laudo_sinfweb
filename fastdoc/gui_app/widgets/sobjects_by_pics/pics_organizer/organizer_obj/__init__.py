@@ -39,7 +39,7 @@ class OrganizerObj(QWidget):
         for i in range(self.ui.lsw_object.count()):
             item = self.ui.lsw_object.item(i)
             user_data: ObjectPicUserData = item.data(Qt.UserRole)
-            pics.append(user_data.pic.name)
+            pics.append(str(user_data.pic))
         return pics
 
 

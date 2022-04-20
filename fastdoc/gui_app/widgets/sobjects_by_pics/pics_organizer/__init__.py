@@ -13,9 +13,9 @@ from .helpers import ajust_size_hint
 
 
 class PicsOrganizer(QDialog):
-    def __init__(self, objects: CaseObjectsType):
+    def __init__(self, parent, objects: CaseObjectsType):
         self.objects = objects
-        super(self.__class__, self).__init__()
+        super(self.__class__, self).__init__(parent)
         self.ui = Ui_PicsOrganizer()
         self.ui.setupUi(self)
         self.setup_ui()
@@ -159,7 +159,7 @@ class PicsOrganizer(QDialog):
         for i in range(self.ui.lsw_not_associated.count()):
             item = self.ui.lsw_not_associated.item(i)
             user_data: ObjectPicUserData =  item.data(Qt.UserRole)
-            pics.append(user_data.pic.name)
+            pics.append(str(user_data.pic))
         self.objects.pics_not_classified = pics
         self.objects.objects = []
         for objw in self.objects_widgets:

@@ -18,7 +18,8 @@ class SObjetctsByPics:
     def __init__(
         self, name: str, required=False, label="", placeholder="",
             validators: list[ValidatorType] = [], stretch=0,
-            converter: Optional[ConverterType] = None, extensions=[".jpg", ".png"]) -> None:
+            converter: Optional[ConverterType] = None, extensions=[".jpg", ".png"],
+            default_object_type: Optional[str]=None) -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
@@ -27,8 +28,10 @@ class SObjetctsByPics:
         self._stretch = stretch
         self.converter = converter
         self.extensions = extensions
+        self.default_object_type = default_object_type
         super(SObjetctsByPics, self).__init__()
         self._led: Optional[QLineEdit] = None
+        self._w: Optional[QWidget] = None
         self._lbl_error: Optional[LabelError] = None
         self._btn_choose: Optional[QToolButton] = None
         self._btn_open_organizer: Optional[QToolButton] = None
@@ -37,6 +40,12 @@ class SObjetctsByPics:
     @property
     def stretch(self) -> int:
         return self._stretch
+
+    @property
+    def w(self) -> QWidget:
+        if not self._w:
+            raise Exception("get_widget must be executed once before")
+        return self._w
 
     @property
     def led(self) -> QLineEdit:
@@ -86,9 +95,9 @@ class SObjetctsByPics:
         return objs
 
     def get_widget(self) -> QWidget:
-        w = QWidget()
+        self._w = QWidget()
         l = QVBoxLayout()
-        w.setLayout(l)
+        self._w.setLayout(l)
         l.addWidget(QLabel(self.label))
         h_layout = QHBoxLayout()
         self._led = QLineEdit()
@@ -108,7 +117,7 @@ class SObjetctsByPics:
 
         self._lbl_error = LabelError()
         l.addWidget(self._lbl_error)
-        return w
+        return self._w
 
     def show_error(self, message: str) -> None:
         self.lbl_error.setText(message)
@@ -120,11 +129,11 @@ class SObjetctsByPics:
             self.load(str(Path(dir_)))
 
     def organize_pics(self):
-        dialog = PicsOrganizer(self.current_objects)
+        dialog = PicsOrganizer(self.w, self.current_objects)
         ok = dialog.exec_()
         if ok:
             self.current_objects = dialog.objects
-            
+                      
 
     def serialize(self) -> Any:
         return self.led.displayText()
@@ -153,7 +162,7 @@ class SObjetctsByPics:
         path = Path(value)
         if path.exists() and path.is_dir():
             # self.current_objects = CaseObjectsType(pics_not_classified=self.get_pics_from_folder(path))
-            self.current_objects = get_objects_from_pics(path)
+            self.current_objects = get_objects_from_pics(path, self.default_object_type)
             self.btn_open_organizer.setEnabled(True)
         else:
             self.current_objects = CaseObjectsType()

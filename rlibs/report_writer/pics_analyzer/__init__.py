@@ -29,7 +29,7 @@ class NameAnalyzer:
             return ret
 
 
-def get_objects_from_pics(folder: Union[Path, str]) -> CaseObjectsType:
+def get_objects_from_pics(folder: Union[Path, str], default_object_type: Optional[str]=None) -> CaseObjectsType:
     folder = Path(folder)
     objects = CaseObjectsType(folder)
     analyzer = NameAnalyzer()
@@ -48,7 +48,8 @@ def get_objects_from_pics(folder: Union[Path, str]) -> CaseObjectsType:
         try:
             obj_map[res['obj_number']].pics.append(str(entry.absolute()))
         except KeyError:
-            obj = ObjectType(name=res['obj_number'], pics=[str(entry.absolute())])
+            name = f"{res['obj_number']}|{default_object_type}" if default_object_type else res['obj_number']
+            obj = ObjectType(name=name, pics=[str(entry.absolute())])
             obj_map[res['obj_number']] = obj
     objects.objects = [obj for obj in obj_map.values()]
     return objects

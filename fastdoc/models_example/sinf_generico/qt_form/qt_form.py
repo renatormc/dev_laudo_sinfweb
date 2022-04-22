@@ -43,7 +43,7 @@ widgets: list[list[SWidget]] = [
         wt.SStringList("pessoas_envolvidas", label="Pessoas envolvidas", placeholder="Pessoas separadas por vírgula")
     ],
     [
-        wt.SObjetctsByPics("objects", "Pasta com fotos dos objetos", default_object_type="Celular")
+        wt.SObjetctsByPics("objects", "Pasta com fotos dos objetos", default_object_type="Tablet", object_types_choices="tipos_objetos")
     ]
 
 ]

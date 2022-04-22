@@ -4,7 +4,7 @@ Fastdoc é um progama cujo objetivo é facilitar a redação de documentos tais 
 
 # Instalação no Windows (forma mais fácil)
 
-Baixe o  arquivo [fastdoc 0.1.4.zip](https://www.4shared.com/account/home.jsp#dir=uGlxUIRR) e o descompacte em uma pasta de sua preferência.  
+Baixe o  arquivo [fastdoc 0.1.4.zip](https://www.4shared.com/zip/loAOp2WQiq/fastdoc__014.html?) e o descompacte em uma pasta de sua preferência.  
 Para utilização execute o arquivo fastdoc_gui.exe. Crie um atalho para ele na area de trabalho caso necessário.
 
 Hash SHA-512 do arquivo "fastdoc 0.1.4.zip": 

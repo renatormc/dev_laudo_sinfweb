@@ -2,10 +2,24 @@ import subprocess
 from pathlib import Path
 import os
 import shutil
+from turtle import end_fill
 import zipfile
 import sys
+import json
 
 script_dir = Path(os.path.dirname(os.path.realpath(__file__))).absolute()
+folder = Path(sys.argv[1]).absolute()
+os.chdir(folder)
+scripts_folder = folder / "extras/Python/Scripts"
+os.environ['PATH'] = f"{scripts_folder};{os.getenv('PATH')}"
+
+python_exe = folder / "extras/Python/python.exe"
+subprocess.check_output([str(python_exe), '-m', 'pip', 'install', '-r', 'requirements.txt'])
+
+def get_current_version():
+    with (script_dir / "../current_release.json").open("r", encoding="utf-8") as f:
+        data = json.load(f)
+    return data['version']
 
 def zip_folder(folder_path: str, output_path: str) -> None:
     contents = os.walk(folder_path)
@@ -25,7 +39,7 @@ def zip_folder(folder_path: str, output_path: str) -> None:
         zip_file.close()
 
 
-folder = Path(sys.argv[1])
+
 folders = [folder / ".local", folder / ".vscode", folder / "models"]
 for f in folders:
     try:
@@ -39,7 +53,9 @@ for f in files:
     except FileNotFoundError:
         pass
 
-
 shutil.copytree(folder / "fastdoc/models_example", folder / "models")
 
-zip_folder(str(folder), str(folder.parent / "fastdoc.zip"))
+subprocess.check_output([str(python_exe), 'manage.py', 'db_upgrade'])
+
+print("Gerando zip")
+zip_folder(str(folder), str(folder.parent / f"fastdoc  {get_current_version()}.zip"))

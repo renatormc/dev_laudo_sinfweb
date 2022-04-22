@@ -55,7 +55,6 @@ from database import db, repo
 from fastdoc.helpers.update import get_local_version_info, get_remote_version_info
 from fastdoc.helpers.models_manager import fix_old_models
 
-db.init_db()
 if args.workdir:
     config.workdir = Path(args.workdir).absolute()
     if not config.workdir.exists():

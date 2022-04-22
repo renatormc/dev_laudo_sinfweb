@@ -2,7 +2,6 @@ import subprocess
 from pathlib import Path
 import os
 import shutil
-from turtle import end_fill
 import zipfile
 import sys
 import json
@@ -10,6 +9,10 @@ import json
 script_dir = Path(os.path.dirname(os.path.realpath(__file__))).absolute()
 folder = Path(sys.argv[1]).absolute()
 os.chdir(folder)
+subprocess.check_output(['git', 'reset', '--hard'])
+subprocess.check_output(['git', 'checkout', 'master'])
+subprocess.check_output(['git', 'pull','origin', 'master'])
+
 scripts_folder = folder / "extras/Python/Scripts"
 os.environ['PATH'] = f"{scripts_folder};{os.getenv('PATH')}"
 

@@ -14,6 +14,7 @@ scripts_folder = folder / "extras/Python/Scripts"
 os.environ['PATH'] = f"{scripts_folder};{os.getenv('PATH')}"
 
 python_exe = folder / "extras/Python/python.exe"
+print("Atualizando libs")
 subprocess.check_output([str(python_exe), '-m', 'pip', 'install', '-r', 'requirements.txt'])
 
 def get_current_version():

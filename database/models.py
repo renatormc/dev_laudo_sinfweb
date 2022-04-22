@@ -39,7 +39,17 @@ class ItemList(Base):
     id = sa.Column(sa.Integer, primary_key=True)
     model_name = sa.Column(sa.String(300))
     list_name = sa.Column(sa.String(300))
-    text = sa.Column(sa.Text)
+    key = sa.Column(sa.String(300))
+    data_str = sa.Column(sa.Text)
+
 
     def __repr__(self) -> str:
-        return self.list
+        return f"{self.list_name} - {self.key}"
+
+    @property
+    def data(self):
+        return json.loads(self.data_str)
+
+    @data.setter
+    def data(self, value) -> None:
+        self.data_str = json.dumps(value)

@@ -15,6 +15,7 @@ class SVarForm:
         self.choices = [c.clone() for c in choices]
         self._current_item: Optional[SVarFormItem] = None
         self.map_choices: dict[str, SVarFormItem] = {}
+        self._model_name: Optional[str] = None
         for item in self.choices:
             self.map_choices[item.choice_value] = item
         super(SVarForm, self).__init__()
@@ -38,6 +39,14 @@ class SVarForm:
     @property
     def name(self) -> str:
         return self._name
+
+    def set_model_name(self, model_name: str) -> None:
+        self._model_name = model_name
+
+    def get_model_name(self) -> str:
+        if self._model_name is None:
+            raise Exception("Model name was not set")
+        return self._model_name
 
     def get_context(self) -> Any:
         data: dict = {
@@ -67,7 +76,7 @@ class SVarForm:
         self.lay_main.addLayout(lay_horizontal)
        
         for item in self.choices:
-            item.composite = SComposite(item.widgets)
+            item.composite = SComposite(item.widgets, model_name=self.get_model_name())
             item.composite.setHidden(True)
             self.lay_main.addWidget(item.composite)
         self._current_item = self.choices[0]

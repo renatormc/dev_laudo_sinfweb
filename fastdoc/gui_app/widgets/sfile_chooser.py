@@ -24,6 +24,7 @@ class SFileChooser:
         self.default = default
         self.converter = converter
         self.default_dir = default_dir
+        self._model_name: Optional[str] = None
         self.type: Literal['file', 'dir'] = type
         super(SFileChooser, self).__init__()
         self._w: Optional[QLineEdit] = None
@@ -52,6 +53,14 @@ class SFileChooser:
     @property
     def name(self) -> str:
         return self._name
+
+    def set_model_name(self, model_name: str) -> None:
+        self._model_name = model_name
+
+    def get_model_name(self) -> str:
+        if self._model_name is None:
+            raise Exception("Model name was not set")
+        return self._model_name
 
     def get_context(self) -> Any:
         data = self.w.displayText().strip()

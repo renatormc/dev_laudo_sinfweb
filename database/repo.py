@@ -41,16 +41,6 @@ def clear_item_list():
     db.session.commit()
 
 
-def add_items_list(model_name: str, list_name: str, items: list[str]) -> None:
-    for item in items:
-        it = ItemList()
-        it.list_name = list_name
-        it.model_name = model_name
-        it.text = item
-        db.session.add(it)
-    db.session.commit()
-
-
 def search_list_items(model_name: str, list_name: str, search_term: str, limit: Optional[int] = None) -> list[str]:
     query = db.session.query(ItemList).filter(
         ItemList.model_name == model_name,
@@ -79,3 +69,34 @@ def save_last_workdir(value: str | Path) -> None:
     jvalue.data = str(value)
     db.session.add(jvalue)
     db.session.commit()
+
+
+def delete_lists() -> None:
+    db.session.query(ItemList).delete()
+    db.session.commit()
+    print("deletando listas")
+
+
+def save_list(model_name: str, list_name: str, items: list[dict]) -> None:
+    for item in items:
+        item_list = ItemList()
+        item_list.model_name = model_name
+        item_list.list_name = list_name
+        try:
+
+            item_list.key = item['key']
+            item_list.data = item['data']
+            db.session.add(item_list)
+        except KeyError:
+            continue
+    db.session.commit()
+
+
+def get_list(model_name: str, list_name: str, filter: Optional[str] = None):
+    query = db.session.query(ItemList).filter(
+        ItemList.list_name == list_name,
+        ItemList.model_name == model_name
+    )
+    if filter:
+        query = query.filter(ItemList.key.ilike(f"%{filter}%"))
+    return query.order_by(ItemList.key.asc()).all()

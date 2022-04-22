@@ -22,6 +22,12 @@ class SWidget(Protocol):
     def clear_content(self) -> None:
         ...
 
+    def set_model_name(self, model_name: str) -> None:
+        ...
+
+    def get_model_name(self) -> str:
+        ...
+
     @property
     def name(self) -> str:
         ...
@@ -33,3 +39,4 @@ class SWidget(Protocol):
     @property
     def stretch(self) -> int:
         ...
+

@@ -11,6 +11,7 @@ from fastdoc.gui_app.widgets.label_error import LabelError
 from fastdoc.gui_app.widgets.sobjects_by_pics.pics_organizer import PicsOrganizer
 from rlibs.report_writer.pics_analyzer import get_objects_from_pics
 from fastdoc import config
+from fastdoc.gui_app.widgets.helpers import get_list, ChoicesType
 
 
 class SObjetctsByPics:
@@ -19,7 +20,7 @@ class SObjetctsByPics:
         self, name: str, required=False, label="", placeholder="",
             validators: list[ValidatorType] = [], stretch=0,
             converter: Optional[ConverterType] = None, extensions=[".jpg", ".png"],
-            default_object_type: Optional[str]=None) -> None:
+            default_object_type: Optional[str] = None, object_types_choices: list[ChoicesType] | str | list[str] = ['Outro']) -> None:
         self.required = required
         self.placeholder = placeholder
         self._name = name
@@ -29,6 +30,8 @@ class SObjetctsByPics:
         self.converter = converter
         self.extensions = extensions
         self.default_object_type = default_object_type
+        self.object_types_choices = object_types_choices
+        self._model_name: Optional[str] = None
         super(SObjetctsByPics, self).__init__()
         self._led: Optional[QLineEdit] = None
         self._w: Optional[QWidget] = None
@@ -78,6 +81,14 @@ class SObjetctsByPics:
     @property
     def name(self) -> str:
         return self._name
+
+    def set_model_name(self, model_name: str) -> None:
+        self._model_name = model_name
+
+    def get_model_name(self) -> str:
+        if self._model_name is None:
+            raise Exception("Model name was not set")
+        return self._model_name
 
     def get_context(self) -> CaseObjectsType:
         text = self.led.displayText().strip()
@@ -133,7 +144,6 @@ class SObjetctsByPics:
         ok = dialog.exec_()
         if ok:
             self.current_objects = dialog.objects
-                      
 
     def serialize(self) -> Any:
         return self.led.displayText()
@@ -165,7 +175,5 @@ class SObjetctsByPics:
             self.current_objects = get_objects_from_pics(path, self.default_object_type)
             self.btn_open_organizer.setEnabled(True)
         else:
-            self.current_objects = CaseObjectsType()
+            self.current_objects = CaseObjectsType(config.workdir)
             self.btn_open_organizer.setEnabled(False)
-
-    

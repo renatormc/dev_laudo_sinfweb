@@ -11,7 +11,7 @@ from pathlib import Path
 class Form(SComposite):
     def __init__(self, model_info: ModelInfo, widgets: list[list[SWidget]]):
         self.model_info = model_info
-        super(Form, self).__init__(widgets)
+        super(Form, self).__init__(widgets, model_name=self.model_info.name)
 
 
     # def get_context(self) -> Tuple[dict, FormError]:

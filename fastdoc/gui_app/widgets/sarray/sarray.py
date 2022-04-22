@@ -11,11 +11,12 @@ import copy
 
 
 class SArray:
-    def __init__(self, name: str, widgets: list[list[SWidget]], label="", stretch=0, ) -> None:
+    def __init__(self, name: str, widgets: list[list[SWidget]], label="", stretch=0, model_name: Optional[str] = None) -> None:
         self._name = name
         self._label = label or self.name
         self._stretch = stretch
         self.widgets = widgets
+        self._model_name = model_name
         super(SArray, self).__init__()
         self._composites: Optional[list[SComposite]] = None
 
@@ -36,6 +37,14 @@ class SArray:
     @property
     def name(self) -> str:
         return self._name
+
+    def set_model_name(self, model_name: str) -> None:
+        self._model_name = model_name
+
+    def get_model_name(self) -> str:
+        if self._model_name is None:
+            raise Exception("Model name was not set")
+        return self._model_name
 
     def show_total_items(self):
         self.lbl_total_items.setText(f"Total: {len(self.composites)}")
@@ -107,7 +116,7 @@ class SArray:
             index = n + i
             widgets = copy.deepcopy(self.widgets)
             # composite = SComposite(widgets, color=Colors.item_array_widget_background, is_array_child=True, index=index)
-            composite = SComposite(widgets, is_array_child=True, index=index, color="white")
+            composite = SComposite(widgets, is_array_child=True, index=index, color="white", model_name=self.get_model_name())
             composite.removeRequested.connect(self.remove_by_index)
             composite.cloneRequested.connect(self.clone_by_index)
             self.lay_composites.addWidget(composite)

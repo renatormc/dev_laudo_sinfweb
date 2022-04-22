@@ -12,11 +12,12 @@ class SComposite(QWidget):
     cloneRequested = pyqtSignal(int)
 
     def __init__(self, widgets: list[list[SWidget]],
-            color: Optional[str] = None, is_array_child=False, index: int = 0) -> None:
+            color: Optional[str] = None, is_array_child=False, index: int = 0, model_name: Optional[str] = None) -> None:
         super().__init__()
         self._index = index
         self.color = color
         self.widgets = widgets
+        self._model_name: Optional[str] = model_name
         self.widgets_map: dict[str, SWidget] = {}
         for row in self.widgets:
             for item in row:
@@ -34,6 +35,14 @@ class SComposite(QWidget):
         self._index = value
         if self.lbl_index is not None:
             self.lbl_index.setText(str(value + 1))
+
+    def set_model_name(self, model_name: str) -> None:
+        self._model_name = model_name
+
+    def get_model_name(self) -> str:
+        if self._model_name is None:
+            raise Exception("Model name was not set")
+        return self._model_name
 
     def setup_ui(self):
         self.lay_main = QVBoxLayout()
@@ -68,6 +77,7 @@ class SComposite(QWidget):
             h_layout = QHBoxLayout()
             self.lay_main.addLayout(h_layout)
             for i, item in enumerate(row):
+                item.set_model_name(self.get_model_name())
                 w = item.get_widget()
                 h_layout.addWidget(w)
                 h_layout.setStretch(i, item.stretch)

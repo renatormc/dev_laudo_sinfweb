@@ -5,6 +5,9 @@ import sys
 from fastdoc import config
 import shutil
 from InquirerPy import inquirer
+from dotenv import load_dotenv
+
+load_dotenv() 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-w', '--workdir', help='Work directory')
@@ -30,7 +33,7 @@ p_install = subparsers.add_parser("install")
 
 p_update = subparsers.add_parser("update")
 
-p_publish = subparsers.add_parser("publish")
+p_analise_models_folder = subparsers.add_parser("analise-models-folder")
 
 p_version = subparsers.add_parser("version")
 
@@ -52,6 +55,7 @@ from fastdoc.app_flask.gui_server import run_server
 from fastdoc.gui_app import run_gui_app
 from database import db, repo
 from fastdoc.helpers.update import get_local_version_info, get_remote_version_info
+from fastdoc.helpers.models_manager import fix_old_models
 
 db.init_db()
 if args.workdir:
@@ -61,6 +65,7 @@ if args.workdir:
     repo.save_last_workdir(config.workdir)
 else:
     config.workdir = repo.get_last_workdir()
+
 
 if args.command == "render":
     if args.model == "choose":
@@ -100,12 +105,8 @@ elif args.command == "install":
 elif args.command == "update":
     rclone_exe = config.main_script_dir / "rclone-v1.58.0-windows-amd64/rclone.exe"
     subprocess.Popen([str(rclone_exe), 'sync', '-v', config.local_data['shared_folder'], str(config.main_script_dir)])
-elif args.command == "publish":
-    dest = config.local_data['shared_folder']
-    input(f"Copiar para \"{dest}\"? Pressione algo para continuar.")
-    rclone_exe = config.main_script_dir / "dist_start/rclone-v1.58.0-windows-amd64/rclone.exe"
-    subprocess.Popen(
-        [str(rclone_exe), 'sync', '-v', str(config.main_script_dir / "dist"), config.local_data['shared_folder']])
+elif args.command == "analise-models-folder":
+    fix_old_models()
 elif args.command == "version":
     info_remote = get_remote_version_info()
     info_local = get_local_version_info()

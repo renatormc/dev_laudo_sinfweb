@@ -2,6 +2,7 @@
 from pathlib import Path
 
 from rlibs.report_writer.types import CaseObjectsType, ObjectType
+from fastdoc.gui_app.widgets.helpers import ChoicesType
 from fastdoc.gui_app.widgets.types import ObjectPicUserData
 from .pics_organizer_ui import Ui_PicsOrganizer
 from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu, QAction, QListWidget
@@ -13,8 +14,9 @@ from .helpers import ajust_size_hint
 
 
 class PicsOrganizer(QDialog):
-    def __init__(self, parent, objects: CaseObjectsType):
+    def __init__(self, parent, objects: CaseObjectsType, object_types: list[ChoicesType]):
         self.objects = objects
+        self.object_types = object_types
         super(self.__class__, self).__init__(parent)
         self.ui = Ui_PicsOrganizer()
         self.ui.setupUi(self)
@@ -83,6 +85,8 @@ class PicsOrganizer(QDialog):
         index = len(self.objects_widgets)
         obj = OrganizerObj(f"Objeto {index + 1}", index)
         self.ui.lay_objects.addWidget(obj)
+        for t in self.object_types:
+            obj.ui.cbx_type.addItem(t["key"], t['data'])
         self.objects_widgets.append(obj)
         obj.close_clicked.connect(self.remove_object)
         obj.context_menu_requested.connect(self.provide_context_menu)

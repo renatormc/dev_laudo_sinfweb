@@ -32,3 +32,7 @@ class WidgetProtocol(Protocol):
     @property
     def col(self) -> int:
         ...
+
+    @property
+    def model_name(self) -> str:
+        ...

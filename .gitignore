@@ -13,3 +13,4 @@ local_data.json
 r-dev-manager.json
 db.db
 extras
+.env

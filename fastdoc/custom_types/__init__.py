@@ -13,6 +13,12 @@ class ModelMetaType(TypedDict):
     has_qt_form: bool
     has_web_form: bool
 
+default_meta: ModelMetaType = {
+    'full_name': 'Sem nome',
+    'has_qt_form': False, 
+    'has_web_form': False
+}
+
 
 class ModelInfo:
     def __init__(self, name: str) -> None:
@@ -28,9 +34,20 @@ class ModelInfo:
         path = config.models_folder / self.name / "meta.json"
         with path.open("r", encoding="utf-8") as f:
             self.meta = json.load(f)
+        missing = False
+        for key, value in default_meta.items():
+            try:
+                self.meta[key]
+            except KeyError:
+                missing = True
+                self.meta[key] = value
+        if missing:
+            self.save_meta()
+
 
     def save_meta(self):
         path = config.models_folder / self.name / "meta.json"
         with path.open("w", encoding="utf-8") as f:
             f.write(json.dumps(self.meta, ensure_ascii=False, indent=4))
+
     

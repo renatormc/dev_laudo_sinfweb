@@ -22,6 +22,7 @@ class SSpinBox:
         self.converter = converter
         self.min = min
         self.max = max
+        self._model_name: Optional[str] = None
         super(SSpinBox, self).__init__()
         self._w: Optional[QSpinBox] = None
         self._lbl_error: Optional[LabelError] = None
@@ -49,6 +50,14 @@ class SSpinBox:
     @property
     def name(self) -> str:
         return self._name
+
+    def set_model_name(self, model_name: str) -> None:
+        self._model_name = model_name
+
+    def get_model_name(self) -> str:
+        if self._model_name is None:
+            raise Exception("Model name was not set")
+        return self._model_name
 
     def get_context(self) -> Any:
         data = self.w.value()

@@ -19,6 +19,7 @@ class SComboBox:
         super(SComboBox, self).__init__()
         self._combo: Optional[QComboBox] = None
         self._lbl_error: Optional[LabelError] = None
+        self._model_name: Optional[str] = None
 
     @property
     def stretch(self) -> int:
@@ -43,6 +44,14 @@ class SComboBox:
     @property
     def label(self) -> str:
         return self._label
+
+    def set_model_name(self, model_name: str) -> None:
+        self._model_name = model_name
+
+    def get_model_name(self) -> str:
+        if self._model_name is None:
+            raise Exception("Model name was not set")
+        return self._model_name
 
     def get_context(self) -> Any:
         data = self.combo.currentText()

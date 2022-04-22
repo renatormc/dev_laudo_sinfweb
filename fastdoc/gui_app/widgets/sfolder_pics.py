@@ -24,6 +24,7 @@ class SFolderPics:
         self._stretch = stretch
         self.default = default
         self.converter = converter
+        self._model_name: Optional[str] = None
         super(SFolderPics, self).__init__()
         self._led: Optional[QLineEdit] = None
         self._lbl_error: Optional[LabelError] = None
@@ -58,6 +59,14 @@ class SFolderPics:
     @property
     def name(self) -> str:
         return self._name
+
+    def set_model_name(self, model_name: str) -> None:
+        self._model_name = model_name
+
+    def get_model_name(self) -> str:
+        if self._model_name is None:
+            raise Exception("Model name was not set")
+        return self._model_name
 
     def get_context(self) -> Any:
         text = self.led.displayText().strip()

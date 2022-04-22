@@ -140,7 +140,7 @@ tests = ["pytest"]
 
 [[package]]
 name = "docxtpl"
-version = "0.15.2"
+version = "0.16.0"
 description = "Python docx template engine"
 category = "main"
 optional = false
@@ -599,7 +599,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "types-beautifulsoup4"
-version = "4.10.18"
+version = "4.10.20"
 description = "Typing stubs for beautifulsoup4"
 category = "dev"
 optional = false
@@ -615,7 +615,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-pillow"
-version = "9.0.11"
+version = "9.0.13"
 description = "Typing stubs for Pillow"
 category = "dev"
 optional = false
@@ -623,7 +623,7 @@ python-versions = "*"
 
 [[package]]
 name = "types-requests"
-version = "2.27.16"
+version = "2.27.20"
 description = "Typing stubs for requests"
 category = "dev"
 optional = false
@@ -634,7 +634,7 @@ types-urllib3 = "<1.27"
 
 [[package]]
 name = "types-urllib3"
-version = "1.26.11"
+version = "1.26.13"
 description = "Typing stubs for urllib3"
 category = "dev"
 optional = false
@@ -642,11 +642,11 @@ python-versions = "*"
 
 [[package]]
 name = "typing-extensions"
-version = "4.1.1"
-description = "Backported and Experimental Type Hints for Python 3.6+"
+version = "4.2.0"
+description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [[package]]
 name = "unidecode"
@@ -822,8 +822,8 @@ docxcompose = [
     {file = "docxcompose-1.3.4.tar.gz", hash = "sha256:b1a40d4f95751565822350174971012875f82a32b83a9d1be098edd965047029"},
 ]
 docxtpl = [
-    {file = "docxtpl-0.15.2-py2.py3-none-any.whl", hash = "sha256:de0988b2a7a92402d6da3aa9dec474cf3cfb941ed69927248a8e97d0ff50d6f9"},
-    {file = "docxtpl-0.15.2.tar.gz", hash = "sha256:d6f7a0d383bcb4e779b9c6abaef29f1af639c038e767fa53a9cb3d628bc0512e"},
+    {file = "docxtpl-0.16.0-py2.py3-none-any.whl", hash = "sha256:6ce60f38ce01d1698932bfba5c8b02e14c2cbdfb13c1c1fa15c30c433d88982d"},
+    {file = "docxtpl-0.16.0.tar.gz", hash = "sha256:a18e33e2e25a4c63d49cd76a3f1e495e53eb96062ecbc7715a8d8f4540c3195b"},
 ]
 flask = [
     {file = "Flask-2.1.1-py3-none-any.whl", hash = "sha256:8a4cf32d904cf5621db9f0c9fbcd7efabf3003f22a04e4d0ce790c7137ec5264"},
@@ -1242,28 +1242,28 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 types-beautifulsoup4 = [
-    {file = "types-beautifulsoup4-4.10.18.tar.gz", hash = "sha256:74a35a3e09729e0fb67006f5526864ad6baa610de2d425f0df89e5e79ee76b3a"},
-    {file = "types_beautifulsoup4-4.10.18-py3-none-any.whl", hash = "sha256:77348fb90156aad33abe6ac29fbcbd097c83756a4adf05c942ce20387344a9b2"},
+    {file = "types-beautifulsoup4-4.10.20.tar.gz", hash = "sha256:856ddb741576a94764392cba81b9dcf07fc0fe005fc753e487e2e9e0db2324ca"},
+    {file = "types_beautifulsoup4-4.10.20-py3-none-any.whl", hash = "sha256:0be4be522ce340ff3f5540c416adfda305bbb4d14f3fecadc2a9086c1dbd4b32"},
 ]
 types-humanfriendly = [
     {file = "types-humanfriendly-9.2.6.tar.gz", hash = "sha256:e5d3e5718d34c6b576a394d337194131f4be60d6692835239920f43b877c31e2"},
     {file = "types_humanfriendly-9.2.6-py3-none-any.whl", hash = "sha256:f789d2838e3a6d3dcd41ca2a494943b423311f8d40e510213f86b400dee275c8"},
 ]
 types-pillow = [
-    {file = "types-Pillow-9.0.11.tar.gz", hash = "sha256:99e306bbe1f97884bb6fe9ddb87b6715fca5a4a368dad42e9366f46aa5877ea7"},
-    {file = "types_Pillow-9.0.11-py3-none-any.whl", hash = "sha256:cef022f67b19e2750b1a709b3ebaeee2bc9f95c704c673b07d52c2e09267077f"},
+    {file = "types-Pillow-9.0.13.tar.gz", hash = "sha256:65d17f30d524d6014e4269ab577b60316db982bf464cbae30098ffacf038ff81"},
+    {file = "types_Pillow-9.0.13-py3-none-any.whl", hash = "sha256:1c09c154064b8786ed914a8a76116d6e80fe666130fc2c47716943ae631505d8"},
 ]
 types-requests = [
-    {file = "types-requests-2.27.16.tar.gz", hash = "sha256:c8010c18b291a7efb60b1452dbe12530bc25693dd657e70c62803fcdc4bffe9b"},
-    {file = "types_requests-2.27.16-py3-none-any.whl", hash = "sha256:2437a5f4d16c0c8bd7539a8126d492b7aeb41e6cda670d76b286c7f83a658d42"},
+    {file = "types-requests-2.27.20.tar.gz", hash = "sha256:63344573cde6c4efd44d867c0158d9fb7e6beb95721cbe9882f3f857ee8a5398"},
+    {file = "types_requests-2.27.20-py3-none-any.whl", hash = "sha256:68b8de86552116424ec23b77afc925e111afb6496d3821b183b7d151b3b834d4"},
 ]
 types-urllib3 = [
-    {file = "types-urllib3-1.26.11.tar.gz", hash = "sha256:24d64e441168851eb05f1d022de18ae31558f5649c8f1117e384c2e85e31315b"},
-    {file = "types_urllib3-1.26.11-py3-none-any.whl", hash = "sha256:bd0abc01e9fb963e4fddd561a56d21cc371b988d1245662195c90379077139cd"},
+    {file = "types-urllib3-1.26.13.tar.gz", hash = "sha256:40f8fb5e8cd7d57e8aefdee3fdd5e930aa1a1bb4179cdadd55226cea588af790"},
+    {file = "types_urllib3-1.26.13-py3-none-any.whl", hash = "sha256:ff7500641824f881b2c7bde4cc57e6c3abf03d1e005bae83aca752e77213a5da"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-4.1.1-py3-none-any.whl", hash = "sha256:21c85e0fe4b9a155d0799430b0ad741cdce7e359660ccbd8b530613e8df88ce2"},
-    {file = "typing_extensions-4.1.1.tar.gz", hash = "sha256:1a9462dcc3347a79b1f1c0271fbe79e844580bb598bafa1ed208b94da3cdcd42"},
+    {file = "typing_extensions-4.2.0-py3-none-any.whl", hash = "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708"},
+    {file = "typing_extensions-4.2.0.tar.gz", hash = "sha256:f1c24655a0da0d1b67f07e17a5e6b2a105894e6824b92096378bb3668ef02376"},
 ]
 unidecode = [
     {file = "Unidecode-1.3.4-py3-none-any.whl", hash = "sha256:afa04efcdd818a93237574791be9b2817d7077c25a068b00f8cff7baa4e59257"},

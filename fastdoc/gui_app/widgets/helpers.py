@@ -22,5 +22,5 @@ def get_list(choices: list|str, model_name: str) -> list[ChoicesType]:
     if isinstance(choices, list):
         return [to_list_item(item) for item in choices]
     elif isinstance(choices, str):
-        return repo.get_list(model_name, choices)
+        return [{"key": item.key, "data": item.data} for item in repo.get_list(model_name, choices)]
     return []

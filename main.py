@@ -1,4 +1,3 @@
-import subprocess
 import argparse
 from pathlib import Path
 import sys
@@ -31,7 +30,6 @@ p_delete_model = subparsers.add_parser("delete-model")
 
 p_install = subparsers.add_parser("install")
 
-p_update = subparsers.add_parser("update")
 
 p_analise_models_folder = subparsers.add_parser("analise-models-folder")
 
@@ -66,48 +64,45 @@ if args.workdir:
 else:
     config.workdir = repo.get_last_workdir()
 
-
-if args.command == "render":
-    if args.model == "choose":
-        args.model = hp.choose_model()
-    md = getattr(models, args.model)
-    context = context = md.test_data.get_context()
-    hp.render_doc(args.model, context, "compilado.docx")
-    print("Renderizado arquivo compilado.docx")
-elif args.command == "new-model":
-    full_name = inquirer.text(message="Nome:").execute()
-    folder_name = model_name_to_folder_name(full_name)
-    folder_from = config.app_dir / "models_example/example"
-    folder_to = config.models_folder / folder_name
-    shutil.copytree(folder_from, folder_to)
-    hp.update_model_meta(folder_name, {'full_name': full_name})
-    hp.fix_imports()
-elif args.command == "delete-model":
-    model = hp.choose_model()
-    try:
-        path = config.models_folder / model
-        shutil.rmtree(path)
-    except FileNotFoundError:
-        pass
-    hp.fix_imports()
-elif args.command == "web":
-    if args.qt:
-        run_server()
-    else:
-        app_flask.run(host='0.0.0.0', port=5000, debug=config.debug)
-elif args.command == "gui":
-    run_gui_app()
-elif args.command == "install":
-    path = Path("./fastdoc.bat").absolute()
-    text = f"@echo off\n\"{path}\" %*"
-    dest_file = Path("C:\\Windows\\fastdoc.bat")
-    dest_file.write_text(text)
-elif args.command == "update":
-    rclone_exe = config.main_script_dir / "rclone-v1.58.0-windows-amd64/rclone.exe"
-    subprocess.Popen([str(rclone_exe), 'sync', '-v', config.local_data['shared_folder'], str(config.main_script_dir)])
-elif args.command == "analise-models-folder":
-    fix_old_models()
-elif args.command == "version":
-    info_remote = get_remote_version_info()
-    info_local = get_local_version_info()
-    print(f"Current version: {info_local['version']}. Available version: {info_remote['version']}")
+match args.command:
+    case "render":
+        if args.model == "choose":
+            args.model = hp.choose_model()
+        md = getattr(models, args.model)
+        context = context = md.test_data.get_context()
+        hp.render_doc(args.model, context, "compilado.docx")
+        print("Renderizado arquivo compilado.docx")
+    case "new-model":
+        full_name = inquirer.text(message="Nome:").execute()
+        folder_name = model_name_to_folder_name(full_name)
+        folder_from = config.app_dir / "models_example/example"
+        folder_to = config.models_folder / folder_name
+        shutil.copytree(folder_from, folder_to)
+        hp.update_model_meta(folder_name, {'full_name': full_name})
+        hp.fix_imports()
+    case "delete-model":
+        model = hp.choose_model()
+        try:
+            path = config.models_folder / model
+            shutil.rmtree(path)
+        except FileNotFoundError:
+            pass
+        hp.fix_imports()
+    case "web":
+        if args.qt:
+            run_server()
+        else:
+            app_flask.run(host='0.0.0.0', port=5000, debug=config.debug)
+    case "gui":
+        run_gui_app()
+    case "install":
+        path = Path("./fastdoc.bat").absolute()
+        text = f"@echo off\n\"{path}\" %*"
+        dest_file = Path("C:\\Windows\\fastdoc.bat")
+        dest_file.write_text(text)
+    case "analise-models-folder":
+        fix_old_models()
+    case "version":
+        info_remote = get_remote_version_info()
+        info_local = get_local_version_info()
+        print(f"Current version: {info_local['version']}. Available version: {info_remote['version']}")

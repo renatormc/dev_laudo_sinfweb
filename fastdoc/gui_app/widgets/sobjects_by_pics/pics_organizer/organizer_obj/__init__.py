@@ -34,6 +34,15 @@ class OrganizerObj(QWidget):
         self.ui.led_name.setText(value)
 
     @property
+    def type(self) -> str:
+        return self.ui.cbx_type.currentData()
+
+    @type.setter
+    def type(self, value) -> None:
+        self.ui.cbx_type.setCurrentText(value)
+
+
+    @property
     def pics(self)-> list[str]:
         pics: list[str] = []
         for i in range(self.ui.lsw_object.count()):

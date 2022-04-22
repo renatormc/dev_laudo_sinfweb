@@ -1,5 +1,6 @@
 # from copy import copy
 from pathlib import Path
+from typing import Optional
 
 from rlibs.report_writer.types import CaseObjectsType, ObjectType
 from fastdoc.gui_app.widgets.helpers import ChoicesType
@@ -14,9 +15,10 @@ from .helpers import ajust_size_hint
 
 
 class PicsOrganizer(QDialog):
-    def __init__(self, parent, objects: CaseObjectsType, object_types: list[ChoicesType]):
+    def __init__(self, parent, objects: CaseObjectsType, object_types: list[ChoicesType], defaul_object_type: Optional[str] = None):
         self.objects = objects
         self.object_types = object_types
+        self.default_object_type = defaul_object_type
         super(self.__class__, self).__init__(parent)
         self.ui = Ui_PicsOrganizer()
         self.ui.setupUi(self)
@@ -53,7 +55,6 @@ class PicsOrganizer(QDialog):
             item.setTextAlignment(Qt.AlignCenter)
             icon = QIcon()
             pixmap = QPixmap(str(pic))
-            print(f"Original size {pixmap.size()}")
             user_data = ObjectPicUserData(pic=pic, original_size=pixmap.size())
             item.setData(Qt.UserRole, user_data)
             ajust_size_hint(item, self.pic_size)
@@ -65,6 +66,7 @@ class PicsOrganizer(QDialog):
         for obj in self.objects.objects:
             objw = self.add_object()
             objw.name = obj.name
+            objw.type = obj.type
             for pic in obj.pics_iterator():
                 self.add_pic_to_object_widget(objw, pic)
 
@@ -87,6 +89,8 @@ class PicsOrganizer(QDialog):
         self.ui.lay_objects.addWidget(obj)
         for t in self.object_types:
             obj.ui.cbx_type.addItem(t["key"], t['data'])
+        if self.default_object_type:
+            obj.ui.cbx_type.setCurrentText(self.default_object_type)
         self.objects_widgets.append(obj)
         obj.close_clicked.connect(self.remove_object)
         obj.context_menu_requested.connect(self.provide_context_menu)
@@ -167,6 +171,6 @@ class PicsOrganizer(QDialog):
         self.objects.pics_not_classified = pics
         self.objects.objects = []
         for objw in self.objects_widgets:
-            obj = ObjectType(pics=objw.pics, name=objw.name)
+            obj = ObjectType(pics=objw.pics, name=objw.name, type=objw.ui.cbx_type.currentData())
             self.objects.objects.append(obj)
         self.accept()

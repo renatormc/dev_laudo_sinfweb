@@ -48,8 +48,10 @@ def get_objects_from_pics(folder: Union[Path, str], default_object_type: Optiona
         try:
             obj_map[res['obj_number']].pics.append(str(entry.absolute()))
         except KeyError:
-            name = f"{res['obj_number']}|{default_object_type}" if default_object_type else res['obj_number']
+            name = res['obj_number']
             obj = ObjectType(name=name, pics=[str(entry.absolute())])
+            
+            obj.type = default_object_type or ""
             obj_map[res['obj_number']] = obj
     objects.objects = [obj for obj in obj_map.values()]
     return objects

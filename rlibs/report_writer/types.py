@@ -40,14 +40,7 @@ class ObjectType:
             text += f"\n{pic}"
         return text
 
-    def find_type_from_name(self):
-        parts = self.name.split("|")
-        try:
-            self.type = parts[1].strip() or "Outro"
-            self.name = parts[0]
-        except:
-            self.type = "Outro"
-
+  
 
 class CaseObjectsType:
     def __init__(self, folder: str|Path, objects: list[ObjectType] = [],
@@ -79,9 +72,6 @@ class CaseObjectsType:
             self.alias = ""
         return self
 
-    def find_objects_types_from_name(self):
-        for obj in self.objects:
-            obj.find_type_from_name()
 
     def __str__(self) -> str:
         return (f"alias: {self.alias}, n_objetos: {len(self.objects)}, n_pics_not_classified: {len(self.pics_not_classified)}, folder: {self.folder}")

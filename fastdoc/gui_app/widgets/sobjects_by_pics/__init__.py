@@ -140,7 +140,8 @@ class SObjetctsByPics:
             self.load(str(Path(dir_)))
 
     def organize_pics(self):
-        dialog = PicsOrganizer(self.w, self.current_objects)
+        dialog = PicsOrganizer(self.w, self.current_objects, object_types=get_list(
+            self.object_types_choices, self.get_model_name()), defaul_object_type=self.default_object_type)
         ok = dialog.exec_()
         if ok:
             self.current_objects = dialog.objects

@@ -21,7 +21,7 @@ print("Atualizando libs")
 subprocess.check_output([str(python_exe), '-m', 'pip', 'install', '-r', 'requirements.txt'])
 
 def get_current_version():
-    with (script_dir / "../current_release.json").open("r", encoding="utf-8") as f:
+    with (folder / "fastdoc/current_release.json").open("r", encoding="utf-8") as f:
         data = json.load(f)
     return data['version']
 

@@ -12,8 +12,9 @@ subprocess.check_output([str(git_exe), 'checkout', 'master'])
 subprocess.check_output([str(git_exe), 'pull','origin', 'master'])
 
 subprocess.check_output([str(python_exe), "-m", "pip", "install", "-r", "requirements.txt"])
-subprocess.check_output([str(python_exe), "main.py", "analise-models-folder"])
 subprocess.check_output([str(python_exe), "manage.py", "db_upgrade"])
+subprocess.check_output([str(python_exe), "main.py", "analise-models-folder"])
+
 print("Aplicativo atualizado com sucesso!")
 
 

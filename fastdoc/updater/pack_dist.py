@@ -39,9 +39,6 @@ for f in files:
     except FileNotFoundError:
         pass
 
-python_exe = folder / "extras/Python/python.exe"
-os.chdir(folder)
-subprocess.check_call([str(python_exe), 'manage.py', 'db_upgrade'])
 
 shutil.copytree(folder / "fastdoc/models_example", folder / "models")
 

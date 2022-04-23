@@ -3,6 +3,8 @@ import sys
 from pathlib import Path
 import json
 import tempfile
+import shutil
+from typing import Optional
 
 app_dir = Path(os.path.dirname(os.path.realpath(__file__)))
 main_script_dir = app_dir.parent
@@ -32,3 +34,24 @@ if not TEMPFOLDER.exists():
     TEMPFOLDER.mkdir()
 
 SELF_CONTAINED: bool = "extras\\Python\\python.exe" in sys.executable or "extras\\Python\\pythonw.exe" in sys.executable
+
+vscode_exe: Optional[Path] = None
+
+if SELF_CONTAINED:
+    pass
+else:
+    aux = shutil.which("code")
+    vscode_exe = Path(aux) if aux else None
+
+def find_file_manager():
+    if os.name == "nt":
+        return shutil.which("explorer")
+    candidates = ['nautilus', 'dolphin', 'nemo', 'nautilus']
+    for c in candidates:
+        aux = shutil.which(c)
+        if aux:
+            return aux
+      
+
+file_manager = find_file_manager()
+

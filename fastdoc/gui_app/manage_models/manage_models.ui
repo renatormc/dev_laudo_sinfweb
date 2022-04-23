@@ -6,14 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>544</width>
-    <height>115</height>
+    <width>547</width>
+    <height>126</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Gerenciar modelos</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Modelo</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QComboBox" name="cbx_model"/>
    </item>

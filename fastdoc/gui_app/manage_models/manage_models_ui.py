@@ -14,9 +14,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ManageModels(object):
     def setupUi(self, ManageModels):
         ManageModels.setObjectName("ManageModels")
-        ManageModels.resize(544, 115)
+        ManageModels.resize(547, 126)
         self.verticalLayout = QtWidgets.QVBoxLayout(ManageModels)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.label = QtWidgets.QLabel(ManageModels)
+        self.label.setObjectName("label")
+        self.verticalLayout.addWidget(self.label)
         self.cbx_model = QtWidgets.QComboBox(ManageModels)
         self.cbx_model.setObjectName("cbx_model")
         self.verticalLayout.addWidget(self.cbx_model)
@@ -46,6 +49,7 @@ class Ui_ManageModels(object):
     def retranslateUi(self, ManageModels):
         _translate = QtCore.QCoreApplication.translate
         ManageModels.setWindowTitle(_translate("ManageModels", "Gerenciar modelos"))
+        self.label.setText(_translate("ManageModels", "Modelo"))
         self.btn_import.setText(_translate("ManageModels", "Importar"))
         self.btn_export.setText(_translate("ManageModels", "Exportar"))
         self.btn_remove.setText(_translate("ManageModels", "Remover"))

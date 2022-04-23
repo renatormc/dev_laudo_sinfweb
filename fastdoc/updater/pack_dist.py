@@ -62,4 +62,6 @@ shutil.copytree(folder / "fastdoc/models_example", folder / "models")
 subprocess.check_output([str(python_exe), 'manage.py', 'db_upgrade'])
 
 print("Gerando zip")
-zip_folder(str(folder), str(folder.parent / f"fastdoc  {get_current_version()}.zip"))
+zippath = folder.parent / f"fastdoc  {get_current_version()}.zip"
+zip_folder(str(folder), str(zippath))
+subprocess.run(['s-hash', str(zippath)], shell=True)

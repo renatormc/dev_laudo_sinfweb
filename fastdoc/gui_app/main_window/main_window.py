@@ -46,6 +46,7 @@ class MainWindow(QMainWindow):
         self.ui.act_add_token.triggered.connect(self.add_token)
         self.ui.btn_choose_workdir.clicked.connect(self.choose_workdir)
         self.ui.act_about.triggered.connect(self.show_about_dialog)
+        self.ui.act_dev.triggered.connect(self.open_ide)
 
     def populate_models(self):
         self.ui.cbx_model.clear()
@@ -180,3 +181,9 @@ class MainWindow(QMainWindow):
     def show_about_dialog(self):
         dialog = AboutDialog(self)
         dialog.exec_()
+
+    def open_ide(self):
+        if config.vscode_exe:
+            subprocess.Popen([str(config.vscode_exe), str(config.main_script_dir)])
+        else:
+            subprocess.Popen([config.file_manager, str(config.main_script_dir)])

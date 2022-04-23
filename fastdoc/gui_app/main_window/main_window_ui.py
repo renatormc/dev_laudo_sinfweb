@@ -43,7 +43,7 @@ class Ui_MainWindow(object):
         self.sca_form.setWidgetResizable(True)
         self.sca_form.setObjectName("sca_form")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1173, 676))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1173, 661))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.sca_form.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_2.addWidget(self.sca_form)
@@ -76,7 +76,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1193, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1193, 27))
         self.menubar.setObjectName("menubar")
         self.menuArquivo = QtWidgets.QMenu(self.menubar)
         self.menuArquivo.setObjectName("menuArquivo")
@@ -92,8 +92,11 @@ class Ui_MainWindow(object):
         self.act_manage_models.setObjectName("act_manage_models")
         self.act_about = QtWidgets.QAction(MainWindow)
         self.act_about.setObjectName("act_about")
+        self.act_dev = QtWidgets.QAction(MainWindow)
+        self.act_dev.setObjectName("act_dev")
         self.menuArquivo.addAction(self.act_add_token)
         self.menuArquivo.addAction(self.act_manage_models)
+        self.menuArquivo.addAction(self.act_dev)
         self.menuSobre.addAction(self.act_about)
         self.menubar.addAction(self.menuArquivo.menuAction())
         self.menubar.addAction(self.menuSobre.menuAction())
@@ -103,7 +106,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Fastdoc"))
         self.label_2.setText(_translate("MainWindow", "Diretório de trabalho"))
         self.btn_choose_workdir.setText(_translate("MainWindow", "..."))
         self.label.setText(_translate("MainWindow", "Modelo"))
@@ -117,3 +120,4 @@ class Ui_MainWindow(object):
         self.act_add_token.setText(_translate("MainWindow", "Adicionar token"))
         self.act_manage_models.setText(_translate("MainWindow", "Gerenciar modelos"))
         self.act_about.setText(_translate("MainWindow", "Sobre"))
+        self.act_dev.setText(_translate("MainWindow", "Desenvolver"))

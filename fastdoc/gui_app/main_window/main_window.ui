@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Fastdoc</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
@@ -68,7 +68,7 @@
          <x>0</x>
          <y>0</y>
          <width>1173</width>
-         <height>676</height>
+         <height>661</height>
         </rect>
        </property>
       </widget>
@@ -177,7 +177,7 @@
      <x>0</x>
      <y>0</y>
      <width>1193</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArquivo">
@@ -186,6 +186,7 @@
     </property>
     <addaction name="act_add_token"/>
     <addaction name="act_manage_models"/>
+    <addaction name="act_dev"/>
    </widget>
    <widget class="QMenu" name="menuSobre">
     <property name="title">
@@ -210,6 +211,11 @@
   <action name="act_about">
    <property name="text">
     <string>Sobre</string>
+   </property>
+  </action>
+  <action name="act_dev">
+   <property name="text">
+    <string>Desenvolver</string>
    </property>
   </action>
  </widget>

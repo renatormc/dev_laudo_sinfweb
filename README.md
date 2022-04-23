@@ -74,7 +74,7 @@ Após criação do novo modelo basicamente o que preciso fazer é editar o arqui
 
 # Widgets
 
-A composição do formulário, o qual o usuário irá utilizar para entrar os dados que serão utilizados para renderização do documento é composta por widgets. Cada widget é um campo para preenchimento. O formulário é definido no arquivo de nome qt_form/qt_form.py da seguinte forma conforme exemplo a seguir.
+A composição do formulário, o qual o usuário irá utilizar para entrar os dados que serão utilizados para renderização do documento é composta por widgets. Cada widget é um campo para preenchimento. O formulário é definido no arquivo "qt_form/qt_form.py" conforme exemplo a seguir.
 
 ```python
 widgets: list[list[SWidget]] = [
@@ -111,13 +111,13 @@ widgets: list[list[SWidget]] = [
 
 ```
 
-Os dados preenchidos no formulário comporão um conjunto de dados denominado "contexto". Este contexto será passado para o renderizador que irá utilizar o template definido no arquivo templates/Main.docx para gerar o documento final.
+Os dados preenchidos no formulário comporão um conjunto de dados denominado "contexto". Este contexto será passado para o renderizador que irá utilizar o template definido no arquivo "templates/Main.docx" para gerar o documento final.
 
 <p>
 <img src="doc/assets/readme/form_context.png" width="300"/>
 </p>
 
-O contexto antes de ser passado para o renderizador passa por pre processamento que pode ser definido nos arquivos pre.py e pre.html. Tal processamento de o objetivo de trabalhar o contexto melhor para utilizar menos código no template docx pois utilizar arquivos no formato py e html é mais simples de manipular. Contudo, este pre processamento é opicional e caso o desenvolvedor do modelo não se interesse em utilizar o recurso pode não utilizar. Para isso basta deixar os arquivo pre.py e pre.html inalterados.
+O contexto antes de ser passado para o renderizador passa por um pre processamento que pode ser definido nos arquivos pre.py e pre.html. Tal processamento tem o objetivo de trabalhar o contexto para utilizar menos código no template docx pois arquivos no formato py e html são mais simples de manipular. Contudo, este pre processamento é opcional e, caso o desenvolvedor do modelo não se interesse em utilizar o recurso ele pode optar por não utilizar. Para isso basta deixar os arquivo pre.py e pre.html inalterados.
 
 # Validators
 
@@ -140,7 +140,7 @@ widgets: list[list[SWidget]] = [
 
 # Converter
 
-As vezes precisamos converter o valor retornado do widget para outro formato desejado. Para isso podemos passar uma função no parâmetro "converter" para o widget. O converter também pode ser um validator, basta lançar uma exceção do tipo "wt.ValidationError" caso haja algum erro da mesma forma que nos validators. Veja o exemplo a seguir.
+As vezes precisamos converter o valor retornado do widget para um formato mais adequado. Para isso podemos passar uma função no parâmetro "converter" para o widget. O converter também page como um validato caso basta seja lançada uma exceção do tipo "wt.ValidationError" caso haja algum erro da mesma forma que nos validators. Veja o exemplo a seguir.
 
 ```python
 def converter_pericia(value):
@@ -162,7 +162,7 @@ widgets: list[list[SWidget]] = [
 ]
 ```
 
-No exemplo acima foi criado um wiget do tipo SText o qual por padrão retorna uma string porém foi utilizado um converter para converter a string com sequencial, rg e ano digitados separados por barra para um dicionário com os valores do tipo inteiro. Caso o usuário digite algo fora do padrão haverá um erro e o formulário não será validado.
+No exemplo acima foi criado um wiget do tipo SText o qual por padrão retorna uma string porém foi utilizado um converter para converter a string no formato sequencial/rg/ano digitados separados por barra para um dicionário com os valores do tipo inteiro. Caso o usuário digite algo fora do padrão haverá um erro e o formulário não será validado.
 
 # Template
 
@@ -196,10 +196,11 @@ O valor da variável é diferente de 1 e 2
  Nome: {{ nome }}
 {% endfor %}
 ```
+A linguagem jinja2 é a lingaugem a ser utilizado tanto dentro dos templates docx como no arquivo pre.html.
 
 ## Filtros
 
-Filtro é um função que converte um valor para outro. Por exemplo as vezes temos um valor do tipo datetime que representa uma data qualquer porém queremos imprimir no documento a data escrita por extenso. Para isso podemos usar da seguinte forma:
+Filtro é um função que converte um valor para outro. Por exemplo, as vezes temos um valor do tipo datetime que representa uma data qualquer porém queremos imprimir no documento a data escrita por extenso. Para isso podemos usar da seguinte forma:
 ```jinja
 {{ data_pericia|data_completa }}
 ```

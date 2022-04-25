@@ -58,15 +58,29 @@ Os modelos ficam dentro da pasta "models" na raiz do projeto. Cada subpasta é u
 ## Criar novo modelo
 Para se criar um novo modelo é necessário executar o comando a seguir:
 
+Windows baixado via zip:
 ```
 fastdoc.bat new-model
 ```
 
+Instalado manualmente:
+```
+python main.py new-model
+```
+
 ## Deletar modelos
 Para se deletar um modelo é preciso digitar o comando a seguir.
+
+Windows baixado via zip:
 ```
 fastdoc.bat delete-model
 ```
+
+Instalado manualmente:
+```
+python main.py delete-model
+```
+
 *Não delete ou crie modelos deletando ou copiando manualmente as pastas. Sempre utilize os comandos acima.*
 
 Após criação do novo modelo basicamente o que preciso fazer é editar o arquivo templates/Main.docx dentro da pasta do modelo e criar um formulário no arquivo qt_form/qt_form.py.
@@ -205,7 +219,7 @@ Filtro é um função que converte um valor para outro. Por exemplo, as vezes te
 {{ data_pericia|data_completa }}
 ```
 
-Assim se a variável contiver a data 12/12/2021 o filtro "data_completa" fará ser impresso a frase *"12 dias dop mês de dezembro do ano de 2021"*
+Assim se a variável contiver a data 12/12/2021 o filtro "data_completa" fará ser impresso a frase *"12 dias do mês de dezembro do ano de 2021"*
 O sistema já traz alguns filtros padrão que estarão disponíveis para todos os templates. Porém é possível a criação de filtros customizados por modelo. Para isto o desenvolvedor pode editar o arquivo "filters/__init__.py" existente dentor da pasta do modelo.
 
 ## Funções

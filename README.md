@@ -39,13 +39,26 @@ python main.py start
 ## Como usar
 
 Para execução rode o programa com o comando abaixo:
+
+### Caso instalado no Windows utilizando arquivo zip
+Utilzar o executável "fastdoc_gui.exe" ou caso deseje executar na linha de comando utilizar o comando:
+```
+fastdoc.bat gui
+```
+
+### Caso instalado no Windows ou Linux manualmente
 ```
 python main.py gui
 ```
 
 ## Como atualizar
 
-Para atualizar ara o terminal na pasta do projeto e digite o seguinte comando.
+### Caso instalado no Windows utilizando arquivo zip
+
+Você receberá um aviso de nova versão no momento em que abrir a interface gráfica com a opção de escolher atualizar.
+
+### Caso instalado no Windows ou Linux manualmente
+Para atualizar abra o terminal na pasta do projeto e digite os seguintes comandos na sequência.
 ```
 git pull origin master
 poetry install
@@ -58,12 +71,12 @@ Os modelos ficam dentro da pasta "models" na raiz do projeto. Cada subpasta é u
 ## Criar novo modelo
 Para se criar um novo modelo é necessário executar o comando a seguir:
 
-Windows baixado via zip:
+### Caso instalado no Windows utilizando arquivo zip
 ```
 fastdoc.bat new-model
 ```
 
-Instalado manualmente:
+### Caso instalado no Windows ou Linux manualmente
 ```
 python main.py new-model
 ```
@@ -71,12 +84,12 @@ python main.py new-model
 ## Deletar modelos
 Para se deletar um modelo é preciso digitar o comando a seguir.
 
-Windows baixado via zip:
+### Caso instalado no Windows utilizando arquivo zip
 ```
 fastdoc.bat delete-model
 ```
 
-Instalado manualmente:
+### Caso instalado no Windows ou Linux manualmente
 ```
 python main.py delete-model
 ```

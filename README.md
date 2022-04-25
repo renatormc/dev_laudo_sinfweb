@@ -12,7 +12,7 @@ Hash SHA-512 do arquivo "fastdoc 0.1.5.zip":
 569a824391b7be86b864117ba3bbbb4d384e2a8104a45cd84e5a8ad5db716348eb5ee149137a1ea1e5665b8d71761ad9ee70990adf0857e617aaaa4d5a48c04f
 ```
 
-# Instalação Manual
+# Instalação Manual (Linux ou Windows)
 
 Requisitos:
 

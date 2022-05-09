@@ -27,7 +27,7 @@ widgets: list[list[SWidget]] = [
         wt.SDate("data_recebimento", label="Data de recebimento"),
     ],
     [
-        wt.SText("numero_quesito", label="Número do quesito"),
+        wt.SText("n_quesito", label="Número do quesito"),
         wt.SText("autoridade", label="Autoridade"),
     ],
     [
@@ -43,7 +43,7 @@ widgets: list[list[SWidget]] = [
         wt.SStringList("pessoas_envolvidas", label="Pessoas envolvidas", placeholder="Pessoas separadas por vírgula")
     ],
     [
-        wt.SObjetctsByPics("objects", "Pasta com fotos dos objetos", default_object_type="Tablet", object_types_choices="tipos_objetos")
+        wt.SObjetctsByPics("objects", "Pasta com fotos dos objetos", default_object_type="Celular", object_types_choices=['Celular', 'Outro', 'Computador', 'Tablet', 'HDD'])
     ]
 
 ]

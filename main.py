@@ -100,8 +100,10 @@ match args.command:
         run_gui_app()
     case "install":
         if os.name == "nt":
-            path = Path("./fastdoc.bat").absolute()
-            text = f"@echo off\n\"{path}\" %*"
+            pythonexe = sys.executable
+            scriptPath = Path("./main.py").absolute()
+            # text = f"@echo off\n\"{path}\" %*"
+            text = f"@echo off\n\"{pythonexe}\" \"{scriptPath}\" %*"
             dest_file = Path("C:\\Windows\\fastdoc.bat")
             dest_file.write_text(text)
         else:

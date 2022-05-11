@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastdoc"
-version = "0.1.0"
+version = "0.1.7"
 description = "A fast document writer"
 authors = ["Renato Martins"]
 license = "MIT"

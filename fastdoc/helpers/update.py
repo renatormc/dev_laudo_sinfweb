@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import TypedDict, Tuple
 import requests
 import json
@@ -5,6 +6,7 @@ from fastdoc import config
 import sys
 import subprocess
 import os
+import re
 
 
 class ReleaseInfo(TypedDict):
@@ -16,6 +18,21 @@ def get_local_version_info() -> ReleaseInfo:
     with path.open("r", encoding="utf-8") as f:
         data = json.load(f)
     return data
+
+def set_local_version(value: str) -> None:
+    path = config.app_dir / "current_release.json"
+    with path.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+    data['version'] = value
+    with path.open("w", encoding="utf-8") as f:
+        f.write(json.dumps(data, ensure_ascii=False, indent=4))
+
+    path = Path("./pyproject.toml")
+    text = path.read_text()
+    res = re.sub(r'version = "0.1.0"', f"version = \"{value}\"", text)
+    path.write_text(res)
+
+
 
 def get_remote_version_info() -> ReleaseInfo:
     r = requests.get("https://raw.githubusercontent.com/renatormc/fastdoc/master/fastdoc/current_release.json")

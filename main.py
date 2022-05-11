@@ -5,6 +5,8 @@ from fastdoc import config
 import shutil
 from InquirerPy import inquirer
 from dotenv import load_dotenv
+import os
+import stat
 
 load_dotenv() 
 
@@ -35,6 +37,8 @@ p_analise_models_folder = subparsers.add_parser("analise-models-folder")
 
 p_version = subparsers.add_parser("version")
 
+p_change_version = subparsers.add_parser("change-version")
+
 args = parser.parse_args()
 config.verbose = args.verbose
 config.debug = args.debug
@@ -52,7 +56,7 @@ from fastdoc.app_flask import app as app_flask
 from fastdoc.app_flask.gui_server import run_server
 from fastdoc.gui_app import run_gui_app
 from database import db, repo
-from fastdoc.helpers.update import get_local_version_info, get_remote_version_info
+from fastdoc.helpers.update import get_local_version_info, get_remote_version_info, set_local_version
 from fastdoc.helpers.models_manager import fix_old_models
 
 if args.workdir:
@@ -95,13 +99,31 @@ match args.command:
     case "gui":
         run_gui_app()
     case "install":
-        path = Path("./fastdoc.bat").absolute()
-        text = f"@echo off\n\"{path}\" %*"
-        dest_file = Path("C:\\Windows\\fastdoc.bat")
-        dest_file.write_text(text)
+        if os.name == "nt":
+            path = Path("./fastdoc.bat").absolute()
+            text = f"@echo off\n\"{path}\" %*"
+            dest_file = Path("C:\\Windows\\fastdoc.bat")
+            dest_file.write_text(text)
+        else:
+            pythonexe = Path("./.venv/bin/python").absolute()
+            scriptPath = Path("./main.py").absolute()
+            path = Path().home() / ".local/bin/fastdoc"
+            if not path.parent.exists():
+                path.parent.mkdir(parents=True)
+            text = f"#!/bin/bash\n\"{pythonexe}\" \"{scriptPath}\" $@"
+            path.write_text(text)
+            st = os.stat(path)
+            os.chmod(path, st.st_mode | stat.S_IEXEC)
+            print("Program installed.")
+            print("Make sure the folder ~/.local/bin is in your PATH")
     case "analise-models-folder":
         fix_old_models()
     case "version":
         info_remote = get_remote_version_info()
         info_local = get_local_version_info()
         print(f"Current version: {info_local['version']}. Available version: {info_remote['version']}")
+    case "change-version":
+        info_local = get_local_version_info()
+        print(f"Current version: {info_local['version']}")
+        new_version = input("New version: ")
+        set_local_version(new_version)

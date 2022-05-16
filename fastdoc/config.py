@@ -55,3 +55,9 @@ def find_file_manager():
 
 file_manager = find_file_manager()
 
+
+APP_USER_FOLDER = Path.home() / ".fastdoc"
+if not APP_USER_FOLDER.exists():
+    APP_USER_FOLDER.mkdir()
+PREFERENCES_PATH = APP_USER_FOLDER / "preferences.json"
+

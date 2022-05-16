@@ -14,7 +14,7 @@
    <string>Fastdoc</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
+   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
@@ -58,6 +58,19 @@
      </layout>
     </item>
     <item>
+     <widget class="QTextBrowser" name="teb_instructions">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QScrollArea" name="sca_form">
       <property name="widgetResizable">
        <bool>true</bool>
@@ -68,7 +81,7 @@
          <x>0</x>
          <y>0</y>
          <width>1173</width>
-         <height>661</height>
+         <height>478</height>
         </rect>
        </property>
       </widget>
@@ -99,6 +112,19 @@
         </property>
         <property name="text">
          <string>Gerar docx</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_load_last">
+        <property name="minimumSize">
+         <size>
+          <width>180</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Ultimo preenchimento</string>
         </property>
        </widget>
       </item>
@@ -177,7 +203,7 @@
      <x>0</x>
      <y>0</y>
      <width>1193</width>
-     <height>27</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArquivo">
@@ -187,6 +213,7 @@
     <addaction name="act_add_token"/>
     <addaction name="act_manage_models"/>
     <addaction name="act_dev"/>
+    <addaction name="act_preferences"/>
    </widget>
    <widget class="QMenu" name="menuSobre">
     <property name="title">
@@ -216,6 +243,11 @@
   <action name="act_dev">
    <property name="text">
     <string>Desenvolver</string>
+   </property>
+  </action>
+  <action name="act_preferences">
+   <property name="text">
+    <string>Preferências</string>
    </property>
   </action>
  </widget>

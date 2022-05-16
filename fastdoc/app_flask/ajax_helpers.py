@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-from rlibs.report_writer.types import ObjectType
+from report_writer.types import ObjectType
 
 
 ajax_helpers = Blueprint('ajax_helpers', __name__)

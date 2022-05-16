@@ -1,6 +1,6 @@
 from datetime import datetime
-from rlibs.report_writer.helpers import exif_transpose_pics
-from rlibs.report_writer.converters import pics_from_subfolders
+from report_writer.helpers import exif_transpose_pics
+from report_writer.converters import pics_from_subfolders
 
 
 def concatenate_peritos(relatores, revisores):

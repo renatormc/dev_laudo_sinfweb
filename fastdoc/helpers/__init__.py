@@ -4,10 +4,10 @@ import os
 from pathlib import Path
 from typing import Literal, Optional, Union
 from fastdoc.custom_types import ModelInfo, ModelMetaType
-from rlibs.report_writer.types import CaseObjectsType
+from report_writer.types import CaseObjectsType
 import models
 from fastdoc import config
-from rlibs.report_writer import Renderer
+from report_writer import Renderer
 from pprint import pprint
 from InquirerPy import inquirer
 import importlib

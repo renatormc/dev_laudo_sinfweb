@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Optional, Union
 from fastdoc.gui_app.widgets.helpers import apply_converter
-from rlibs.report_writer.types import CaseObjectsType
+from report_writer.types import CaseObjectsType
 from fastdoc.gui_app.widgets.types import ValidationError
 
 from PyQt5.QtWidgets import QLineEdit
@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QToolButt
 from fastdoc.custom_types import ConverterType, ValidatorType
 from fastdoc.gui_app.widgets.label_error import LabelError
 from fastdoc.gui_app.widgets.sobjects_by_pics.pics_organizer import PicsOrganizer
-from rlibs.report_writer.pics_analyzer import get_objects_from_pics
+from report_writer.pics_analyzer import get_objects_from_pics
 from fastdoc import config
 from fastdoc.gui_app.widgets.helpers import get_list, ChoicesType
 

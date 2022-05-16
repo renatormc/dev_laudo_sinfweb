@@ -3,16 +3,18 @@ import sys
 import subprocess
 from pathlib import Path
 from typing import Optional
+
+from report_writer import ReportWriter
 from fastdoc.custom_types import ModelInfo
 from fastdoc.helpers import open_doc, render_doc, get_models_info
 from fastdoc.gui_app.main_window.main_window_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog
-from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog
+from PyQt5.QtCore import QSize, QThread, pyqtSignal, QObject, Qt
 from PyQt5.QtGui import QShowEvent
 from fastdoc.gui_app.form import Form
 from fastdoc import config
 import importlib
-from rlibs.report_writer.types import InitialData
+from report_writer.types import InitialData
 from fastdoc.gui_app.helpers import ask_confirmation, get_icon
 from fastdoc.gui_app.manage_models import ManageModelsDialog
 from fastdoc.gui_app.main_window.dialog_token import DialogToken
@@ -20,6 +22,27 @@ from database import repo
 import traceback
 from fastdoc.helpers.update import has_newer_version
 from fastdoc.gui_app.about_dialog import AboutDialog
+from fastdoc.preferences import PreferencesManager
+
+
+class Worker(QObject):
+    finished = pyqtSignal()
+    error_occurered = pyqtSignal(Exception)
+    doc_rendered = pyqtSignal(str)
+
+    def __init__(self, model_name: str, context, file_: Path) -> None:
+        super().__init__()
+        self.model_name = model_name
+        self.context = context
+        self.file = file_
+
+    def run(self):
+        try:
+            render_doc(self.model_name, self.context, self.file)
+            self.doc_rendered.emit(str(self.file))
+        except Exception as e:
+            self.error_occurered.emit(e)
+        self.finished.emit()
 
 
 class MainWindow(QMainWindow):
@@ -34,6 +57,8 @@ class MainWindow(QMainWindow):
         self.populate_models()
         self.initial_data: Optional[InitialData] = None
         self.ui.led_workdir.setText(str(config.workdir))
+        self.thread: Optional[QThread] = None
+        self.worker: Optional[Worker] = None
 
     def connections(self):
         self.ui.btn_render.clicked.connect(self.render)
@@ -47,6 +72,8 @@ class MainWindow(QMainWindow):
         self.ui.btn_choose_workdir.clicked.connect(self.choose_workdir)
         self.ui.act_about.triggered.connect(self.show_about_dialog)
         self.ui.act_dev.triggered.connect(self.open_ide)
+        self.ui.act_preferences.triggered.connect(self.open_preferences)
+        self.ui.btn_load_last.clicked.connect(self.load_last_data)
 
     def populate_models(self):
         self.ui.cbx_model.clear()
@@ -66,6 +93,8 @@ class MainWindow(QMainWindow):
         self.ui.btn_clear.setIconSize(QSize(34, 34))
         self.ui.btn_initial_data.setIcon(get_icon("initial_data.png"))
         self.ui.btn_initial_data.setIconSize(QSize(32, 32))
+        self.ui.btn_load_last.setIcon(get_icon("undo.png"))
+        self.ui.btn_load_last.setIconSize(QSize(28, 28))
 
     def set_buttons_enable(self, value: bool) -> None:
         self.ui.btn_clear.setEnabled(value)
@@ -90,8 +119,18 @@ class MainWindow(QMainWindow):
                 self.form.load_from_file(file_)
             else:
                 self.form.clear_content()
+            self.show_instructions(mi)
         else:
             self.set_buttons_enable(False)
+
+    def show_instructions(self, mi: ModelInfo):
+        rw = ReportWriter(config.models_folder, model_name=mi.name)
+        html = rw.get_instructions_html()
+        if html:
+            self.ui.teb_instructions.setHtml(html)
+            self.ui.teb_instructions.setVisible(True)
+        else:
+            self.ui.teb_instructions.setVisible(False)
 
     def load_initial_data(self) -> None:
         if self.form:
@@ -106,9 +145,36 @@ class MainWindow(QMainWindow):
                 traceback.print_exc()
                 QMessageBox.warning(self, "Erro", str(e))
 
+    def render_doc(self, model_name: str, context, file_: Path) -> None:
+        self.thread = QThread()
+        self.worker = Worker(model_name, context, file_)
+        self.worker.moveToThread(self.thread)
+        self.thread.started.connect(self.worker.run)
+        self.worker.finished.connect(self.thread.quit)
+        self.worker.doc_rendered.connect(self.finish_render)
+        self.worker.error_occurered.connect(self.render_error)
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+        self.thread.start()
+
+    def finish_render(self, file_):
+        QApplication.restoreOverrideCursor()
+        if os.name == "nt":
+            reply = QMessageBox.question(self, "Arquivo compilado",
+                                         "Arquivo compilado. Deseja abri-lo no seu editor de textos padrão?",
+                                         QMessageBox.Yes, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                open_doc(file_)
+        else:
+            QMessageBox.about(self, "Arquivo compilado", f"Arquivo compilado \"{file_}\"")
+
+    def render_error(self, e):
+        traceback.print_exc()
+        QApplication.restoreOverrideCursor()
+        QMessageBox.warning(self, "Erro", str(e))
+
     def render(self):
-        file_ = config.local_folder / f"{self.form.model_info.name}.json"
-        self.form.save_to_file(file_)
+        self.form.save_last_data()
+        # self.form.save_to_file(file_)
         context, errors = self.form.get_context()
         if config.debug:
             print(context)
@@ -118,28 +184,24 @@ class MainWindow(QMainWindow):
             return
         if self.initial_data:
             context.update(self.initial_data.context)
-        try:
-            file_ = QFileDialog.getSaveFileName(
-                self, "Escolha o arquivo",  ".", "DOCX (*.docx)")[0]
-            if file_:
-                render_doc(self.form.model_info.name, context, file_)
-                if os.name == "nt":
-                    reply = QMessageBox.question(self, "Arquivo compilado",
-                                                 "Arquivo compilado. Deseja abri-lo no seu editor de textos padrão?",
-                                                 QMessageBox.Yes, QMessageBox.No)
-                    if reply == QMessageBox.Yes:
-                        open_doc(file_)
-                else:
-                    QMessageBox.about(self, "Arquivo compilado", f"Arquivo compilado \"{file_}\"")
-        except Exception as e:
-            traceback.print_exc()
-            QMessageBox.warning(self, "Erro", str(e))
 
+        p = PreferencesManager.instance()
+        if not p.preferences["doc_in_workdir"]:
+            file_ = QFileDialog.getSaveFileName(self, "Escolha o arquivo",  ".", "DOCX (*.docx)")[0]
+        else:
+            file_ = config.workdir / p.preferences["doc_default_name"]
+        if file_:
+            self.render_doc(self.form.model_info.name, context, file_)
+
+       
     def save(self):
         self.form.save_to_file()
 
     def load(self):
         self.form.load_from_file()
+
+    def load_last_data(self):
+        self.form.load_last_data()
 
     def clear_content(self):
         self.form.clear_content()
@@ -183,7 +245,10 @@ class MainWindow(QMainWindow):
         dialog.exec_()
 
     def open_ide(self):
-        if config.vscode_exe:
-            subprocess.Popen([str(config.vscode_exe), str(config.main_script_dir)])
-        else:
-            subprocess.Popen([config.file_manager, str(config.main_script_dir)])
+        try:
+            subprocess.Popen(['code', str(config.main_script_dir)])
+        except FileNotFoundError:
+            subprocess.Popen(['code', str(config.main_script_dir)])
+
+    def open_preferences(self):
+        PreferencesManager.instance().edit_preferences()

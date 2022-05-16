@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms import Field, StringField, ValidationError
 from fastdoc import config
 from fastdoc.custom_types import ModelInfo
-from rlibs.report_writer.types import InitialData
+from report_writer.types import InitialData
 import importlib
 
 

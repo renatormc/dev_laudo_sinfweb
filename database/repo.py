@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import Optional
 from unicodedata import name
+
+from sqlalchemy import JSON
 from database import db
 from database.models import *
 
@@ -100,3 +102,25 @@ def get_list(model_name: str, list_name: str, filter: Optional[str] = None):
     if filter:
         query = query.filter(ItemList.key.ilike(f"%{filter}%"))
     return query.order_by(ItemList.key.asc()).all()
+
+
+def save_last_data(model_name: str, data: Any) -> None:
+    jvalue: JsonValue | None = db.session.query(JsonValue).filter(
+        JsonValue.category == 'last_saved',
+        JsonValue.key == model_name
+    ).first()
+    if not jvalue:
+        jvalue = JsonValue()
+        jvalue.category = 'last_saved'
+        jvalue.key = model_name
+    jvalue.data = data
+    db.session.add(jvalue)
+    db.session.commit()
+
+
+def get_last_data(model_name: str) -> Any:
+    jvalue: JsonValue | None = db.session.query(JsonValue).filter(
+        JsonValue.category == 'last_saved',
+        JsonValue.key == model_name
+    ).first()
+    return jvalue.data if jvalue else {}

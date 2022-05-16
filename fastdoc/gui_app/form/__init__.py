@@ -6,6 +6,7 @@ from fastdoc.gui_app.widgets.types import ValidationError
 from PyQt5.QtWidgets import QFileDialog
 import json
 from pathlib import Path
+from database import repo
 
 
 class Form(SComposite):
@@ -14,21 +15,14 @@ class Form(SComposite):
         super(Form, self).__init__(widgets, model_name=self.model_info.name)
 
 
-    # def get_context(self) -> Tuple[dict, FormError]:
-    #     context = {}
-    #     errors: FormError = {}
-    #     for row in self.widgets:
-    #         for item in row:
-    #             message = ""
-    #             try:
-    #                 context[item.name] = item.get_context()
-    #             except ValidationError as e:
-    #                 message = str(e)
-    #                 errors[item.name] = message
-    #             item.show_error(message)
-    #     return context, errors
+    def save_last_data(self):
+        data = self.serialize()
+        repo.save_last_data(self.model_info.name,  data)
 
-   
+    def load_last_data(self):
+        data = repo.get_last_data(self.model_info.name)
+        self.load(data)
+
     def save_to_file(self, file_: Optional[str] = None):
         data = self.serialize()
         file_= file_ or QFileDialog.getSaveFileName(self, "Escolha o arquivo",  ".", "JSON (*.json)")[0]

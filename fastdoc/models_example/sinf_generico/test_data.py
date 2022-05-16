@@ -1,4 +1,4 @@
-from rlibs.report_writer.converters import str2date
+from report_writer.converters import str2date
 
 
 def get_context():

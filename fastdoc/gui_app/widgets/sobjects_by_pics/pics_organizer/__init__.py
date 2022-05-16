@@ -2,7 +2,7 @@
 from pathlib import Path
 from typing import Optional
 
-from rlibs.report_writer.types import CaseObjectsType, ObjectType
+from report_writer.types import CaseObjectsType, ObjectType
 from fastdoc.gui_app.widgets.helpers import ChoicesType
 from fastdoc.gui_app.widgets.types import ObjectPicUserData
 from .pics_organizer_ui import Ui_PicsOrganizer

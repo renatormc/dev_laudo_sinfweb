@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Optional, Union
-from rlibs.report_writer.types import InitialData
+from report_writer.types import InitialData
 from fastdoc.data_extractors.odin_parser import OdinPdfParser
 from fastdoc.data_extractors.sinfweb_bridge import get_pericia_data
 

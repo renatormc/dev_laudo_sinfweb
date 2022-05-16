@@ -20,6 +20,7 @@ class JsonValue(Base):
     __tablename__ = 'json_value'
     id = sa.Column(sa.Integer, primary_key=True)
     key = sa.Column(sa.String(300))
+    category = sa.Column(sa.String(300))
     data_str = sa.Column(sa.Text)
 
     def __repr__(self) -> str:
@@ -53,3 +54,4 @@ class ItemList(Base):
     @data.setter
     def data(self, value) -> None:
         self.data_str = json.dumps(value)
+

@@ -214,6 +214,7 @@
     <addaction name="act_manage_models"/>
     <addaction name="act_dev"/>
     <addaction name="act_preferences"/>
+    <addaction name="act_open_workdir"/>
    </widget>
    <widget class="QMenu" name="menuSobre">
     <property name="title">
@@ -248,6 +249,11 @@
   <action name="act_preferences">
    <property name="text">
     <string>Preferências</string>
+   </property>
+  </action>
+  <action name="act_open_workdir">
+   <property name="text">
+    <string>Abrir diretório de trabalho</string>
    </property>
   </action>
  </widget>

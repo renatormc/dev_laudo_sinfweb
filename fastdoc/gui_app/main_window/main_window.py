@@ -20,6 +20,7 @@ from fastdoc.gui_app.manage_models import ManageModelsDialog
 from fastdoc.gui_app.main_window.dialog_token import DialogToken
 from database import repo
 import traceback
+from fastdoc.helpers.external import open_in_filemanager
 from fastdoc.helpers.update import has_newer_version
 from fastdoc.gui_app.about_dialog import AboutDialog
 from fastdoc.preferences import PreferencesManager
@@ -74,6 +75,7 @@ class MainWindow(QMainWindow):
         self.ui.act_dev.triggered.connect(self.open_ide)
         self.ui.act_preferences.triggered.connect(self.open_preferences)
         self.ui.btn_load_last.clicked.connect(self.load_last_data)
+        self.ui.act_open_workdir.triggered.connect(self.open_workdir)
 
     def populate_models(self):
         self.ui.cbx_model.clear()
@@ -95,6 +97,10 @@ class MainWindow(QMainWindow):
         self.ui.btn_initial_data.setIconSize(QSize(32, 32))
         self.ui.btn_load_last.setIcon(get_icon("undo.png"))
         self.ui.btn_load_last.setIconSize(QSize(28, 28))
+
+    @property
+    def workdir(self) -> Path:
+        return Path(self.ui.led_workdir.displayText())
 
     def set_buttons_enable(self, value: bool) -> None:
         self.ui.btn_clear.setEnabled(value)
@@ -239,15 +245,13 @@ class MainWindow(QMainWindow):
 
     def open_ide(self):
         try:
-            subprocess.Popen(['code', str(config.main_script_dir)], shell=True)
+            subprocess.Popen(['code', str(config.main_script_dir)], shell=os.name == "nt")
         except FileNotFoundError:
-            filemanagers = ['explorer'] if os.name == "nt" else ['nautilus', 'nemo','dolphin']
-            for item in filemanagers:
-                try:
-                    subprocess.Popen([item, str(config.main_script_dir)])
-                    break
-                except FileNotFoundError:
-                    pass
+            open_in_filemanager(config.main_script_dir)
+           
 
     def open_preferences(self):
         PreferencesManager.instance().edit_preferences()
+
+    def open_workdir(self):
+        open_in_filemanager(self.workdir)

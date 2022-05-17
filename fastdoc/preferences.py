@@ -2,8 +2,7 @@ from typing import TypedDict, Union
 from marshmallow import Schema, fields, EXCLUDE
 from fastdoc import config
 import json
-import subprocess
-import os
+from fastdoc.helpers.external import open_in_text_editor
 
 
 class FastdocPreferences(TypedDict):
@@ -55,11 +54,5 @@ class PreferencesManager:
     def edit_preferences(self) -> None:
         self.load_preferences()
         self.save_preferences()
-        items = ['notepad++', 'notepad'] if os.name == 'nt' else ['gedit', 'kate', 'xed']
-        for item in items:
-            try:
-                subprocess.run([item, str(config.PREFERENCES_PATH)])
-                self.load_preferences()
-                break
-            except FileNotFoundError:
-                pass
+        open_in_text_editor(config.PREFERENCES_PATH)
+        self.load_preferences()

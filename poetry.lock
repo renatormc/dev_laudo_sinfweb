@@ -578,7 +578,7 @@ cli = ["click (>=5.0)"]
 
 [[package]]
 name = "report-writer"
-version = "0.1.5"
+version = "0.1.6"
 description = ""
 category = "main"
 optional = false
@@ -597,8 +597,8 @@ stringcase = "^1.2.0"
 [package.source]
 type = "git"
 url = "https://github.com/renatormc/report_writer.git"
-reference = "v0.1.5"
-resolved_reference = "8c69224e54f7eab40680efb94eac150cad4eaef0"
+reference = "v0.1.6"
+resolved_reference = "5bd233bd35aa21d67280a900e371f2adf21b10a2"
 
 [[package]]
 name = "requests"
@@ -810,7 +810,7 @@ email = ["email-validator"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "83092a368feba4579888bf81948410bb17fcd72591a10888ffab6d646d399600"
+content-hash = "d0da92005870d353dead702b58fc57265bad9dad7cf6333b038dfb5ca2cf9421"
 
 [metadata.files]
 alembic = [

@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
         self.populate_models()
         self.initial_data: Optional[InitialData] = None
         self.ui.led_workdir.setText(str(config.workdir))
-        self.thread: Optional[QThread] = None
+        self._thread: Optional[QThread] = None
         self.worker: Optional[Worker] = None
 
     def connections(self):
@@ -103,10 +103,7 @@ class MainWindow(QMainWindow):
         self.ui.btn_render.setEnabled(value)
         self.ui.btn_save.setEnabled(value)
 
-    def create_form(self):
-        if self.form is not None:
-            file_ = config.local_folder / f"{self.form.model_info.name}.json"
-            self.form.save_to_file(file_)
+    def create_form(self):            
         mi: ModelInfo = self.ui.cbx_model.currentData()
         if mi is not None:
             form_module = importlib.import_module(f"models.{mi.name}.qt_form")
@@ -114,11 +111,7 @@ class MainWindow(QMainWindow):
             self.form = Form(mi, widgets)
             self.ui.sca_form.setWidget(self.form)
             self.set_buttons_enable(True)
-            file_ = config.local_folder / f"{self.form.model_info}.json"
-            if Path(file_).exists():
-                self.form.load_from_file(file_)
-            else:
-                self.form.clear_content()
+            self.form.clear_content()
             self.show_instructions(mi)
         else:
             self.set_buttons_enable(False)
@@ -146,15 +139,15 @@ class MainWindow(QMainWindow):
                 QMessageBox.warning(self, "Erro", str(e))
 
     def render_doc(self, model_name: str, context, file_: Path) -> None:
-        self.thread = QThread()
+        self._thread = QThread()
         self.worker = Worker(model_name, context, file_)
-        self.worker.moveToThread(self.thread)
-        self.thread.started.connect(self.worker.run)
-        self.worker.finished.connect(self.thread.quit)
+        self.worker.moveToThread(self._thread)
+        self._thread.started.connect(self.worker.run)
+        self.worker.finished.connect(self._thread.quit)
         self.worker.doc_rendered.connect(self.finish_render)
         self.worker.error_occurered.connect(self.render_error)
         QApplication.setOverrideCursor(Qt.WaitCursor)
-        self.thread.start()
+        self._thread.start()
 
     def finish_render(self, file_):
         QApplication.restoreOverrideCursor()

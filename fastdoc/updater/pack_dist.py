@@ -16,9 +16,32 @@ subprocess.check_output(['git', 'pull','origin', 'master'])
 scripts_folder = folder / "extras/Python/Scripts"
 os.environ['PATH'] = f"{scripts_folder};{os.getenv('PATH')}"
 
+
+# Deletar arquivos locais
+folders = [folder / ".local", folder / ".vscode", folder / "models"]
+for f in folders:
+    try:
+        print(f"Deletando pasta \"{f}\"")
+        shutil.rmtree(f)
+    except FileNotFoundError:
+        print(f"Folder \"{f}\" not found")
+files = [folder / "db.db"]
+for f in files:
+    try:
+        f.unlink()
+    except FileNotFoundError:
+        print(f"File \"{f}\" not found")
+
+print("Syncronizando extras")
+folder_from = folder.parent / "extras"
+forlder_to = folder / "extras"
+subprocess.check_call(['rclone', 'sync', str(folder_from), str(forlder_to)])
+
+
 python_exe = folder / "extras/Python/python.exe"
 print("Atualizando libs")
-subprocess.check_output([str(python_exe), '-m', 'pip', 'install', '-r', 'requirements.txt'])
+subprocess.check_output([str(python_exe), '-m', 'pip', 'install', '--upgrade', 'pip', 'setuptools'])
+subprocess.check_output([str(python_exe), '-m', 'pip', 'install','-r', 'requirements.txt'])
 
 def get_current_version():
     with (folder / "fastdoc/current_release.json").open("r", encoding="utf-8") as f:
@@ -43,19 +66,6 @@ def zip_folder(folder_path: str, output_path: str) -> None:
         zip_file.close()
 
 
-
-folders = [folder / ".local", folder / ".vscode", folder / "models"]
-for f in folders:
-    try:
-        shutil.rmtree(f)
-    except FileNotFoundError:
-        pass
-files = [folder / "db.db"]
-for f in files:
-    try:
-        f.unlink()
-    except FileNotFoundError:
-        pass
 
 shutil.copytree(folder / "fastdoc/models_example", folder / "models")
 

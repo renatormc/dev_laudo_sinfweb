@@ -72,8 +72,14 @@ shutil.copytree(folder / "fastdoc/models_example", folder / "models")
 subprocess.check_output([str(python_exe), 'manage.py', 'db_upgrade'])
 
 print("Gerando zip...")
-zippath = folder.parent / f"fastdoc  {get_current_version()}.zip"
+zippath = folder.parent / f"fastdoc/fastdoc  {get_current_version()}.zip"
+f = zippath.parent
+try:
+    shutil.rmtree(f)
+except FileNotFoundError:
+    pass
+f.mkdir()
 zip_folder(str(folder), str(zippath))
 print("Subindo para o Dropbox...")
-subprocess.run(['rclone', 'sync', str(zippath), f"dropbox:/fastdoc/{zippath.name}"])
+subprocess.run(['rclone', 'sync', str(f), f"dropbox:/fastdoc"])
 # subprocess.run(['s-hash', str(zippath)], shell=True)

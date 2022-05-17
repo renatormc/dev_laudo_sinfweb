@@ -239,9 +239,15 @@ class MainWindow(QMainWindow):
 
     def open_ide(self):
         try:
-            subprocess.Popen(['code', str(config.main_script_dir)])
+            subprocess.Popen(['code', str(config.main_script_dir)], shell=True)
         except FileNotFoundError:
-            subprocess.Popen(['code', str(config.main_script_dir)])
+            filemanagers = ['explorer'] if os.name == "nt" else ['nautilus', 'nemo','dolphin']
+            for item in filemanagers:
+                try:
+                    subprocess.Popen([item, str(config.main_script_dir)])
+                    break
+                except FileNotFoundError:
+                    pass
 
     def open_preferences(self):
         PreferencesManager.instance().edit_preferences()
